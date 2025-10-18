@@ -223,26 +223,39 @@
 
 </div>
 
-<script>
+<script is:inline>
   // FAQ Accordion functionality with original styling
   document.addEventListener('DOMContentLoaded', function() {
     const faqButtons = document.querySelectorAll('.faq-button');
     
     faqButtons.forEach(button => {
       button.addEventListener('click', function() {
-        const content = document.getElementById(this.getAttribute('aria-controls'));
+        const controlsId = this.getAttribute('aria-controls');
+        if (!controlsId) return;
+        
+        const content = document.getElementById(controlsId);
+        if (!content) return;
+        
         const isExpanded = this.getAttribute('aria-expanded') === 'true';
         const icon = this.querySelector('.faq-icon');
         
         // Close all other FAQs
         faqButtons.forEach(otherButton => {
           if (otherButton !== this) {
-            const otherContent = document.getElementById(otherButton.getAttribute('aria-controls'));
+            const otherControlsId = otherButton.getAttribute('aria-controls');
+            if (!otherControlsId) return;
+            
+            const otherContent = document.getElementById(otherControlsId);
             const otherIcon = otherButton.querySelector('.faq-icon');
             otherButton.setAttribute('aria-expanded', 'false');
-            otherContent.classList.remove('max-h-96', 'opacity-100');
-            otherContent.classList.add('max-h-0', 'opacity-0');
-            otherIcon.classList.remove('rotate-90');
+            
+            if (otherContent) {
+              otherContent.classList.remove('max-h-96', 'opacity-100');
+              otherContent.classList.add('max-h-0', 'opacity-0');
+            }
+            if (otherIcon) {
+              otherIcon.classList.remove('rotate-90');
+            }
           }
         });
         
@@ -251,12 +264,12 @@
           this.setAttribute('aria-expanded', 'false');
           content.classList.remove('max-h-96', 'opacity-100');
           content.classList.add('max-h-0', 'opacity-0');
-          icon.classList.remove('rotate-90');
+          if (icon) icon.classList.remove('rotate-90');
         } else {
           this.setAttribute('aria-expanded', 'true');
           content.classList.remove('max-h-0', 'opacity-0');
           content.classList.add('max-h-96', 'opacity-100');
-          icon.classList.add('rotate-90');
+          if (icon) icon.classList.add('rotate-90');
         }
       });
       

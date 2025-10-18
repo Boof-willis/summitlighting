@@ -331,15 +331,15 @@ const whyChooseFeatures = [
         const form = document.getElementById('repair-form');
         if (form) {
           Object.entries(params).forEach(([key, value]) => {
-            const input = form.querySelector(`input[name="${key}"]`);
+            const input = form.querySelector(`input[name="${key}"]`) as HTMLInputElement | null;
             if (input && value) {
               input.value = value;
             }
           });
           
           // Set landing page and referrer
-          const landingPageInput = form.querySelector('input[name="landing_page"]');
-          const referrerInput = form.querySelector('input[name="referrer"]');
+          const landingPageInput = form.querySelector('input[name="landing_page"]') as HTMLInputElement | null;
+          const referrerInput = form.querySelector('input[name="referrer"]') as HTMLInputElement | null;
           if (landingPageInput) landingPageInput.value = window.location.href;
           if (referrerInput) referrerInput.value = document.referrer;
         }
@@ -372,7 +372,7 @@ const whyChooseFeatures = [
       function trackFormSubmissions() {
         const form = document.getElementById('repair-form');
         if (form) {
-          form.addEventListener('submit', (e) => {
+          form.addEventListener('submit', () => {
             // Let the form submit normally, then track
             setTimeout(() => {
               window.dispatchEvent(new Event('Lead'));
