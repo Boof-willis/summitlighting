@@ -66,8 +66,8 @@ export default function HeaderRepair() {
           </ul>
         </div>
         <div className="flex items-center gap-4">
-          <a href="tel:+1-XXX-XXX-XXXX" className="secondary-button !hidden md:!flex">
-            Call Now
+          <a href="tel:+13855398892" className="secondary-button !hidden md:!flex">
+            Call (385) 539-8892
           </a>
           <button
             className={`md:hidden bg-none border-none cursor-pointer flex items-center justify-start w-10 h-10 relative`}
@@ -129,11 +129,11 @@ export default function HeaderRepair() {
             </li>
             <li>
               <a
-                href="tel:+1-XXX-XXX-XXXX"
+                href="tel:+13855398892"
                 className="inline-flex items-center justify-center bg-[#498dcb] text-white py-4 px-12 rounded-full font-heading font-normal text-base hover:bg-[#3a7ab5] transition-colors"
                 onClick={() => window.dispatchEvent(new Event('PhoneCallClick'))}
               >
-                Call Now
+                Call (385) 539-8892
               </a>
             </li>
           </ul>
