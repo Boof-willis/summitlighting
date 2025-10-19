@@ -140,11 +140,26 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
 
   const handleChangeIssue = () => {
     setIsModalOpen(false);
-    // Scroll to issue chooser section
-    const issueChooser = document.getElementById('issue-chooser');
-    if (issueChooser) {
-      issueChooser.scrollIntoView({ behavior: 'smooth' });
-    }
+    setCurrentStep(2);
+    setFormData({
+      selectedIssue: '',
+      fullName: '',
+      phone: '',
+      email: '',
+      cityOrZip: '',
+      description: '',
+      consentGiven: false,
+      timestamp: '',
+      pageSource: 'solar-repair-landing'
+    });
+    setErrors({});
+    // Scroll to issue chooser section after modal closes
+    setTimeout(() => {
+      const issueChooser = document.getElementById('issue-chooser');
+      if (issueChooser) {
+        issueChooser.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 300);
   };
 
   // Form submission
@@ -245,18 +260,18 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
         </div>
 
         {/* Issue Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
           {issues.map((issue) => (
             <button
               key={issue.title}
               onClick={() => handleIssueSelect(issue.title)}
-              className="bg-white rounded-[32px] shadow-[0_0_32px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 hover:scale-105 p-8 text-left cursor-pointer border-2 border-transparent hover:border-[#498dcb]/30 hover:bg-[#498dcb]/5 group"
+              className="bg-white rounded-2xl md:rounded-[32px] shadow-[0_0_16px_rgba(0,0,0,0.05)] md:shadow-[0_0_32px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 hover:scale-105 p-4 md:p-8 text-center md:text-left cursor-pointer border-2 border-transparent hover:border-[#498dcb]/30 hover:bg-[#498dcb]/5 group"
             >
-              <div className="text-4xl mb-4">{issue.icon}</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-2 font-heading group-hover:text-[#498dcb] transition-colors">
+              <div className="text-3xl md:text-4xl mb-2 md:mb-4">{issue.icon}</div>
+              <h3 className="text-base md:text-xl font-bold text-gray-800 mb-1 md:mb-2 font-heading group-hover:text-[#498dcb] transition-colors leading-tight">
                 {issue.title}
               </h3>
-              <p className="text-gray-600 text-sm font-heading">
+              <p className="text-gray-600 text-xs md:text-sm font-heading hidden md:block">
                 Click to get your free diagnostic quote →
               </p>
             </button>
@@ -277,13 +292,13 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
           aria-modal="true"
         >
           <div 
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-[600px] max-h-[90vh] overflow-y-auto relative animate-[fadeInUp_0.3s_ease-out]"
+            className="bg-white rounded-2xl md:rounded-2xl rounded-t-2xl shadow-2xl w-full max-w-[600px] max-h-[95vh] md:max-h-[90vh] overflow-y-auto relative animate-[fadeInUp_0.3s_ease-out]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={handleCloseModal}
-              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
+              className="sticky top-4 right-4 ml-auto w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10 mb-[-40px]"
               aria-label="Close modal"
             >
               <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -291,7 +306,7 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
               </svg>
             </button>
 
-            <div className="p-6 md:p-8">
+            <div className="p-4 md:p-8 pt-2">
               {!isSubmitted ? (
                 <>
                   {/* Progress Bar */}
@@ -315,8 +330,8 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
                   {/* Step 2: Contact Information */}
                   {currentStep === 2 && (
                     <div>
-                      <div className="mb-6">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-2 font-heading">
+                      <div className="mb-4 md:mb-6">
+                        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2 font-heading">
                           Let's Get You a Free Quote
                         </h2>
                         <div className="flex items-center gap-2 text-sm text-gray-600 flex-wrap">
@@ -329,12 +344,12 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
                             ✏️ Change
                           </button>
                         </div>
-                        <p className="text-gray-600 text-sm mt-2 font-heading">
+                        <p className="text-gray-600 text-sm mt-2 font-heading hidden md:block">
                           We'll call you within 24 hours to schedule your same-week diagnostic visit.
                         </p>
                       </div>
 
-                      <form className="space-y-4">
+                      <form className="space-y-3 md:space-y-4">
                         {/* Full Name */}
                         <div>
                           <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
@@ -346,7 +361,7 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
                             value={formData.fullName}
                             onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                             placeholder="John Smith"
-                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#498dcb] font-heading ${
+                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#498dcb] font-heading text-base ${
                               errors.fullName ? 'border-red-500' : 'border-gray-300'
                             }`}
                           />
@@ -366,7 +381,7 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
                             value={formData.phone}
                             onChange={handlePhoneChange}
                             placeholder="(385) 555-1234"
-                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#498dcb] font-heading ${
+                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#498dcb] font-heading text-base ${
                               errors.phone ? 'border-red-500' : 'border-gray-300'
                             }`}
                           />
@@ -386,7 +401,7 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             placeholder="john@example.com"
-                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#498dcb] font-heading ${
+                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#498dcb] font-heading text-base ${
                               errors.email ? 'border-red-500' : 'border-gray-300'
                             }`}
                           />
@@ -410,16 +425,16 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
                   {/* Step 3: Location & Details */}
                   {currentStep === 3 && (
                     <div>
-                      <div className="mb-6">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-2 font-heading">
+                      <div className="mb-4 md:mb-6">
+                        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2 font-heading">
                           Almost Done!
                         </h2>
-                        <p className="text-gray-600 text-sm font-heading">
+                        <p className="text-gray-600 text-sm font-heading hidden md:block">
                           Just need a few more details to provide an accurate quote.
                         </p>
                       </div>
 
-                      <form onSubmit={handleSubmit} className="space-y-4">
+                      <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
                         {/* City or Zip Code */}
                         <div>
                           <label htmlFor="cityOrZip" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
@@ -431,7 +446,7 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
                             value={formData.cityOrZip}
                             onChange={(e) => setFormData({ ...formData, cityOrZip: e.target.value })}
                             placeholder="Salt Lake City or 84101"
-                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#498dcb] font-heading ${
+                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#498dcb] font-heading text-base ${
                               errors.cityOrZip ? 'border-red-500' : 'border-gray-300'
                             }`}
                           />
@@ -454,8 +469,8 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
                               }
                             }}
                             placeholder="Tell us more about what's happening with your solar system..."
-                            rows={4}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#498dcb] font-heading resize-none"
+                            rows={3}
+                            className="w-full px-3 md:px-4 py-2.5 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#498dcb] font-heading resize-none text-base"
                           />
                           <p className="text-sm text-gray-500 mt-1 text-right font-heading">
                             {formData.description.length} / 500

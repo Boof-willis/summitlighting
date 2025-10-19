@@ -44,7 +44,7 @@ export default function FeatureSteps({
 
         <div className="flex flex-col md:grid md:grid-cols-2 gap-10 items-center">
           {/* Image Section - Left on desktop, top on mobile */}
-          <div className="order-1 relative h-[300px] md:h-[400px] overflow-hidden rounded-xl">
+          <div className="order-1 relative w-full h-[250px] md:h-[400px] overflow-hidden rounded-xl bg-gray-100">
             <AnimatePresence mode="wait">
               {features.map(
                 (feature, index) =>
@@ -61,6 +61,11 @@ export default function FeatureSteps({
                         src={feature.image}
                         alt={feature.title}
                         className="w-full h-full object-cover"
+                        loading="lazy"
+                        onError={(e) => {
+                          console.log('Image failed to load:', feature.image);
+                          e.currentTarget.style.display = 'none';
+                        }}
                       />
                       <div className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
                     </motion.div>
