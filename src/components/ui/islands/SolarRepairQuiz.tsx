@@ -11,6 +11,8 @@ interface FormData {
   consentGiven: boolean;
   timestamp: string;
   pageSource: string;
+  gclid: string;
+  fullUrl: string;
 }
 
 interface Errors {
@@ -36,8 +38,25 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
     description: '',
     consentGiven: false,
     timestamp: '',
-    pageSource: 'solar-repair-landing'
+    pageSource: 'solar-repair-landing',
+    gclid: '',
+    fullUrl: ''
   });
+
+  // Capture URL parameters on component mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const gclidValue = urlParams.get('gclid') || '';
+      const fullUrlValue = window.location.href;
+      
+      setFormData(prev => ({
+        ...prev,
+        gclid: gclidValue,
+        fullUrl: fullUrlValue
+      }));
+    }
+  }, []);
   
   const [errors, setErrors] = useState<Errors>({});
 
@@ -55,6 +74,12 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
     setIsModalOpen(false);
     setCurrentStep(2);
     setIsSubmitted(false);
+    
+    // Preserve gclid and fullUrl when resetting
+    const urlParams = new URLSearchParams(window.location.search);
+    const gclidValue = urlParams.get('gclid') || '';
+    const fullUrlValue = window.location.href;
+    
     setFormData({
       selectedIssue: '',
       fullName: '',
@@ -64,7 +89,9 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
       description: '',
       consentGiven: false,
       timestamp: '',
-      pageSource: 'solar-repair-landing'
+      pageSource: 'solar-repair-landing',
+      gclid: gclidValue,
+      fullUrl: fullUrlValue
     });
     setErrors({});
   };
@@ -141,6 +168,12 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
   const handleChangeIssue = () => {
     setIsModalOpen(false);
     setCurrentStep(2);
+    
+    // Preserve gclid and fullUrl when resetting
+    const urlParams = new URLSearchParams(window.location.search);
+    const gclidValue = urlParams.get('gclid') || '';
+    const fullUrlValue = window.location.href;
+    
     setFormData({
       selectedIssue: '',
       fullName: '',
@@ -150,7 +183,9 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
       description: '',
       consentGiven: false,
       timestamp: '',
-      pageSource: 'solar-repair-landing'
+      pageSource: 'solar-repair-landing',
+      gclid: gclidValue,
+      fullUrl: fullUrlValue
     });
     setErrors({});
     // Scroll to issue chooser section after modal closes
@@ -177,11 +212,9 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
         phoneClean: formData.phone.replace(/\D/g, ''),
       };
       
-      // TODO: Replace with actual GHL webhook URL
-      const GHL_WEBHOOK_URL = 'YOUR_GHL_WEBHOOK_URL_HERE';
+      // GoHighLevel webhook endpoint
+      const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/XWsWcayA7pICQzloojOk/webhook-trigger/6539b540-63f1-4261-b727-e11eceeb8609';
       
-      // Uncomment when ready to connect to GHL
-      /*
       const response = await fetch(GHL_WEBHOOK_URL, {
         method: 'POST',
         headers: { 
@@ -200,10 +233,7 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
       
       const responseData = await response.text();
       console.log('GHL webhook response:', responseData);
-      */
-      
-      // For now, just log the data
-      console.log('Lead submitted (demo mode):', submissionData);
+      console.log('Lead submitted successfully:', submissionData);
       
       setIsSubmitted(true);
       

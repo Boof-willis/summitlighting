@@ -136,15 +136,6 @@ export default function HeaderRepair() {
                 Call Now
               </a>
             </li>
-            <li>
-              <a
-                href="#cta-band"
-                onClick={(e) => handleNavClick(e, '#cta-band')}
-                className="cta-button !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] font-heading"
-              >
-                Request Repair
-              </a>
-            </li>
           </ul>
         </div>
       </div>
