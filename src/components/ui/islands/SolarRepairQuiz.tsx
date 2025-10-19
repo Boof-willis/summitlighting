@@ -476,7 +476,15 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
                             </span>
                           </label>
                           <p className="text-xs text-gray-500 mt-1 ml-8 font-heading">
-                            We respect your privacy. See our privacy policy.
+                            We respect your privacy. See our{' '}
+                            <a 
+                              href="https://www.randrsolarroofs.com/privacy-policy" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-[#498dcb] hover:underline"
+                            >
+                              privacy policy
+                            </a>.
                           </p>
                           {errors.consent && (
                             <p className="text-red-500 text-sm mt-1 ml-8 font-heading" role="alert">{errors.consent}</p>
@@ -563,12 +571,12 @@ const SolarRepairQuiz: React.FC<SolarRepairQuizProps> = ({ onIssueSelect }) => {
                     </a>
                   </div>
                   
-                  <button 
-                    onClick={handleCloseModal}
-                    className="text-gray-600 hover:text-gray-900 underline text-sm font-heading"
+                  <a 
+                    href="https://www.randrsolarroofs.com/"
+                    className="text-gray-600 hover:text-gray-900 underline text-sm font-heading inline-block"
                   >
                     Return to Homepage
-                  </button>
+                  </a>
                 </div>
               )}
             </div>
