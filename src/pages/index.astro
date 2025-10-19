@@ -394,7 +394,7 @@ const whyChooseFeatures = [
     </script>
 
     <!-- GoHighLevel Dynamic Number Tracking - Custom implementation for React/Astro -->
-    <script>
+    <script is:inline>
       // Configuration
       const STATIC_NUMBER = '(385) 539-8892';
       const STATIC_NUMBER_TEL = '+13855398892';
@@ -423,7 +423,7 @@ const whyChooseFeatures = [
             }, 3000);
           });
         } catch (error) {
-          console.log('Using static number:', error.message);
+          console.log('Using static number:', error instanceof Error ? error.message : 'Unknown error');
           return null;
         }
       }
@@ -441,27 +441,28 @@ const whyChooseFeatures = [
         const walker = document.createTreeWalker(
           document.body,
           NodeFilter.SHOW_TEXT,
-          null,
-          false
+          null
         );
         
         const nodesToReplace = [];
-        while (walker.nextNode()) {
-          const node = walker.currentNode;
-          if (node.textContent.includes(STATIC_NUMBER)) {
+        let node;
+        while ((node = walker.nextNode())) {
+          if (node.textContent && node.textContent.includes(STATIC_NUMBER)) {
             nodesToReplace.push(node);
           }
         }
         
         nodesToReplace.forEach(node => {
-          node.textContent = node.textContent.replace(new RegExp(STATIC_NUMBER, 'g'), formattedTracking);
+          if (node.textContent) {
+            node.textContent = node.textContent.replace(new RegExp(STATIC_NUMBER, 'g'), formattedTracking);
+          }
         });
         
         // Replace all tel: links
-        const telLinks = document.querySelectorAll(`a[href*="tel:"]`);
+        const telLinks = document.querySelectorAll('a[href*="tel:"]');
         telLinks.forEach(link => {
           const currentHref = link.getAttribute('href');
-          if (currentHref.includes(STATIC_NUMBER_TEL) || currentHref.includes(STATIC_NUMBER.replace(/[^0-9]/g, ''))) {
+          if (currentHref && (currentHref.includes(STATIC_NUMBER_TEL) || currentHref.includes(STATIC_NUMBER.replace(/[^0-9]/g, '')))) {
             // Extract just the tracking number digits
             const trackingDigits = formattedTracking.replace(/[^0-9]/g, '');
             link.setAttribute('href', `tel:+1${trackingDigits}`);
