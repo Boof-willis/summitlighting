@@ -3,8 +3,8 @@ import '@/styles/global.css';
 import HeaderRepair from '@/components/ui/islands/HeaderRepair';
 import FeatureSteps from '@/components/ui/islands/FeatureSteps';
 import TestimonialsColumns from '@/components/ui/islands/TestimonialsColumns';
+import SolarRepairQuiz from '@/components/ui/islands/SolarRepairQuiz';
 import HeroRepair from '@/components/ui/HeroRepair.astro';
-import IssueChooser from '@/components/ui/IssueChooser.astro';
 import PricingCard from '@/components/ui/PricingCard.astro';
 import StepsTimeline from '@/components/ui/StepsTimeline.astro';
 import FaqAccordion from '@/components/ui/FaqAccordion.astro';
@@ -100,7 +100,7 @@ const whyChooseFeatures = [
       <!-- Hero Section -->
       <HeroRepair />
 
-      <!-- Issue Chooser Section -->
+      <!-- Issue Chooser Section with Interactive Quiz -->
       <section id="issue-chooser" class="py-20 bg-white">
         <div class="max-w-[1200px] mx-auto px-8">
           <div class="text-center mb-12">
@@ -111,7 +111,7 @@ const whyChooseFeatures = [
               Click the issue that best describes your problem. We'll help you get back to generating clean energy.
             </p>
           </div>
-          <IssueChooser />
+          <SolarRepairQuiz client:load onIssueSelect={(issue: string) => console.log('Issue selected:', issue)} />
         </div>
       </section>
 
