@@ -1,6 +1,6 @@
 # 🚀 Quick Start Guide
 
-Get your Centerline Flight Training website up and running in minutes!
+Get your R&R Solar Repair website up and running in minutes!
 
 ## Step 1: Install Dependencies
 
@@ -28,18 +28,18 @@ Your site will be live at: **http://localhost:4321**
 
 ### Update Content
 
-1. **Hero Text** → `src/components/ui/islands/HeroClient.tsx`
-2. **Stats Numbers** → `src/components/ui/islands/StatsCounter.tsx`
-3. **Reviews** → `src/components/ui/islands/ReviewCarousel.tsx`
-4. **FAQs** → `src/components/ui/islands/Faq.tsx`
-5. **Footer Info** → `src/components/ui/Footer.astro`
+1. **Hero Text** → `src/components/ui/HeroRepair.astro`
+2. **Solar Quiz** → `src/components/ui/islands/SolarRepairQuiz.tsx`
+3. **Testimonials** → `src/components/ui/islands/TestimonialsColumns.tsx`
+4. **FAQs** → `src/components/ui/FaqAccordion.astro`
+5. **Footer Info** → `src/components/ui/FooterRepair.astro`
 
-### Replace Placeholder Images
+### Update Images
 
-Look for "PLACEHOLDER" text in components and replace with actual images:
-- Career cards
-- Why Us section
-- Instructor photos
+Replace images in `public/images/`:
+- Hero background
+- Feature section images
+- Logo files
 
 ## Step 4: Build for Production
 
@@ -140,5 +140,5 @@ npx astro check
 
 ---
 
-**Happy coding! ✈️**
+**Happy coding! ☀️**
 

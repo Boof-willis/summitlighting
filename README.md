@@ -1,6 +1,6 @@
-# Centerline Flight Training - Astro + Tailwind + TypeScript
+# R&R Solar Repair - Astro + Tailwind + TypeScript
 
-A modern, high-performance flight training website built with Astro, Tailwind CSS, TypeScript, and React islands for interactive components.
+A modern, high-performance solar repair landing page built with Astro, Tailwind CSS, TypeScript, and React islands for interactive components.
 
 ## 🚀 Tech Stack
 
@@ -22,20 +22,15 @@ A modern, high-performance flight training website built with Astro, Tailwind CS
 │   ├── components/
 │   │   └── ui/
 │   │       ├── islands/   # React interactive components
-│   │       │   ├── HeaderClient.tsx
-│   │       │   ├── HeroClient.tsx
-│   │       │   ├── StatsCounter.tsx
-│   │       │   ├── CareerCards.tsx
-│   │       │   ├── ReviewCarousel.tsx
-│   │       │   ├── TrainingPathway.tsx
-│   │       │   ├── AircraftShowcase.tsx
-│   │       │   └── Faq.tsx
-│   │       ├── BenefitsBar.astro
-│   │       ├── WhyUs.astro
-│   │       ├── Testimonials.astro
-│   │       ├── InstructorsFleet.astro
-│   │       ├── CtaBand.astro
-│   │       └── Footer.astro
+│   │       │   ├── HeaderRepair.tsx
+│   │       │   ├── SolarRepairQuiz.tsx
+│   │       │   ├── FeatureSteps.tsx
+│   │       │   └── TestimonialsColumns.tsx
+│   │       ├── HeroRepair.astro
+│   │       ├── PricingCard.astro
+│   │       ├── StepsTimeline.astro
+│   │       ├── FaqAccordion.astro
+│   │       └── FooterRepair.astro
 │   ├── pages/
 │   │   └── index.astro    # Main landing page
 │   └── styles/
@@ -80,12 +75,10 @@ The site will be available at `http://localhost:4321`
 
 ### Interactive Components (React Islands)
 - ✅ **Header** - Scroll-based styling and smooth navigation
-- ✅ **Hero** - Parallax background with character reveal animation
-- ✅ **Stats Counter** - Animated counting on scroll into view
-- ✅ **Career Cards** - Sticky scroll with scale animation
-- ✅ **Review Carousel** - Auto-rotating testimonials with manual controls
-- ✅ **Training Pathway** - Hover-based card expansion
-- ✅ **Aircraft Showcase** - Sticky images triggered by scroll sections
+- ✅ **Hero** - Gradient overlay with animated text reveal
+- ✅ **Solar Repair Quiz** - Multi-step lead capture form with modal
+- ✅ **Feature Steps** - Auto-rotating feature showcase with images
+- ✅ **Testimonials** - Column-based testimonial display with initials
 - ✅ **FAQ Accordion** - Expandable question/answer sections
 
 ### Performance Optimizations
@@ -141,14 +134,17 @@ Place images in the `public/` directory:
 ```
 public/
   └── images/
-      ├── logo.png
-      └── hero-bg.jpg
+      ├── logo/
+      │   ├── rrlogo.png
+      │   └── rrlogo-white.png
+      └── hero/
+          └── 67bff5403e5f1a358c998e13_fit-hero.webp
 ```
 
 Reference them in your code:
 
 ```astro
-<img src="/images/logo.png" alt="Logo" />
+<img src="/images/logo/rrlogo.png" alt="Logo" />
 ```
 
 ## 🎨 Tailwind Configuration
@@ -159,7 +155,7 @@ The project uses custom Tailwind tokens defined in `src/styles/global.css`:
 :root {
   --background: 0 0% 100%;
   --foreground: 222 84% 4%;
-  --primary: 222 84% 54%;
+  --primary: 207 57% 54%;
   --primary-foreground: 0 0% 100%;
 }
 ```
@@ -175,13 +171,14 @@ Access via Tailwind classes:
 
 ### Updating Content
 
-1. **Hero Section** - Edit `src/components/ui/islands/HeroClient.tsx`
-2. **Benefits/Stats** - Edit `src/components/ui/BenefitsBar.astro`
-3. **Career Paths** - Edit `src/components/ui/islands/CareerCards.tsx`
-4. **Training Pathway** - Edit `src/components/ui/islands/TrainingPathway.tsx`
-5. **Aircraft** - Edit `src/components/ui/islands/AircraftShowcase.tsx`
-6. **FAQ** - Edit `src/components/ui/islands/Faq.tsx`
-7. **Footer** - Edit `src/components/ui/Footer.astro`
+1. **Hero Section** - Edit `src/components/ui/HeroRepair.astro`
+2. **Solar Quiz** - Edit `src/components/ui/islands/SolarRepairQuiz.tsx`
+3. **Features** - Edit `src/components/ui/islands/FeatureSteps.tsx`
+4. **Pricing** - Edit `src/components/ui/PricingCard.astro`
+5. **Steps Timeline** - Edit `src/components/ui/StepsTimeline.astro`
+6. **Testimonials** - Edit `src/components/ui/islands/TestimonialsColumns.tsx`
+7. **FAQ** - Edit `src/components/ui/FaqAccordion.astro`
+8. **Footer** - Edit `src/components/ui/FooterRepair.astro`
 
 ### Adding New Pages
 
@@ -198,7 +195,7 @@ import '@/styles/global.css';
     <title>About Us</title>
   </head>
   <body>
-    <h1>About Centerline</h1>
+    <h1>About R&R Solar</h1>
   </body>
 </html>
 ```
@@ -234,9 +231,8 @@ npm run astro check
 
 ## 📄 License
 
-Copyright © 2024 Centerline Flight Training. All rights reserved.
+Copyright © 2025 R&R Solar. All rights reserved.
 
 ---
 
 **Built with ❤️ using Astro + Tailwind + TypeScript**
-

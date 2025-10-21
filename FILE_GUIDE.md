@@ -1,6 +1,6 @@
 # 📁 Complete File Guide
 
-Quick reference for every file in your Centerline Flight Training project.
+Quick reference for every file in your R&R Solar Repair project.
 
 ## 🎯 Configuration Files (Root)
 
@@ -10,19 +10,18 @@ Quick reference for every file in your Centerline Flight Training project.
 | `astro.config.mjs` | Astro configuration | Changing build settings |
 | `tsconfig.json` | TypeScript config with `@/*` alias | Adding new path aliases |
 | `tailwind.config.mjs` | Tailwind CSS customization | Changing colors/fonts |
-| `.prettierrc` | Code formatting rules | Code style preferences |
 | `.gitignore` | Files to exclude from git | Adding files to ignore |
 
 ## 📄 Pages (`src/pages/`)
 
 | File | Purpose | URL |
 |------|---------|-----|
-| `index.astro` | Main landing page | `/` |
+| `index.astro` | Main solar repair landing page | `/` |
 
 To add more pages, create new `.astro` files here:
 - `about.astro` → `/about`
 - `contact.astro` → `/contact`
-- `blog/index.astro` → `/blog`
+- `thank-you.astro` → `/thank-you`
 
 ## 🧩 React Islands (`src/components/ui/islands/`)
 
@@ -30,14 +29,10 @@ To add more pages, create new `.astro` files here:
 
 | Component | Feature | Hydration |
 |-----------|---------|-----------|
-| `HeaderClient.tsx` | Navigation with scroll effects | `client:load` |
-| `HeroClient.tsx` | Parallax + character reveal animation | `client:load` |
-| `StatsCounter.tsx` | Animated counting on scroll | `client:visible` |
-| `CareerCards.tsx` | Sticky scroll with scale effect | `client:visible` |
-| `ReviewCarousel.tsx` | Auto-rotating testimonials | `client:visible` |
-| `TrainingPathway.tsx` | Hover expand/contract cards | `client:visible` |
-| `AircraftShowcase.tsx` | Sticky images on scroll | `client:visible` |
-| `Faq.tsx` | Expandable accordion | `client:visible` |
+| `HeaderRepair.tsx` | Navigation with scroll effects | `client:load` |
+| `SolarRepairQuiz.tsx` | Multi-step lead capture form | `client:load` |
+| `FeatureSteps.tsx` | Auto-rotating feature showcase | `client:visible` |
+| `TestimonialsColumns.tsx` | Customer review display | `client:visible` |
 
 ### When to Edit Islands
 
@@ -51,238 +46,276 @@ To add more pages, create new `.astro` files here:
 
 | Component | Purpose | Contains |
 |-----------|---------|----------|
-| `BenefitsBar.astro` | Stats section with counter | Stats data + StatsCounter island |
-| `WhyUs.astro` | Why choose Centerline | Benefits list |
-| `Testimonials.astro` | Student testimonials | Static review cards |
-| `InstructorsFleet.astro` | Team & aircraft info | Instructor profiles + fleet specs |
-| `CtaBand.astro` | Call-to-action section | CTA buttons |
-| `Footer.astro` | Site footer | Links, contact, legal |
-
-### When to Edit Static Components
-
-- **Content updates**: Edit text directly
-- **Layout changes**: Modify HTML structure
-- **Styling**: Use Tailwind classes
+| `HeroRepair.astro` | Hero section | Hero text, CTA buttons, trust indicators |
+| `PricingCard.astro` | Pricing display | Three pricing tiers |
+| `StepsTimeline.astro` | Repair process | 4-step timeline |
+| `FaqAccordion.astro` | FAQ section | Expandable Q&A |
+| `FooterRepair.astro` | Site footer | Contact info, links, legal |
 
 ## 🎨 Styles (`src/styles/`)
 
-| File | Purpose | Contains |
+| File | Purpose | Edit For |
 |------|---------|----------|
-| `global.css` | Global styles + Tailwind | CSS variables, animations, custom classes |
+| `global.css` | Tailwind directives + custom CSS | Colors, animations, global styles |
 
-### Key Sections in global.css
+### Key CSS Classes
 
 ```css
-@tailwind base;           /* Tailwind reset */
-@tailwind components;     /* Tailwind component classes */
-@tailwind utilities;      /* Tailwind utility classes */
+/* Primary color (blue) */
+.text-\[\#498dcb\]
+.bg-\[\#498dcb\]
+.border-\[\#498dcb\]
 
-:root { ... }            /* CSS variables (design tokens) */
-@keyframes { ... }       /* Custom animations */
-.custom-class { ... }    /* Custom component styles */
+/* Buttons */
+.cta-button
+.secondary-button
+
+/* Animations */
+@keyframes fadeInUp
+@keyframes heroBackgroundZoomOut
+@keyframes charReveal
 ```
 
-## 📦 Public Assets (`public/`)
+## 📂 Public Directory (`public/`)
 
-**Static files served as-is (no processing).**
+**Static assets served directly (no processing).**
 
-| File/Folder | Purpose | Access URL |
-|-------------|---------|------------|
-| `404.html` | Custom error page | `/404.html` |
-| `robots.txt` | Search engine rules | `/robots.txt` |
-| `sitemap.xml` | Site structure for SEO | `/sitemap.xml` |
-| `favicon.svg` | Site icon | `/favicon.svg` |
+| Path | Purpose |
+|------|---------|
+| `404.html` | Custom 404 error page |
+| `robots.txt` | Search engine directives |
+| `sitemap.xml` | Site structure for SEO |
+| `favicon.svg` | Site icon (deprecated, use external) |
+| `images/logo/rrlogo.png` | Black logo |
+| `images/logo/rrlogo-white.png` | White logo |
+| `images/hero/67bff5403e5f1a358c998e13_fit-hero.webp` | Hero background |
 
-### Adding Images
+### Adding New Images
 
-```
-public/
-  └── images/
-      ├── logo.png
-      ├── hero-bg.jpg
-      └── team/
-          ├── john.jpg
-          └── lisa.jpg
-```
-
-Reference in code:
-```astro
-<img src="/images/logo.png" alt="Logo" />
-```
-
-## 📚 Documentation Files
-
-| File | Purpose | Read When... |
-|------|---------|--------------|
-| `README.md` | Full technical docs | Setting up or troubleshooting |
-| `QUICKSTART.md` | Getting started guide | First time setup |
-| `PROJECT_SUMMARY.md` | What was built | Overview of conversion |
-| `DEPLOYMENT.md` | Deploy to Cloudflare | Ready to go live |
-| `FILE_GUIDE.md` | This file! | Need to find something |
-
-## 🎯 Common Edit Scenarios
-
-### Scenario 1: Update Hero Text
-
-**File**: `src/components/ui/islands/HeroClient.tsx`
-
-```tsx
-<h1>Your Pilot Career<br />Starts Here</h1>
-```
-
-### Scenario 2: Change Stats Numbers
-
-**File**: `src/components/ui/islands/StatsCounter.tsx`
-
-```tsx
-<StatItem number="15+" label="Years of experience" />
-```
-
-### Scenario 3: Add New Review
-
-**File**: `src/components/ui/islands/ReviewCarousel.tsx`
-
-```tsx
-const reviews: Review[] = [
-  {
-    text: "New review text...",
-    author: "John Doe, Private Pilot",
-    image: "https://...",
-  },
-  // ... existing reviews
-];
-```
-
-### Scenario 4: Update FAQ
-
-**File**: `src/components/ui/islands/Faq.tsx`
-
-```tsx
-const faqs = [
-  {
-    question: "New question?",
-    answer: "New answer...",
-  },
-  // ... existing FAQs
-];
-```
-
-### Scenario 5: Change Footer Links
-
-**File**: `src/components/ui/Footer.astro`
+1. Place in `public/images/`
+2. Reference with `/images/filename.jpg`
+3. No import needed!
 
 ```astro
-<a href="#programs">Programs</a>
+<img src="/images/hero/my-image.jpg" alt="Description" />
 ```
 
-### Scenario 6: Add New Section
+## ⚙️ Configuration Details
 
-**File**: `src/pages/index.astro`
+### Astro Config (`astro.config.mjs`)
 
-```astro
-<!-- Add before Footer -->
-<section class="py-20 bg-white">
-  <div class="max-w-[1200px] mx-auto px-8">
-    <h2>New Section</h2>
-    <p>Content...</p>
-  </div>
-</section>
+```javascript
+export default defineConfig({
+  integrations: [
+    react(),        // React islands
+    tailwind()      // Tailwind CSS
+  ]
+});
 ```
 
-### Scenario 7: Update Colors
+### Tailwind Config (`tailwind.config.mjs`)
 
-**File**: `src/styles/global.css`
+```javascript
+export default {
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  theme: {
+    extend: {
+      fontFamily: {
+        heading: ['Inter', 'sans-serif'],
+        body: ['Inter', 'sans-serif']
+      }
+    }
+  }
+}
+```
 
+### TypeScript Config (`tsconfig.json`)
+
+```json
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}
+```
+
+## 📦 Key Dependencies
+
+### Production
+
+| Package | Purpose | Version |
+|---------|---------|---------|
+| `astro` | Core framework | ^4.16.7 |
+| `react` | UI library | ^18.3.1 |
+| `react-dom` | React renderer | ^18.3.1 |
+| `tailwindcss` | CSS framework | ^3.4.14 |
+| `framer-motion` | Animations | ^11.18.2 |
+| `motion` | Advanced animations | ^12.23.24 |
+| `lucide-react` | Icon library | ^0.545.0 |
+
+### Dev Dependencies
+
+| Package | Purpose |
+|---------|---------|
+| `typescript` | Type checking |
+| `@types/react` | React type definitions |
+| `@types/node` | Node.js types |
+
+## 🗂️ Component Hierarchy
+
+```
+index.astro (Main Page)
+├── HeaderRepair (React Island)
+├── HeroRepair (Astro)
+├── SolarRepairQuiz (React Island)
+├── PricingCard (Astro) × 3
+├── FeatureSteps (React Island)
+├── TestimonialsColumns (React Island)
+├── StepsTimeline (Astro)
+├── Service Area Section (Astro inline)
+├── FaqAccordion (Astro)
+└── FooterRepair (Astro)
+```
+
+## 🎬 How Components Work Together
+
+### Page Load Flow
+
+1. **SSG Build Time**
+   - Astro pre-renders all static components
+   - React islands are prepared for hydration
+   - HTML generated with minimal JS
+
+2. **Browser Load**
+   - HTML loads instantly (static content visible)
+   - React islands hydrate based on strategy:
+     - `client:load` - Immediately (Header, Quiz)
+     - `client:visible` - When scrolled into view (Features, Testimonials)
+
+3. **User Interaction**
+   - Quiz opens modal on card click
+   - Header changes style on scroll
+   - Features auto-rotate every 5 seconds
+   - FAQ items expand/collapse
+
+## 📝 Common Editing Tasks
+
+### Change Phone Number
+
+Search and replace `(385) 539-8892` across:
+- `src/components/ui/HeroRepair.astro`
+- `src/components/ui/islands/HeaderRepair.tsx`
+- `src/components/ui/FooterRepair.astro`
+- `src/pages/index.astro` (JSON-LD schema)
+
+### Update Email
+
+Search and replace `seth@randrsolarroofs.com` in:
+- `src/components/ui/FooterRepair.astro`
+- `src/pages/index.astro` (JSON-LD schema)
+
+### Change Primary Color
+
+Edit `src/styles/global.css`:
 ```css
 :root {
-  --primary: 222 84% 54%;  /* Change this HSL value */
+  --primary: 207 57% 54%;  /* Change this HSL value */
 }
 ```
 
-Or in Tailwind config:
+Then search/replace `#498dcb` and `#3a7ab5` across components.
 
-**File**: `tailwind.config.mjs`
+### Add FAQ Question
 
-```js
-colors: {
-  primary: {
-    DEFAULT: 'hsl(222, 84%, 54%)',
-  },
-}
+Edit `src/components/ui/FaqAccordion.astro`, add new accordion item in the grid.
+
+### Update Testimonials
+
+Edit `src/components/ui/islands/TestimonialsColumns.tsx`, modify the `testimonials` array.
+
+## 🚀 Build Output
+
+### Development (`npm run dev`)
+
+```
+.astro/                    # Astro cache
+node_modules/              # Dependencies
 ```
 
-### Scenario 8: Replace Placeholder Image
+### Production (`npm run build`)
 
-Search for "PLACEHOLDER" in:
-- `src/components/ui/islands/CareerCards.tsx`
-- `src/components/ui/WhyUs.astro`
-- `src/components/ui/InstructorsFleet.astro`
-
-Replace with real image URLs:
-```tsx
-<img src="/images/career-airline.jpg" alt="Airline Pilot" />
+```
+dist/                      # Optimized output
+├── index.html             # Pre-rendered page
+├── _astro/                # JS/CSS bundles
+│   ├── *.js               # React islands
+│   └── *.css              # Compiled CSS
+├── images/                # Static assets
+└── *.xml, *.txt, etc.     # Public files
 ```
 
-## 🔍 Quick File Finder
+## 📊 File Sizes (Approximate)
 
-### "Where is the..."
+| Type | Size | Notes |
+|------|------|-------|
+| HTML | ~40KB | Main page markup |
+| CSS | ~15KB | Tailwind + custom styles |
+| JS (islands) | ~100KB | React + Framer Motion |
+| Images | ~1MB | Hero + feature images |
 
-| Looking for... | File |
-|----------------|------|
-| Header/Navigation | `src/components/ui/islands/HeaderClient.tsx` |
-| Hero section | `src/components/ui/islands/HeroClient.tsx` |
-| Stats numbers | `src/components/ui/islands/StatsCounter.tsx` |
-| Career paths | `src/components/ui/islands/CareerCards.tsx` |
-| Reviews/testimonials | `src/components/ui/islands/ReviewCarousel.tsx` |
-| Training cards | `src/components/ui/islands/TrainingPathway.tsx` |
-| Aircraft info | `src/components/ui/islands/AircraftShowcase.tsx` |
-| FAQ questions | `src/components/ui/islands/Faq.tsx` |
-| Footer | `src/components/ui/Footer.astro` |
-| Colors/fonts | `tailwind.config.mjs` or `src/styles/global.css` |
-| Build settings | `astro.config.mjs` |
-| Dependencies | `package.json` |
+## 🔍 Finding Files Quickly
 
-## 🛠️ Developer Commands
+### By Feature
 
-```bash
-# Development
-npm install          # Install dependencies
-npm run dev          # Start dev server (port 4321)
-npm run build        # Build for production
-npm run preview      # Preview production build
+| Feature | Main File(s) |
+|---------|-------------|
+| Navigation | `src/components/ui/islands/HeaderRepair.tsx` |
+| Hero section | `src/components/ui/HeroRepair.astro` |
+| Lead capture | `src/components/ui/islands/SolarRepairQuiz.tsx` |
+| Pricing | `src/components/ui/PricingCard.astro`, `src/pages/index.astro` |
+| Testimonials | `src/components/ui/islands/TestimonialsColumns.tsx` |
+| FAQ | `src/components/ui/FaqAccordion.astro` |
+| Contact info | `src/components/ui/FooterRepair.astro` |
 
-# Code Quality
-npx astro check      # TypeScript type checking
-npx prettier --write .  # Format all files
+### By Type
 
-# Deployment
-git push             # Triggers Cloudflare build (if connected)
-npx wrangler pages deploy dist  # Manual deploy
-```
+| Type | Location |
+|------|----------|
+| React components | `src/components/ui/islands/*.tsx` |
+| Astro components | `src/components/ui/*.astro` |
+| Pages | `src/pages/*.astro` |
+| Styles | `src/styles/*.css` |
+| Static assets | `public/*` |
+| Config | Root `*.mjs`, `*.json` |
 
-## 📱 Project File Count
+## 💡 Pro Tips
 
-- **React Islands**: 8 files
-- **Astro Components**: 6 files
-- **Pages**: 1 file (index)
-- **Styles**: 1 file (global.css)
-- **Config**: 6 files
-- **Public Assets**: 4 files
-- **Documentation**: 5 files
+1. **Use `@/` alias** instead of `../../../` for imports
+2. **Astro components** for static content (faster)
+3. **React islands** only when interactivity needed
+4. **`client:visible`** for below-fold components
+5. **Place images in `public/`** for direct serving
 
-**Total**: ~31 files
+## 🐛 Debugging Files
+
+### Can't find component?
+- Check `src/components/ui/` (Astro)
+- Check `src/components/ui/islands/` (React)
+
+### Styles not applying?
+- Check `src/styles/global.css` for custom classes
+- Verify Tailwind classes in `tailwind.config.mjs`
+
+### Image not loading?
+- Ensure image is in `public/images/`
+- Use `/images/...` path (not `./images/`)
 
 ---
 
-## 🎯 Quick Tips
-
-1. **Always edit** `.tsx` files for interactive features
-2. **Always edit** `.astro` files for static content
-3. **Never edit** files in `dist/` (auto-generated)
-4. **Always run** `npm run build` before deploying
-5. **Always test** locally with `npm run dev` first
-
----
-
-Need to find something? Use your editor's search (Cmd/Ctrl + Shift + F) to search across all files!
-
+**Questions?** Check `README.md` or `QUICKSTART.md` for more help! ☀️

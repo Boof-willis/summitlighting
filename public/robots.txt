@@ -3,5 +3,5 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://centerlineaviationinc.com/sitemap.xml
+Sitemap: https://offers.randrsolarroofs.com/sitemap.xml
 
