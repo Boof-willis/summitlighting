@@ -57,49 +57,49 @@ export const TestimonialsColumn = (props: {
 
 const testimonials = [
   {
-    text: "R&R Solar fixed our inverter issue in just one visit. Professional, fast, and reasonably priced. Our system is back to full production.",
+    text: "Love the lights and the pricing! Summit made our home look absolutely magical this year. Best decision we made was hiring professionals instead of doing it ourselves.",
     name: "Sarah M.",
-    role: "Salt Lake City, UT",
-  },
-  {
-    text: "Had a roof leak after our original installer went out of business. R&R Solar came out quickly and fixed everything properly. No more leaks!",
-    name: "Mike J.",
-    role: "Provo, UT",
-  },
-  {
-    text: "Excellent service! They diagnosed our monitoring issue and had our app working again the same day. Highly recommend for any solar repairs.",
-    name: "Lisa C.",
-    role: "Ogden, UT",
-  },
-  {
-    text: "Our solar system stopped producing power. R&R Solar identified the problem with our optimizer and replaced it within 48 hours. Great work!",
-    name: "David R.",
-    role: "Park City, UT",
-  },
-  {
-    text: "We needed our panels removed for a roof replacement. They handled everything perfectly and coordinated with our roofer. System works better than ever!",
-    name: "Jennifer K.",
-    role: "Sandy, UT",
-  },
-  {
-    text: "Fast response for our critter damage issue. They sealed everything up and installed guards to prevent future problems. Very thorough!",
-    name: "Tom H.",
-    role: "Draper, UT",
-  },
-  {
-    text: "The diagnostic was detailed and transparent. They explained everything clearly and the repair cost was exactly as quoted. No surprises!",
-    name: "Amanda S.",
     role: "Lehi, UT",
   },
   {
-    text: "Our SolarEdge inverter was showing errors constantly. R&R Solar came out same week, diagnosed the issue, and had us back online quickly.",
-    name: "Robert M.",
+    text: "Holiday lights were installed and look awesome! The team was professional, fast, and the lights are beautiful. Plus, no storage in our garage anymore!",
+    name: "John D.",
+    role: "Orem, UT",
+  },
+  {
+    text: "These guys are awesome! From the quote to installation to takedown, everything was seamless. Our neighbors are asking who did our lights!",
+    name: "Jennifer L.",
     role: "American Fork, UT",
   },
   {
-    text: "They fixed wiring issues left by our original installer. Professional, knowledgeable, and they actually care about quality work. Highly recommended!",
+    text: "Summit Lighting made the holidays so much easier. They handled everything and our house looked amazing all season long. Will definitely use them again next year!",
+    name: "David R.",
+    role: "Highland, UT",
+  },
+  {
+    text: "We've tried doing it ourselves for years. Summit Lighting was worth every penny. Professional installation, beautiful design, and we didn't have to climb any ladders!",
+    name: "Jennifer K.",
+    role: "Pleasant Grove, UT",
+  },
+  {
+    text: "Fast, friendly, and the lights looked incredible. They came back to fix one bulb that went out and stored everything for us after the season. Great service!",
+    name: "Tom H.",
+    role: "Provo, UT",
+  },
+  {
+    text: "The quote was transparent and accurate. No hidden fees, lights looked exactly as they showed us, and the team was professional from start to finish.",
+    name: "Amanda S.",
+    role: "Lindon, UT",
+  },
+  {
+    text: "Our house was the talk of the neighborhood! Summit Lighting designed a custom display that was absolutely stunning. Can't wait for next year!",
+    name: "Robert M.",
+    role: "Spanish Fork, UT",
+  },
+  {
+    text: "Professional, reliable, and the lights were beautiful. They maintained them all season and took them down in spring. This is the way to do Christmas lights!",
     name: "Emily W.",
-    role: "Orem, UT",
+    role: "Saratoga Springs, UT",
   },
 ];
 

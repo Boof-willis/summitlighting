@@ -28,10 +28,10 @@ export default function HeaderRepair() {
       <nav className="flex justify-between items-center w-full px-8 max-w-[1200px] mx-auto relative z-[1001]">
         <div className="flex items-center gap-4">
           <div className="flex items-center">
-            <img
-              src="/images/logo/rrlogo.png"
-              alt="R&R Solar"
-              className={`h-12 w-auto ${scrolled ? '' : 'invert'}`}
+            <img 
+              src="https://static.wixstatic.com/media/9ce439_a1db304484b242b1b0e22b76abb1ff80~mv2.png/v1/fill/w_538,h_186,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Summit-Logo-White-4x.png"
+              alt="Summit Lighting Co."
+              className={`h-8 w-auto transition-all duration-300 ${scrolled ? 'brightness-0' : 'brightness-100'}`}
             />
           </div>
           <div className="w-[3px] h-6 bg-white/30 hidden md:block"></div>
@@ -66,8 +66,8 @@ export default function HeaderRepair() {
           </ul>
         </div>
         <div className="flex items-center gap-4">
-          <a href="tel:+13855398892" className="secondary-button !hidden md:!flex">
-            Call (385) 539-8892
+          <a href="tel:+18011234567" className="secondary-button !hidden md:!flex">
+            Call (801) 123-4567
           </a>
           <button
             className={`md:hidden bg-none border-none cursor-pointer flex items-center justify-start w-10 h-10 relative`}
@@ -129,11 +129,11 @@ export default function HeaderRepair() {
             </li>
             <li>
               <a
-                href="tel:+13855398892"
+                href="tel:+18011234567"
                 className="inline-flex items-center justify-center bg-[#498dcb] text-white py-4 px-12 rounded-full font-heading font-normal text-base hover:bg-[#3a7ab5] transition-colors"
                 onClick={() => window.dispatchEvent(new Event('PhoneCallClick'))}
               >
-                Call (385) 539-8892
+                Call (801) 123-4567
               </a>
             </li>
           </ul>

@@ -1,0 +1,639 @@
+"use client";
+import React, { useState, useEffect } from 'react';
+
+interface FormData {
+  selectedPropertyType: string;
+  fullName: string;
+  phone: string;
+  email: string;
+  cityOrZip: string;
+  description: string;
+  consentGiven: boolean;
+  timestamp: string;
+  pageSource: string;
+  gclid: string;
+  fullUrl: string;
+}
+
+interface Errors {
+  [key: string]: string;
+}
+
+interface ChristmasLightQuoteProps {
+  onPropertySelect: (propertyType: string) => void;
+}
+
+const ChristmasLightQuote: React.FC<ChristmasLightQuoteProps> = ({ onPropertySelect }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState(2); // Start at step 2 (step 1 is property type selection)
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  const [formData, setFormData] = useState<FormData>({
+    selectedPropertyType: '',
+    fullName: '',
+    phone: '',
+    email: '',
+    cityOrZip: '',
+    description: '',
+    consentGiven: false,
+    timestamp: '',
+    pageSource: 'christmas-lights-landing',
+    gclid: '',
+    fullUrl: ''
+  });
+
+  // Capture URL parameters on component mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const gclidValue = urlParams.get('gclid') || '';
+      const fullUrlValue = window.location.href;
+      
+      setFormData(prev => ({
+        ...prev,
+        gclid: gclidValue,
+        fullUrl: fullUrlValue
+      }));
+    }
+  }, []);
+  
+  const [errors, setErrors] = useState<Errors>({});
+
+  // Handle property type card click
+  const handlePropertySelect = (propertyType: string) => {
+    setFormData({ ...formData, selectedPropertyType: propertyType });
+    setIsModalOpen(true);
+    setCurrentStep(2);
+    setIsSubmitted(false);
+    onPropertySelect(propertyType);
+  };
+
+  // Close modal and reset
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setCurrentStep(2);
+    setIsSubmitted(false);
+    
+    // Preserve gclid and fullUrl when resetting
+    const urlParams = new URLSearchParams(window.location.search);
+    const gclidValue = urlParams.get('gclid') || '';
+    const fullUrlValue = window.location.href;
+    
+    setFormData({
+      selectedPropertyType: '',
+      fullName: '',
+      phone: '',
+      email: '',
+      cityOrZip: '',
+      description: '',
+      consentGiven: false,
+      timestamp: '',
+      pageSource: 'christmas-lights-landing',
+      gclid: gclidValue,
+      fullUrl: fullUrlValue
+    });
+    setErrors({});
+  };
+
+  // Phone number formatting
+  const formatPhoneNumber = (value: string) => {
+    const phoneNumber = value.replace(/\D/g, '');
+    
+    if (phoneNumber.length === 0) return '';
+    if (phoneNumber.length <= 3) return `(${phoneNumber}`;
+    if (phoneNumber.length <= 6) {
+      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+    }
+    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setFormData({ ...formData, phone: formatted });
+  };
+
+  // Validation functions
+  const validateStep2 = () => {
+    const newErrors: Errors = {};
+    
+    if (!formData.fullName || formData.fullName.trim().length < 2) {
+      newErrors.fullName = 'Please enter your full name';
+    }
+    
+    const phoneDigits = formData.phone.replace(/\D/g, '');
+    if (phoneDigits.length !== 10) {
+      newErrors.phone = 'Please enter a valid 10-digit phone number';
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateStep3 = () => {
+    const newErrors: Errors = {};
+    
+    if (!formData.cityOrZip || formData.cityOrZip.trim().length < 3) {
+      newErrors.cityOrZip = 'Please enter your city or zip code';
+    }
+    
+    if (!formData.consentGiven) {
+      newErrors.consent = 'Please agree to be contacted';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Step navigation
+  const handleNextStep = () => {
+    if (currentStep === 2 && validateStep2()) {
+      setCurrentStep(3);
+      setErrors({});
+    }
+  };
+
+  const handlePreviousStep = () => {
+    if (currentStep === 3) {
+      setCurrentStep(2);
+      setErrors({});
+    }
+  };
+
+  const handleChangePropertyType = () => {
+    setIsModalOpen(false);
+    setCurrentStep(2);
+    
+    // Preserve gclid and fullUrl when resetting
+    const urlParams = new URLSearchParams(window.location.search);
+    const gclidValue = urlParams.get('gclid') || '';
+    const fullUrlValue = window.location.href;
+    
+    setFormData({
+      selectedPropertyType: '',
+      fullName: '',
+      phone: '',
+      email: '',
+      cityOrZip: '',
+      description: '',
+      consentGiven: false,
+      timestamp: '',
+      pageSource: 'christmas-lights-landing',
+      gclid: gclidValue,
+      fullUrl: fullUrlValue
+    });
+    setErrors({});
+    // Scroll to property type chooser section after modal closes
+    setTimeout(() => {
+      const propertyChooser = document.getElementById('property-chooser');
+      if (propertyChooser) {
+        propertyChooser.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 300);
+  };
+
+  // Form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateStep3()) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      const submissionData = {
+        ...formData,
+        timestamp: new Date().toISOString(),
+        phoneClean: formData.phone.replace(/\D/g, ''),
+      };
+      
+      // GoHighLevel webhook endpoint (UPDATE WITH SUMMIT LIGHTING WEBHOOK)
+      const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/SUMMIT_WEBHOOK_ID/webhook-trigger/SUMMIT_TRIGGER_ID';
+      
+      const response = await fetch(GHL_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData),
+      });
+      
+      if (!response.ok) {
+        console.error('GHL webhook error:', {
+          status: response.status,
+          statusText: response.statusText,
+        });
+        throw new Error(`Webhook returned ${response.status}`);
+      }
+      
+      const responseData = await response.text();
+      console.log('GHL webhook response:', responseData);
+      console.log('Lead submitted successfully:', submissionData);
+      
+      setIsSubmitted(true);
+      
+    } catch (error) {
+      console.error('Form submission error:', error);
+      alert('Something went wrong. Please call us at (801) 123-4567');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Keyboard and click outside handlers
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        handleCloseModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
+
+  const propertyTypes = [
+    { title: "Small Home", subtitle: "1,500-2,500 sq ft", icon: "🏠", estimate: "$400-$600" },
+    { title: "Medium Home", subtitle: "2,500-3,500 sq ft", icon: "🏡", estimate: "$600-$900" },
+    { title: "Large Home", subtitle: "3,500+ sq ft", icon: "🏘️", estimate: "$900-$1,200+" },
+    { title: "Commercial Property", subtitle: "Business or storefront", icon: "🏢", estimate: "Custom Quote" },
+    { title: "HOA/Complex", subtitle: "Multiple units", icon: "🏘️", estimate: "Custom Quote" },
+    { title: "Just Browsing", subtitle: "General inquiry", icon: "💡", estimate: "Free Consult" }
+  ];
+
+  const isStep2Valid = formData.fullName.trim().length >= 2 && 
+                       formData.phone.replace(/\D/g, '').length === 10 && 
+                       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+
+  return (
+    <>
+      {/* Property Type Cards Section */}
+      <div className="mb-12" id="property-chooser">
+        {/* Interactive Indicator */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-4 py-2">
+            <span className="text-[#2563eb] text-sm font-medium font-heading">👆 Get Your Quote</span>
+            <span className="text-gray-600 text-sm font-heading">Click your property type to get started →</span>
+          </div>
+        </div>
+
+        {/* Property Type Cards Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
+          {propertyTypes.map((type) => (
+            <button
+              key={type.title}
+              onClick={() => handlePropertySelect(type.title)}
+              className="bg-white rounded-2xl md:rounded-[32px] shadow-[0_0_16px_rgba(0,0,0,0.05)] md:shadow-[0_0_32px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 hover:scale-105 p-4 md:p-8 text-center cursor-pointer border-2 border-transparent hover:border-[#2563eb]/30 hover:bg-[#2563eb]/5 group"
+            >
+              <div className="text-3xl md:text-4xl mb-2 md:mb-4">{type.icon}</div>
+              <h3 className="text-base md:text-xl font-bold text-gray-800 mb-1 md:mb-2 font-heading group-hover:text-[#2563eb] transition-colors leading-tight">
+                {type.title}
+              </h3>
+              <p className="text-gray-600 text-xs md:text-sm font-heading mb-1">
+                {type.subtitle}
+              </p>
+              <p className="text-[#2563eb] font-semibold text-sm md:text-base font-heading">
+                {type.estimate}
+              </p>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ 
+            background: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(4px)',
+          }}
+          onClick={handleCloseModal}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div 
+            className="bg-white rounded-2xl md:rounded-2xl rounded-t-2xl shadow-2xl w-full max-w-[600px] max-h-[95vh] md:max-h-[90vh] overflow-y-auto relative animate-[fadeInUp_0.3s_ease-out]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={handleCloseModal}
+              className="sticky top-4 right-4 ml-auto w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10 mb-[-40px]"
+              aria-label="Close modal"
+            >
+              <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div className="p-4 md:p-8 pt-2">
+              {!isSubmitted ? (
+                <>
+                  {/* Progress Bar */}
+                  <div className="w-full mb-6">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm text-gray-600 font-heading">Step {currentStep} of 3</span>
+                      <span className="text-sm text-gray-600 font-heading">{Math.round((currentStep / 3) * 100)}% Complete</span>
+                    </div>
+                    <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-[#2563eb] transition-all duration-300 ease-in-out"
+                        style={{ width: `${(currentStep / 3) * 100}%` }}
+                        role="progressbar"
+                        aria-valuenow={currentStep}
+                        aria-valuemin={1}
+                        aria-valuemax={3}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Step 2: Contact Information */}
+                  {currentStep === 2 && (
+                    <div>
+                      <div className="mb-4 md:mb-6">
+                        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2 font-heading">
+                          Let's Get You a Free Quote
+                        </h2>
+                        <div className="flex items-center gap-2 text-sm text-gray-600 flex-wrap">
+                          <span className="font-heading">Property Type:</span>
+                          <span className="font-medium text-[#2563eb] font-heading">{formData.selectedPropertyType}</span>
+                          <button 
+                            onClick={handleChangePropertyType}
+                            className="text-[#2563eb] hover:underline ml-2 font-heading"
+                          >
+                            ✏️ Change
+                          </button>
+                        </div>
+                        <p className="text-gray-600 text-sm mt-2 font-heading hidden md:block">
+                          We'll contact you within 24 hours with your personalized quote and available installation dates.
+                        </p>
+                      </div>
+
+                      <form className="space-y-3 md:space-y-4">
+                        {/* Full Name */}
+                        <div>
+                          <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
+                            Full Name <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            id="fullName"
+                            value={formData.fullName}
+                            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                            placeholder="John Smith"
+                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] font-heading text-base ${
+                              errors.fullName ? 'border-red-500' : 'border-gray-300'
+                            }`}
+                          />
+                          {errors.fullName && (
+                            <p className="text-red-500 text-sm mt-1 font-heading" role="alert">{errors.fullName}</p>
+                          )}
+                        </div>
+
+                        {/* Phone Number */}
+                        <div>
+                          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
+                            Phone Number <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="tel"
+                            id="phone"
+                            value={formData.phone}
+                            onChange={handlePhoneChange}
+                            placeholder="(801) 555-1234"
+                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] font-heading text-base ${
+                              errors.phone ? 'border-red-500' : 'border-gray-300'
+                            }`}
+                          />
+                          {errors.phone && (
+                            <p className="text-red-500 text-sm mt-1 font-heading" role="alert">{errors.phone}</p>
+                          )}
+                        </div>
+
+                        {/* Email */}
+                        <div>
+                          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
+                            Email <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="email"
+                            id="email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            placeholder="john@example.com"
+                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] font-heading text-base ${
+                              errors.email ? 'border-red-500' : 'border-gray-300'
+                            }`}
+                          />
+                          {errors.email && (
+                            <p className="text-red-500 text-sm mt-1 font-heading" role="alert">{errors.email}</p>
+                          )}
+                        </div>
+
+                        <button 
+                          type="button"
+                          onClick={handleNextStep}
+                          disabled={!isStep2Valid}
+                          className="w-full bg-[#2563eb] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#1d4ed8] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed font-heading min-h-[44px]"
+                        >
+                          Continue →
+                        </button>
+                      </form>
+                    </div>
+                  )}
+
+                  {/* Step 3: Location & Details */}
+                  {currentStep === 3 && (
+                    <div>
+                      <div className="mb-4 md:mb-6">
+                        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2 font-heading">
+                          Almost Done!
+                        </h2>
+                        <p className="text-gray-600 text-sm font-heading hidden md:block">
+                          Just need a few more details to provide an accurate quote.
+                        </p>
+                      </div>
+
+                      <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
+                        {/* City or Zip Code */}
+                        <div>
+                          <label htmlFor="cityOrZip" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
+                            City or Zip Code <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            id="cityOrZip"
+                            value={formData.cityOrZip}
+                            onChange={(e) => setFormData({ ...formData, cityOrZip: e.target.value })}
+                            placeholder="Provo or 84601"
+                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] font-heading text-base ${
+                              errors.cityOrZip ? 'border-red-500' : 'border-gray-300'
+                            }`}
+                          />
+                          {errors.cityOrZip && (
+                            <p className="text-red-500 text-sm mt-1 font-heading" role="alert">{errors.cityOrZip}</p>
+                          )}
+                        </div>
+
+                        {/* Brief Description */}
+                        <div>
+                          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
+                            Special Requests or Questions (Optional)
+                          </label>
+                          <textarea
+                            id="description"
+                            value={formData.description}
+                            onChange={(e) => {
+                              if (e.target.value.length <= 500) {
+                                setFormData({ ...formData, description: e.target.value });
+                              }
+                            }}
+                            placeholder="Tell us about your property, preferred colors, timeline, or any special requests..."
+                            rows={3}
+                            className="w-full px-3 md:px-4 py-2.5 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] font-heading resize-none text-base"
+                          />
+                          <p className="text-sm text-gray-500 mt-1 text-right font-heading">
+                            {formData.description.length} / 500
+                          </p>
+                        </div>
+
+                        {/* Consent Checkbox */}
+                        <div>
+                          <label className="flex items-start gap-3 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={formData.consentGiven}
+                              onChange={(e) => setFormData({ ...formData, consentGiven: e.target.checked })}
+                              className="mt-1 w-5 h-5 text-[#2563eb] border-gray-300 rounded focus:ring-[#2563eb] cursor-pointer flex-shrink-0"
+                            />
+                            <span className="text-sm text-gray-700 font-heading">
+                              I agree to receive calls/texts from Summit Lighting Co. about my quote request
+                            </span>
+                          </label>
+                          <p className="text-xs text-gray-500 mt-1 ml-8 font-heading">
+                            We respect your privacy. See our{' '}
+                            <a 
+                              href="https://summitlightingco.com/privacy-policy" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-[#2563eb] hover:underline"
+                            >
+                              privacy policy
+                            </a>.
+                          </p>
+                          {errors.consent && (
+                            <p className="text-red-500 text-sm mt-1 ml-8 font-heading" role="alert">{errors.consent}</p>
+                          )}
+                        </div>
+
+                        {/* Buttons */}
+                        <div className="flex gap-3">
+                          <button 
+                            type="button"
+                            onClick={handlePreviousStep}
+                            className="flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors font-heading min-h-[44px]"
+                          >
+                            ← Back
+                          </button>
+                          <button 
+                            type="submit"
+                            disabled={!formData.consentGiven || isSubmitting}
+                            className="flex-1 bg-[#2563eb] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#1d4ed8] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed font-heading min-h-[44px]"
+                          >
+                            {isSubmitting ? 'Submitting...' : 'Get Free Quote →'}
+                          </button>
+                        </div>
+
+                        {/* Footer Link */}
+                        <div className="text-center mt-4 pt-4 border-t border-gray-200">
+                          <p className="text-sm text-gray-600 font-heading">
+                            Need immediate help?{' '}
+                            <a href="tel:+18011234567" className="text-[#2563eb] hover:underline font-medium">
+                              Call (801) 123-4567
+                            </a>
+                          </p>
+                        </div>
+                      </form>
+                    </div>
+                  )}
+                </>
+              ) : (
+                /* Thank You State */
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-2 font-heading">
+                    Quote Request Received!
+                  </h2>
+                  
+                  <p className="text-gray-600 mb-6 font-heading">
+                    We'll review your <span className="font-medium">{formData.selectedPropertyType}</span> request and call you within 24 hours.
+                  </p>
+                  
+                  <div className="bg-gray-50 rounded-lg p-6 mb-6 text-left">
+                    <h3 className="font-semibold text-gray-900 mb-3 font-heading">What happens next:</h3>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-3">
+                        <span className="text-[#2563eb] font-semibold">1️⃣</span>
+                        <span className="text-gray-700 font-heading">We'll review your property details</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="text-[#2563eb] font-semibold">2️⃣</span>
+                        <span className="text-gray-700 font-heading">A team member will call you within 24 hours</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="text-[#2563eb] font-semibold">3️⃣</span>
+                        <span className="text-gray-700 font-heading">We'll provide your custom quote</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="text-[#2563eb] font-semibold">4️⃣</span>
+                        <span className="text-gray-700 font-heading">Schedule installation at your convenience</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <p className="text-sm font-medium text-gray-900 mb-1 font-heading">Ready to book now?</p>
+                    <a 
+                      href="tel:+18011234567" 
+                      className="text-lg font-semibold text-[#2563eb] hover:underline font-heading"
+                    >
+                      Call (801) 123-4567
+                    </a>
+                  </div>
+                  
+                  <button 
+                    onClick={handleCloseModal}
+                    className="text-gray-600 hover:text-gray-900 underline text-sm font-heading inline-block"
+                  >
+                    Close
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default ChristmasLightQuote;
+

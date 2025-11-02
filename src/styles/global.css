@@ -142,8 +142,8 @@ html {
   flex: 1;
 }
 
-/* Aircraft Showcase Image Transitions */
-.aircraft-image {
+/* Gallery Image Transitions */
+.gallery-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -152,7 +152,7 @@ html {
   transition: opacity 0.6s ease;
 }
 
-.aircraft-image.active {
+.gallery-image.active {
   opacity: 1;
   position: relative;
 }
