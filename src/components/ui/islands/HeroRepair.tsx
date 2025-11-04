@@ -59,31 +59,31 @@ export default function HeroRepair() {
     <section className="relative h-[95vh] md:h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
       {/* Parallax Container - moves background and content together */}
       <div ref={parallaxRef} className="absolute inset-0 w-full h-full" style={{ willChange: 'transform' }}>
-        {/* Background Image */}
+        {/* Mobile Background Image */}
         <div
-          className="absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1] opacity-0 scale-110"
+          className="md:hidden absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1] opacity-0 scale-110"
           style={{
             backgroundImage:
-              "url('https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/Summit%20Lighting%20Hero%20-%20Sunset.avif')",
+              "url('https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/Christmas%20Lights%20Hero.avif')",
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center 30%',
+            backgroundPosition: 'left 30%',
             animation: 'heroBackgroundZoomOut 3s cubic-bezier(0.12, 0.23, 0.5, 1) forwards',
             willChange: 'transform',
           }}
         />
         
-        {/* Gradient Overlay - Mobile */}
-        <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1] md:hidden"
+        {/* Desktop Background Image */}
+        <div
+          className="hidden md:block absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1] opacity-0 scale-110"
           style={{
-            background: 'linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3), transparent)',
-          }}
-        />
-        
-        {/* Gradient Overlay - Desktop - Dark portion extends further right */}
-        <div className="hidden md:block absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1]"
-          style={{
-            background: 'linear-gradient(to right, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0.3) 55%, transparent)',
+            backgroundImage:
+              "url('https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/4.png')",
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            animation: 'heroBackgroundZoomOut 3s cubic-bezier(0.12, 0.23, 0.5, 1) forwards',
+            willChange: 'transform',
           }}
         />
       </div>
