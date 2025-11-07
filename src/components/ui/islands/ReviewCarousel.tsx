@@ -293,7 +293,7 @@ export default function ReviewCarousel() {
 
       {/* Dots Indicator */}
       <div className="flex justify-center gap-2 items-center">
-        {reviews.map((review, index) => (
+        {reviews.map((_, index) => (
           <button
             key={index}
             type="button"

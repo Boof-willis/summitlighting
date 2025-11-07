@@ -346,7 +346,7 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
       </section>
 
       <!-- Services Section Scroll Animation Script -->
-      <script>
+      <script is:inline>
         // Scroll-based scale animation for sticky cards
         function initStickyCardAnimation(cardElement) {
           let ticking = false;
@@ -393,8 +393,11 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
           const cards = document.querySelectorAll('.career-card');
           cards.forEach((card, index) => {
             // Stagger the animation delay
-            card.style.animationDelay = `${index * 0.1}s`;
-            initStickyCardAnimation(card);
+            const htmlCard = card;
+            if (htmlCard && htmlCard.style) {
+              htmlCard.style.animationDelay = `${index * 0.1}s`;
+              initStickyCardAnimation(htmlCard);
+            }
           });
         });
       </script>
