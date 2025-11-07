@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ExpandableGalleryProps {
@@ -9,13 +9,58 @@ interface ExpandableGalleryProps {
 const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className = '' }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [autoExpandedIndex, setAutoExpandedIndex] = useState<number>(0);
+  const [isInView, setIsInView] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Intersection Observer to detect when gallery is in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsInView(entry.isIntersecting);
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (galleryRef.current) {
+      observer.observe(galleryRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-rotate every 2 seconds when in view and not paused
+  useEffect(() => {
+    if (isInView && !isPaused && selectedIndex === null) {
+      intervalRef.current = setInterval(() => {
+        setAutoExpandedIndex((prev) => (prev + 1) % images.length);
+      }, 2000);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isInView, isPaused, selectedIndex, images.length]);
 
   const openImage = (index: number) => {
     setSelectedIndex(index);
+    setIsPaused(true);
   };
 
   const closeImage = () => {
     setSelectedIndex(null);
+    setIsPaused(false);
   };
 
   const goToNext = (e: React.MouseEvent) => {
@@ -33,14 +78,30 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
   };
 
   const getFlexValue = (index: number) => {
-    if (hoveredIndex === null) {
+    // If user is hovering, use hover state
+    if (hoveredIndex !== null) {
+      return hoveredIndex === index ? 2 : 0.5;
+    }
+    // If lightbox is open, all images equal
+    if (selectedIndex !== null) {
       return 1;
     }
-    return hoveredIndex === index ? 2 : 0.5;
+    // Auto-expand the current index
+    return autoExpandedIndex === index ? 2 : 0.5;
+  };
+
+  const handleMouseEnter = (index: number) => {
+    setHoveredIndex(index);
+    setIsPaused(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredIndex(null);
+    setIsPaused(false);
   };
 
   return (
-    <div className={className}>
+    <div ref={galleryRef} className={className}>
       {/* Horizontal Expandable Gallery */}
       <div className="flex gap-2 h-96 w-full">
         {images.map((image, index) => (
@@ -50,8 +111,8 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
             style={{ flex: 1 }}
             animate={{ flex: getFlexValue(index) }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={handleMouseLeave}
             onClick={() => openImage(index)}
           >
             <img
@@ -62,7 +123,9 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
             <motion.div
               className="absolute inset-0 bg-black"
               initial={{ opacity: 0 }}
-              animate={{ opacity: hoveredIndex === index ? 0 : 0.3 }}
+              animate={{ 
+                opacity: (hoveredIndex === index || autoExpandedIndex === index) && selectedIndex === null ? 0 : 0.3 
+              }}
               transition={{ duration: 0.3 }}
             />
           </motion.div>

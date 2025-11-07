@@ -9,6 +9,7 @@ import FooterRepair from '@/components/ui/FooterRepair.astro';
 import StatsCounter from '@/components/ui/islands/StatsCounter';
 import VideoPlayer from '@/components/ui/islands/VideoPlayer';
 import ExpandableGallery from '@/components/ui/gallery-animation';
+import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
 ---
 
 <!DOCTYPE html>
@@ -112,217 +113,393 @@ import ExpandableGallery from '@/components/ui/gallery-animation';
             </p>
           </div>
           
-          <div class="grid md:grid-cols-2 gap-8">
+          <div class="flex flex-col gap-24 max-w-[1200px] mx-auto p-4">
             <!-- Residential Lighting -->
-            <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-xl transition-shadow">
-              <div class="flex items-start gap-4 mb-4">
-                <span class="text-5xl flex-shrink-0">🏡</span>
-                <div>
-                  <h3 class="text-2xl font-bold text-gray-900 mb-2 font-heading">Residential Lighting</h3>
-                  <p class="text-gray-600 font-heading">Transform your home into a holiday masterpiece with our professional Christmas light installation.</p>
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-[calc(100%+32px)] -ml-4 -mr-4 career-card">
+              <div class="career-card-grid">
+                <!-- LEFT COLUMN: Image -->
+                <div class="career-card-image">
+                  <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/hybrid%203.png" alt="Residential Christmas Light Installation" class="w-full h-full object-cover" />
+                </div>
+                
+                <!-- RIGHT COLUMN: Text Content -->
+                <div class="career-card-content">
+                  <div>
+                    <h3 class="career-card-title">Residential Lighting</h3>
+                    <p class="career-card-description">Transform your home into a holiday masterpiece with our professional Christmas light installation.</p>
+                    <ul class="career-card-features">
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Custom design consultation</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>We provide all lights & equipment</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Professional installation</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Season-long maintenance</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Free year-round storage</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Spring takedown included</span>
+                      </li>
+                    </ul>
+                    <a href="#value-proposition" class="cta-button hero-cta-button mt-6">Get in touch</a>
+                  </div>
                 </div>
               </div>
-              <ul class="space-y-2 ml-16">
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Custom design consultation</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>We provide all lights & equipment</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Professional installation</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Season-long maintenance</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Free year-round storage</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Spring takedown included</span>
-                </li>
-              </ul>
             </div>
 
             <!-- Commercial Lighting -->
-            <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-xl transition-shadow">
-              <div class="flex items-start gap-4 mb-4">
-                <span class="text-5xl flex-shrink-0">🏢</span>
-                <div>
-                  <h3 class="text-2xl font-bold text-gray-900 mb-2 font-heading">Commercial Lighting</h3>
-                  <p class="text-gray-600 font-heading">Attract customers and spread holiday cheer with professional commercial lighting displays.</p>
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-[calc(100%+32px)] -ml-4 -mr-4 career-card">
+              <div class="career-card-grid">
+                <!-- LEFT COLUMN: Image -->
+                <div class="career-card-image">
+                  <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/hybrid%202.png" alt="Commercial Christmas Light Installation" class="w-full h-full object-cover" />
+                </div>
+                
+                <!-- RIGHT COLUMN: Text Content -->
+                <div class="career-card-content">
+                  <div>
+                    <h3 class="career-card-title">Commercial Lighting</h3>
+                    <p class="career-card-description">Attract customers and spread holiday cheer with professional commercial lighting displays.</p>
+                    <ul class="career-card-features">
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Large-scale installations</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Brand-aligned color schemes</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Energy-efficient LED options</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Flexible scheduling</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Maintenance throughout season</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Professional takedown</span>
+                      </li>
+                    </ul>
+                    <a href="#value-proposition" class="cta-button hero-cta-button mt-6">Get in touch</a>
+                  </div>
                 </div>
               </div>
-              <ul class="space-y-2 ml-16">
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Large-scale installations</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Brand-aligned color schemes</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Energy-efficient LED options</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Flexible scheduling</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Maintenance throughout season</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Professional takedown</span>
-                </li>
-              </ul>
             </div>
 
             <!-- Custom Design -->
-            <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-xl transition-shadow">
-              <div class="flex items-start gap-4 mb-4">
-                <span class="text-5xl flex-shrink-0">🎨</span>
-                <div>
-                  <h3 class="text-2xl font-bold text-gray-900 mb-2 font-heading">Custom Design Service</h3>
-                  <p class="text-gray-600 font-heading">Choose from multiple color options to create the perfect holiday display for your property.</p>
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-[calc(100%+32px)] -ml-4 -mr-4 career-card">
+              <div class="career-card-grid">
+                <!-- LEFT COLUMN: Image -->
+                <div class="career-card-image">
+                  <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/hybrid%20sky.png" alt="Custom Christmas Light Design" class="w-full h-full object-cover" />
+                </div>
+                
+                <!-- RIGHT COLUMN: Text Content -->
+                <div class="career-card-content">
+                  <div>
+                    <h3 class="career-card-title">Custom Design Service</h3>
+                    <p class="career-card-description">Choose from multiple color options to create the perfect holiday display for your property.</p>
+                    <ul class="career-card-features">
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Warm white classic</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Multicolor traditional</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Cool white modern</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Custom color combinations</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Architectural accent lighting</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Tree and landscape lighting</span>
+                      </li>
+                    </ul>
+                    <a href="#value-proposition" class="cta-button hero-cta-button mt-6">Get in touch</a>
+                  </div>
                 </div>
               </div>
-              <ul class="space-y-2 ml-16">
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Warm white classic</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Multicolor traditional</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Cool white modern</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Custom color combinations</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Architectural accent lighting</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Tree and landscape lighting</span>
-                </li>
-              </ul>
             </div>
 
             <!-- Maintenance & Warranty -->
-            <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-xl transition-shadow">
-              <div class="flex items-start gap-4 mb-4">
-                <span class="text-5xl flex-shrink-0">🔧</span>
-                <div>
-                  <h3 class="text-2xl font-bold text-gray-900 mb-2 font-heading">Maintenance & Warranty</h3>
-                  <p class="text-gray-600 font-heading">Enjoy worry-free holidays with our season-long maintenance and comprehensive warranty.</p>
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-[calc(100%+32px)] -ml-4 -mr-4 career-card">
+              <div class="career-card-grid">
+                <!-- LEFT COLUMN: Image -->
+                <div class="career-card-image">
+                  <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/4.png" alt="Maintenance & Warranty Service" class="w-full h-full object-cover" />
+                </div>
+                
+                <!-- RIGHT COLUMN: Text Content -->
+                <div class="career-card-content">
+                  <div>
+                    <h3 class="career-card-title">Maintenance & Warranty</h3>
+                    <p class="career-card-description">Enjoy worry-free holidays with our season-long maintenance and comprehensive warranty.</p>
+                    <ul class="career-card-features">
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Free bulb replacement</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Repair service included</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Storm damage support</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Timer adjustments</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Annual warranty coverage</span>
+                      </li>
+                      <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>24-hour response time</span>
+                      </li>
+                    </ul>
+                    <a href="#value-proposition" class="cta-button hero-cta-button mt-6">Get in touch</a>
+                  </div>
                 </div>
               </div>
-              <ul class="space-y-2 ml-16">
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Free bulb replacement</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Repair service included</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Storm damage support</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Timer adjustments</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>Annual warranty coverage</span>
-                </li>
-                <li class="flex items-start gap-2 text-gray-700 font-heading">
-                  <span class="text-[#10b981] mt-1 flex-shrink-0">✓</span>
-                  <span>24-hour response time</span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- Services Section Scroll Animation Script -->
+      <script>
+        // Scroll-based scale animation for sticky cards
+        function initStickyCardAnimation(cardElement) {
+          let ticking = false;
 
-      <!-- Reviews Section -->
-      <TestimonialsColumns client:load />
+          const updateCardScale = () => {
+            if (!cardElement) return;
+
+            const rect = cardElement.getBoundingClientRect();
+            const cardTop = rect.top;
+            const cardHeight = rect.height;
+            const viewportHeight = window.innerHeight;
+
+            const entryPoint = viewportHeight;
+            const exitPoint = entryPoint - cardHeight;
+
+            let scale = 0.9;
+
+            if (cardTop <= entryPoint && cardTop >= exitPoint) {
+              const progress = (entryPoint - cardTop) / (entryPoint - exitPoint);
+              scale = 0.9 + 0.1 * Math.max(0, Math.min(1, progress));
+            } else if (cardTop < exitPoint) {
+              scale = 1.0;
+            }
+
+            cardElement.style.transform = `translateY(0) scale(${scale})`;
+            ticking = false;
+          };
+
+          const requestTick = () => {
+            if (!ticking) {
+              requestAnimationFrame(updateCardScale);
+              ticking = true;
+            }
+          };
+
+          window.addEventListener('scroll', requestTick, { passive: true });
+          updateCardScale();
+
+          return () => window.removeEventListener('scroll', requestTick);
+        }
+
+        // Initialize animations for all career cards
+        document.addEventListener('DOMContentLoaded', () => {
+          const cards = document.querySelectorAll('.career-card');
+          cards.forEach((card, index) => {
+            // Stagger the animation delay
+            card.style.animationDelay = `${index * 0.1}s`;
+            initStickyCardAnimation(card);
+          });
+        });
+      </script>
+
+      <!-- Review Carousel Section -->
+      <section class="py-20 bg-white">
+        <div class="max-w-[1200px] mx-auto px-8">
+          <ReviewCarousel client:visible />
+        </div>
+      </section>
+
+      <!-- How It Works Section -->
+      <section id="programs" class="py-20 bg-white">
+        <div class="max-w-[1200px] mx-auto px-8">
+          <h2 class="text-center text-[36px] sm:text-[40px] lg:text-[52px] font-medium font-heading mb-6 text-gray-800">Getting Your Utah County Home Holiday-Ready Is Easy</h2>
+          <p class="text-center max-w-[700px] mx-auto mb-12 text-lg text-gray-600 font-heading">
+            Four simple steps to a stunning holiday display
+          </p>
+          <StepsTimeline />
+          <div class="text-center mt-8">
+            <a href="#value-proposition" class="cta-button !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px]">Get Free Quote</a>
+          </div>
+        </div>
+      </section>
 
       <!-- Gallery Section -->
-      <section id="gallery" class="py-20 bg-gray-50">
+      <section id="gallery" class="py-20 bg-black">
         <div class="max-w-[1200px] mx-auto px-8">
           <div class="text-center mb-16">
-            <h2 class="text-[36px] sm:text-[40px] lg:text-[52px] font-medium font-heading mb-6 text-gray-800">
+            <h2 class="text-[36px] sm:text-[40px] lg:text-[52px] font-medium font-heading mb-6 text-white">
               Our Utah County Christmas Light Installations
             </h2>
-            <p class="text-center max-w-[700px] mx-auto mb-12 text-lg text-gray-600 font-heading">
+            <p class="text-center max-w-[700px] mx-auto mb-12 text-lg text-white/90 font-heading">
               See how we've transformed homes throughout Provo, Orem, Lehi, and beyond
             </p>
           </div>
 
-          <ExpandableGallery 
-            client:load
-            images={[
-              "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=1600&h=900&fit=crop&q=80",
-              "https://images.unsplash.com/photo-1544328103-7a1fc64e0c8e?w=1600&h=900&fit=crop&q=80",
-              "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1600&h=900&fit=crop&q=80",
-              "https://images.unsplash.com/photo-1576280331606-7c851f6c0a6b?w=1600&h=900&fit=crop&q=80",
-              "https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1600&h=900&fit=crop&q=80",
-              "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1600&h=900&fit=crop&q=80"
-            ]}
-            className="w-full"
-          />
+          <div class="overlay-sales-gallery">
+            <a href="#" class="lightbox-gallery w-inline-block" aria-label="open lightbox" aria-haspopup="dialog">
+              <script type="application/json" class="w-json" is:inline>
+                {
+                  "items": [
+                    {
+                      "type": "image",
+                      "url": "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=1600&h=900&fit=crop&q=80",
+                      "caption": "Residential Christmas Light Installation"
+                    },
+                    {
+                      "type": "image",
+                      "url": "https://images.unsplash.com/photo-1544328103-7a1fc64e0c8e?w=1600&h=900&fit=crop&q=80",
+                      "caption": "Residential Christmas Light Installation"
+                    },
+                    {
+                      "type": "image",
+                      "url": "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1600&h=900&fit=crop&q=80",
+                      "caption": "Residential Christmas Light Installation"
+                    },
+                    {
+                      "type": "image",
+                      "url": "https://images.unsplash.com/photo-1576280331606-7c851f6c0a6b?w=1600&h=900&fit=crop&q=80",
+                      "caption": "Residential Christmas Light Installation"
+                    },
+                    {
+                      "type": "image",
+                      "url": "https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1600&h=900&fit=crop&q=80",
+                      "caption": "Residential Christmas Light Installation"
+                    },
+                    {
+                      "type": "image",
+                      "url": "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1600&h=900&fit=crop&q=80",
+                      "caption": "Residential Christmas Light Installation"
+                    }
+                  ],
+                  "group": "Residential Collection"
+                }
+              </script>
+              <ExpandableGallery 
+                client:load
+                images={[
+                  "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=1600&h=900&fit=crop&q=80",
+                  "https://images.unsplash.com/photo-1544328103-7a1fc64e0c8e?w=1600&h=900&fit=crop&q=80",
+                  "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1600&h=900&fit=crop&q=80",
+                  "https://images.unsplash.com/photo-1576280331606-7c851f6c0a6b?w=1600&h=900&fit=crop&q=80",
+                  "https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1600&h=900&fit=crop&q=80",
+                  "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1600&h=900&fit=crop&q=80"
+                ]}
+                className="w-full"
+              />
+            </a>
+          </div>
 
           <div class="text-center mt-12">
-            <p class="text-gray-600 font-heading mb-6">
-              Ready to see your home featured here next year?
-            </p>
             <a 
-              href="tel:+18011234567" 
-              class="inline-flex items-center gap-3 px-8 py-4 text-lg font-semibold text-white bg-[#2563eb] hover:bg-[#1d4ed8] rounded-lg shadow-lg hover:shadow-xl transition-all"
+              href="#gallery" 
+              class="inline-flex items-center gap-2 px-8 py-4 text-lg font-semibold text-white hover:text-white/80 transition-all font-heading"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
-                <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
-              </svg>
-              <span>Call Your Local Team: (801) 123-4567</span>
+              <span>View Complete Project Gallery</span>
+              <span>→</span>
             </a>
           </div>
         </div>
       </section>
 
-      <!-- How It Works Section -->
-    <section id="programs" class="py-20 bg-white">
-      <div class="max-w-[1200px] mx-auto px-8">
-          <h2 class="text-center text-[36px] sm:text-[40px] lg:text-[52px] font-medium font-heading mb-6 text-gray-800">Getting Your Utah County Home Holiday-Ready Is Easy</h2>
-        <p class="text-center max-w-[700px] mx-auto mb-12 text-lg text-gray-600 font-heading">
-            Four simple steps to a stunning holiday display
-        </p>
-          <StepsTimeline />
-        <div class="text-center mt-8">
-            <a href="#value-proposition" class="cta-button !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px]">Get Free Quote</a>
-          </div>
-      </div>
-    </section>
+      <!-- Reviews Section -->
+      <TestimonialsColumns client:load />
 
       <!-- Service Area Section -->
       <section class="py-20 bg-white">
@@ -502,24 +679,6 @@ import ExpandableGallery from '@/components/ui/gallery-animation';
               </tr>
             </tbody>
           </table>
-        </div>
-
-        <div class="mt-12 text-center">
-          <div class="bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white rounded-xl shadow-lg p-8 max-w-3xl mx-auto">
-            <h3 class="text-2xl font-bold mb-4 font-heading">Save Time, Money & Stress</h3>
-            <p class="text-lg mb-6 font-heading opacity-90">
-              When you factor in the cost of lights, your time, storage space, and the risk of ladder accidents, professional installation just makes sense. Plus, we come back every year!
-            </p>
-            <a 
-              href="tel:+18011234567" 
-              class="inline-flex items-center gap-3 px-8 py-4 text-lg font-semibold text-[#2563eb] bg-white hover:bg-gray-50 rounded-lg shadow-lg hover:shadow-xl transition-all"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
-                <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
-              </svg>
-              <span>Get Your Free Quote: (801) 123-4567</span>
-            </a>
-      </div>
         </div>
       </div>
     </section>

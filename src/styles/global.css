@@ -1,5 +1,6 @@
-/* Google Fonts - Inter & Manrope */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
+/* Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -55,6 +56,59 @@
   will-change: transform, opacity, filter;
 }
 
+/* Hero Typography */
+.hero-eyebrow {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.hero-title {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: white;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 4.5rem;
+  }
+}
+
+.hero-subheading {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-cta-button {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.hero-reviews-stars {
+  font-size: 1.125rem;
+  letter-spacing: 0.125rem;
+  line-height: 1;
+  color: white;
+}
+
+.hero-reviews-text {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.95);
+}
+
 /* CTA Button Styles */
 .cta-button {
   position: relative;
@@ -66,8 +120,9 @@
   padding: 0 4px 0 24px;
   border: none;
   border-radius: 24px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1rem;
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -76,6 +131,7 @@
   min-height: 48px;
 }
 
+/* Arrow Icon (::after pseudo-element) */
 .cta-button::after {
   content: '→';
   display: flex;
@@ -91,6 +147,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Hover State */
 .cta-button:hover {
   background: #CCCCCC;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
@@ -105,23 +162,210 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff26;
+  background: #ffffff26; /* rgba(255, 255, 255, 0.15) */
   color: white;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border: none;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 0.875rem 2rem;
-  border-radius: 100px;
-  font-weight: 600;
+  padding: 0.875rem 2rem; /* 14px 32px */
+  border-radius: 100px; /* Fully rounded */
+  font-weight: 400;
   font-size: 1rem;
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
   line-height: 1;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .secondary-button:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Services Section - Career Cards Styling */
+/* Container for all cards */
+.career-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem; /* 24 * 0.25rem = 96px / 1.5rem = 24px, but gap-24 = 6rem */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Individual Sticky Card */
+.career-card {
+  height: auto;
+  background: white;
+  border-radius: 32px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(32px) scale(0.9);
+  padding: 1rem;
+  position: sticky;
+  top: 20px; /* Mobile: 20px from top */
+  width: calc(100% + 32px);
+  margin-left: -1rem;
+  margin-right: -1rem;
+  animation: fadeInUpCard 0.6s ease forwards;
+}
+
+/* Desktop card height */
+@media (min-width: 1024px) {
+  .career-card {
+    height: 502px;
+    top: 32px; /* Desktop: 32px from top */
+  }
+}
+
+/* Hover state */
+.career-card:hover {
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+
+/* Card Grid Layout */
+.career-card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+@media (min-width: 1024px) {
+  .career-card-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+/* Image Container */
+.career-card-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 1.2rem;
+  order: 1; /* First on mobile */
+}
+
+@media (min-width: 1024px) {
+  .career-card-image {
+    height: 100%;
+    order: 1; /* Left column on desktop */
+  }
+}
+
+.career-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content Container */
+.career-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  order: 2; /* Second on mobile */
+}
+
+@media (min-width: 1024px) {
+  .career-card-content {
+    height: 100%;
+    order: 2; /* Right column on desktop */
+  }
+}
+
+/* Typography */
+.career-card-title {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #1f2937;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .career-card-title {
+    font-size: 32px;
+  }
+}
+
+.career-card-description {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 1rem;
+  line-height: 1.625;
+  color: #4b5563;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.career-card-timeline {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 1rem;
+  color: #000000;
+  margin: 0;
+}
+
+.career-card-timeline strong {
+  font-weight: 600;
+}
+
+/* Features List */
+.career-card-features {
+  list-style: none;
+  margin: 0;
+  margin-bottom: 1rem;
+  padding: 0;
+}
+
+.career-card-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 1rem;
+  color: #374151;
+  margin-bottom: 0.75rem;
+}
+
+.career-card-features li:last-child {
+  margin-bottom: 0;
+}
+
+.career-card-features svg {
+  width: 20px;
+  height: 20px;
+  color: #000000;
+  flex-shrink: 0;
+}
+
+/* CTA Button (Card-specific styling) */
+.career-card-cta {
+  align-self: flex-start;
+  background: #F2F2F2 !important;
+  border: 1px solid #E1E1E1 !important;
+  box-shadow: none !important;
+  height: 48px !important;
+  margin-top: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .career-card-cta {
+    margin-top: auto;
+  }
+}
+
+/* Fade In Animation for Cards */
+@keyframes fadeInUpCard {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(0.9);
+  }
 }
 
 /* Smooth scrolling */
@@ -174,5 +418,38 @@ html {
 
 .faq-icon.rotated {
   transform: rotate(180deg);
+}
+
+/* Hide scrollbar for mobile carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Overlay Sales Gallery */
+.overlay-sales-gallery {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
+.lightbox-gallery {
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.lightbox-gallery:hover {
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.w-inline-block {
+  display: inline-block;
 }
 
