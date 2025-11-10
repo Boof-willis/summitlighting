@@ -34,19 +34,20 @@ export default function HeroRepair() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Split text into characters for animation
+  // Split text into characters for animation - shared charIndex for wave effect
+  let globalCharIndex = 0;
+  
   const wrapCharacters = (text: string) => {
-    let charIndex = 0;
     const baseDelay = 0.5;
-    const charDelay = 0.04;
+    const charDelay = 0.03;
 
     return text.split(' ').map((word, wordIndex) => (
-      <span key={wordIndex} className="inline-block whitespace-nowrap mr-[18px]">
+      <span key={wordIndex} className="inline-block whitespace-nowrap mr-2 md:mr-[18px]">
         {word.split('').map((char) => {
-          const delay = baseDelay + charIndex * charDelay;
-          charIndex++;
+          const delay = baseDelay + globalCharIndex * charDelay;
+          globalCharIndex++;
           return (
-            <span key={charIndex} style={{ animationDelay: `${delay}s` }}>
+            <span key={`char-${globalCharIndex}`} style={{ animationDelay: `${delay}s` }}>
               {char}
             </span>
           );
@@ -64,11 +65,12 @@ export default function HeroRepair() {
           className="md:hidden absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1] opacity-0 scale-110"
           style={{
             backgroundImage:
-              "url('https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/Christmas%20Lights%20Hero.avif')",
+              "url('https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/hybrid%203.png')",
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'left 30%',
+            backgroundPosition: 'center 20%',
             animation: 'heroBackgroundZoomOut 3s cubic-bezier(0.12, 0.23, 0.5, 1) forwards',
+            transform: 'scaleX(-1)',
             willChange: 'transform',
           }}
         />
@@ -85,6 +87,13 @@ export default function HeroRepair() {
             animation: 'heroBackgroundZoomOut 3s cubic-bezier(0.12, 0.23, 0.5, 1) forwards',
             transform: 'scaleX(-1)',
             willChange: 'transform',
+          }}
+        />
+        
+        {/* Gradient Overlay - Mobile - Dark to transparent left to right for text legibility */}
+        <div className="md:hidden absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1]"
+          style={{
+            background: 'linear-gradient(to right, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.65) 50%, rgba(0, 0, 0, 0.4) 80%, transparent 100%)',
           }}
         />
         
@@ -106,17 +115,22 @@ export default function HeroRepair() {
           </div>
 
           {/* H1 with Character Reveal */}
-          <h1 className="hero-title font-heading text-5xl md:text-7xl font-medium leading-[1.2] text-white tracking-tight mb-7">
-            {wrapCharacters('Professional Christmas')}
-            <br />
-            {wrapCharacters('Light Installation')}
-            <br />
-            {wrapCharacters('in Utah County')}
+          <h1 className="hero-title font-heading text-4xl md:text-7xl font-medium leading-[1.2] text-white tracking-tight mb-7">
+            {(() => {
+              globalCharIndex = 0; // Reset for each render
+              return (
+                <>
+                  {wrapCharacters("Utah County's Most")}
+                  <br />
+                  {wrapCharacters('Trusted Christmas Light Installation')}
+                </>
+              );
+            })()}
           </h1>
 
           {/* Subheading */}
           <h2 className="font-heading text-base leading-6 text-white/90 font-normal mb-10 max-w-[620px] opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.9s_forwards]">
-            We Install, Maintain, Store & Return Your Lights Every Year
+            Commercial-grade lights included. Professional design, installation, and takedown with free year-round storage.
           </h2>
 
           {/* Buttons */}
@@ -125,9 +139,9 @@ export default function HeroRepair() {
               href="#value-proposition" 
               className="cta-button hero-cta-button"
             >
-              Get Your Free Quote
+              Get Free Quote
             </a>
-            <a href="#gallery" className="secondary-button hero-cta-button">
+            <a href="#gallery" className="secondary-button hero-cta-button !hidden md:!inline-flex">
               View Our Work
             </a>
           </div>
@@ -136,7 +150,7 @@ export default function HeroRepair() {
           <div className="mt-8 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_1.3s_forwards]">
             <div className="flex flex-col gap-1 pl-4 py-2 border-l-[3px] border-white/80">
               <div className="hero-reviews-stars pb-5">★★★★★</div>
-              <div className="hero-reviews-text font-heading">5-Star Google Reviews • Professional Team • Free Year-Round Storage</div>
+              <div className="hero-reviews-text font-heading">5-Star Google Reviews • Fully Insured • Free Year-Round Storage</div>
             </div>
           </div>
         </div>

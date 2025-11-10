@@ -86,16 +86,17 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
           <div class="flex flex-col lg:flex-row gap-12 lg:gap-[100px] items-center justify-center w-full h-min p-0 mb-16 relative overflow-hidden">
             <div class="text-left">
               <h2 class="font-heading text-[24px] md:text-[32px] font-normal leading-[1.3] text-gray-800 mb-6">
-                Professional installation you can trust. 
-                <span class="text-gray-500">All lights included, free storage, and we handle everything from design to takedown. Transparent pricing with no hidden fees.</span>
+                Professional installation with all lights included. 
+                <span class="text-gray-500">We handle everything from design to takedown, plus free year-round storage. Transparent pricing, zero hassle.</span>
               </h2>
             </div>
-            <VideoPlayer 
-              client:load
-              videoSrc="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/videos/summit-lighting-installation.mp4"
-              thumbnailSrc="/images/hero/u3539228692_christmas_lights_--ar_169_--v_7_1df52ede-c437-45ee-83d7-4cfff732fa1f.png"
-              alt="Summit Lighting Co. professional Christmas light installation in Utah County"
-            />
+            <div class="rounded-[16px] overflow-hidden w-full md:w-[408px] h-[245px] flex-shrink-0">
+              <img 
+                src="/images/hero/u3539228692_christmas_lights_--ar_169_--v_7_1df52ede-c437-45ee-83d7-4cfff732fa1f.png"
+                alt="Summit Lighting Co. professional Christmas light installation in Utah County"
+                class="w-full h-full object-cover"
+              />
+            </div>
           </div>
           <StatsCounter client:visible />
         </div>
@@ -112,236 +113,244 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
               Professional lighting solutions for every property in Utah County
             </p>
           </div>
-          
-          <div class="flex flex-col gap-24 max-w-[1200px] mx-auto p-4">
+        </div>
+        
+        <div class="flex flex-col gap-24 max-w-[1200px] mx-auto">
             <!-- Residential Lighting -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-[calc(100%+32px)] -ml-4 -mr-4 career-card">
-              <div class="career-card-grid">
-                <!-- LEFT COLUMN: Image -->
-                <div class="career-card-image">
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-full career-card">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
+                <!-- Image Column -->
+                <div class="w-full h-[200px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
                   <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/hybrid%203.png" alt="Residential Christmas Light Installation" class="w-full h-full object-cover" />
                 </div>
                 
-                <!-- RIGHT COLUMN: Text Content -->
-                <div class="career-card-content">
+                <!-- Content Column -->
+                <div class="flex flex-col justify-between gap-4 py-2 lg:h-full">
                   <div>
-                    <h3 class="career-card-title">Residential Lighting</h3>
-                    <p class="career-card-description">Transform your home into a holiday masterpiece with our professional Christmas light installation.</p>
-                    <ul class="career-card-features">
-                      <li>
+                    <div class="flex items-center gap-3 mb-4">
+                      <h3 class="text-[24px] lg:text-[32px] font-medium text-gray-800 m-0 font-heading">Residential Lighting</h3>
+                    </div>
+                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Transform your home into a holiday masterpiece with our professional Christmas light installation.</p>
+                    <ul class="list-none m-0 mb-4 space-y-3">
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Custom design consultation</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>We provide all lights & equipment</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Professional installation</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Season-long maintenance</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Free year-round storage</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Spring takedown included</span>
                       </li>
                     </ul>
-                    <a href="#value-proposition" class="cta-button hero-cta-button mt-6">Get in touch</a>
                   </div>
+                  <a href="#value-proposition" class="cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
                 </div>
               </div>
             </div>
 
             <!-- Commercial Lighting -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-[calc(100%+32px)] -ml-4 -mr-4 career-card">
-              <div class="career-card-grid">
-                <!-- LEFT COLUMN: Image -->
-                <div class="career-card-image">
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-full career-card">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
+                <!-- Image Column -->
+                <div class="w-full h-[200px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
                   <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/hybrid%202.png" alt="Commercial Christmas Light Installation" class="w-full h-full object-cover" />
                 </div>
                 
-                <!-- RIGHT COLUMN: Text Content -->
-                <div class="career-card-content">
+                <!-- Content Column -->
+                <div class="flex flex-col justify-between gap-4 py-2 lg:h-full">
                   <div>
-                    <h3 class="career-card-title">Commercial Lighting</h3>
-                    <p class="career-card-description">Attract customers and spread holiday cheer with professional commercial lighting displays.</p>
-                    <ul class="career-card-features">
-                      <li>
+                    <div class="flex items-center gap-3 mb-4">
+                      <h3 class="text-[24px] lg:text-[32px] font-medium text-gray-800 m-0 font-heading">Commercial Lighting</h3>
+                    </div>
+                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Attract customers and spread holiday cheer with professional commercial lighting displays.</p>
+                    <ul class="list-none m-0 mb-4 space-y-3">
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Large-scale installations</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Brand-aligned color schemes</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Energy-efficient LED options</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Flexible scheduling</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Maintenance throughout season</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Professional takedown</span>
                       </li>
                     </ul>
-                    <a href="#value-proposition" class="cta-button hero-cta-button mt-6">Get in touch</a>
                   </div>
+                  <a href="#value-proposition" class="cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
                 </div>
               </div>
             </div>
 
             <!-- Custom Design -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-[calc(100%+32px)] -ml-4 -mr-4 career-card">
-              <div class="career-card-grid">
-                <!-- LEFT COLUMN: Image -->
-                <div class="career-card-image">
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-full career-card">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
+                <!-- Image Column -->
+                <div class="w-full h-[200px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
                   <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/hybrid%20sky.png" alt="Custom Christmas Light Design" class="w-full h-full object-cover" />
                 </div>
                 
-                <!-- RIGHT COLUMN: Text Content -->
-                <div class="career-card-content">
+                <!-- Content Column -->
+                <div class="flex flex-col justify-between gap-4 py-2 lg:h-full">
                   <div>
-                    <h3 class="career-card-title">Custom Design Service</h3>
-                    <p class="career-card-description">Choose from multiple color options to create the perfect holiday display for your property.</p>
-                    <ul class="career-card-features">
-                      <li>
+                    <div class="flex items-center gap-3 mb-4">
+                      <h3 class="text-[24px] lg:text-[32px] font-medium text-gray-800 m-0 font-heading">Custom Design Service</h3>
+                    </div>
+                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Choose from multiple color options to create the perfect holiday display for your property.</p>
+                    <ul class="list-none m-0 mb-4 space-y-3">
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Warm white classic</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Multicolor traditional</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Cool white modern</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Custom color combinations</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Architectural accent lighting</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Tree and landscape lighting</span>
                       </li>
                     </ul>
-                    <a href="#value-proposition" class="cta-button hero-cta-button mt-6">Get in touch</a>
                   </div>
+                  <a href="#value-proposition" class="cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
                 </div>
               </div>
             </div>
 
             <!-- Maintenance & Warranty -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-[calc(100%+32px)] -ml-4 -mr-4 career-card">
-              <div class="career-card-grid">
-                <!-- LEFT COLUMN: Image -->
-                <div class="career-card-image">
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-full career-card">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
+                <!-- Image Column -->
+                <div class="w-full h-[200px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
                   <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/4.png" alt="Maintenance & Warranty Service" class="w-full h-full object-cover" />
                 </div>
                 
-                <!-- RIGHT COLUMN: Text Content -->
-                <div class="career-card-content">
+                <!-- Content Column -->
+                <div class="flex flex-col justify-between gap-4 py-2 lg:h-full">
                   <div>
-                    <h3 class="career-card-title">Maintenance & Warranty</h3>
-                    <p class="career-card-description">Enjoy worry-free holidays with our season-long maintenance and comprehensive warranty.</p>
-                    <ul class="career-card-features">
-                      <li>
+                    <div class="flex items-center gap-3 mb-4">
+                      <h3 class="text-[24px] lg:text-[32px] font-medium text-gray-800 m-0 font-heading">Maintenance & Warranty</h3>
+                    </div>
+                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Enjoy worry-free holidays with our season-long maintenance and comprehensive warranty.</p>
+                    <ul class="list-none m-0 mb-4 space-y-3">
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Free bulb replacement</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Repair service included</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Storm damage support</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Timer adjustments</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Annual warranty coverage</span>
                       </li>
-                      <li>
+                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>24-hour response time</span>
                       </li>
                     </ul>
-                    <a href="#value-proposition" class="cta-button hero-cta-button mt-6">Get in touch</a>
                   </div>
+                  <a href="#value-proposition" class="cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </section>
 
@@ -424,50 +433,68 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
       </section>
 
       <!-- Gallery Section -->
-      <section id="gallery" class="py-20 bg-black">
-        <div class="max-w-[1200px] mx-auto px-8">
+      <section id="gallery" class="py-20 relative overflow-hidden" style="
+        background: linear-gradient(135deg, 
+          rgba(255, 180, 180, 0.6) 0%, 
+          rgba(255, 200, 200, 0.5) 12%,
+          rgba(255, 255, 255, 0.75) 20%,
+          rgba(200, 255, 200, 0.5) 40%, 
+          rgba(255, 255, 255, 0.75) 55%,
+          rgba(200, 200, 255, 0.5) 70%, 
+          rgba(255, 255, 255, 0.75) 85%,
+          rgba(255, 180, 180, 0.6) 100%);
+        background-size: 200% 200%;
+        animation: gradientShift 15s ease infinite;
+      ">
+        <style>
+          @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+          }
+        </style>
+        <div class="max-w-[1200px] mx-auto px-8 relative z-10">
           <div class="text-center mb-16">
-            <h2 class="text-[36px] sm:text-[40px] lg:text-[52px] font-medium font-heading mb-6 text-white">
+            <h2 class="text-[36px] sm:text-[40px] lg:text-[52px] font-medium font-heading mb-6 text-black">
               Our Utah County Christmas Light Installations
             </h2>
-            <p class="text-center max-w-[700px] mx-auto mb-12 text-lg text-white/90 font-heading">
+            <p class="text-center max-w-[700px] mx-auto mb-12 text-lg text-gray-700 font-heading">
               See how we've transformed homes throughout Provo, Orem, Lehi, and beyond
             </p>
           </div>
 
           <div class="overlay-sales-gallery">
-            <a href="#" class="lightbox-gallery w-inline-block" aria-label="open lightbox" aria-haspopup="dialog">
+            <div class="lightbox-gallery w-inline-block" aria-label="open lightbox" aria-haspopup="dialog">
               <script type="application/json" class="w-json" is:inline>
                 {
                   "items": [
                     {
                       "type": "image",
-                      "url": "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=1600&h=900&fit=crop&q=80",
+                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/12_converted.avif",
                       "caption": "Residential Christmas Light Installation"
                     },
                     {
                       "type": "image",
-                      "url": "https://images.unsplash.com/photo-1544328103-7a1fc64e0c8e?w=1600&h=900&fit=crop&q=80",
+                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/10_converted.avif",
                       "caption": "Residential Christmas Light Installation"
                     },
                     {
                       "type": "image",
-                      "url": "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1600&h=900&fit=crop&q=80",
+                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/11_converted.avif",
                       "caption": "Residential Christmas Light Installation"
                     },
                     {
                       "type": "image",
-                      "url": "https://images.unsplash.com/photo-1576280331606-7c851f6c0a6b?w=1600&h=900&fit=crop&q=80",
+                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/3_converted.avif",
                       "caption": "Residential Christmas Light Installation"
                     },
                     {
                       "type": "image",
-                      "url": "https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1600&h=900&fit=crop&q=80",
+                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/4_converted.avif",
                       "caption": "Residential Christmas Light Installation"
                     },
                     {
                       "type": "image",
-                      "url": "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1600&h=900&fit=crop&q=80",
+                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/5_converted.avif",
                       "caption": "Residential Christmas Light Installation"
                     }
                   ],
@@ -477,22 +504,22 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
               <ExpandableGallery 
                 client:load
                 images={[
-                  "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=1600&h=900&fit=crop&q=80",
-                  "https://images.unsplash.com/photo-1544328103-7a1fc64e0c8e?w=1600&h=900&fit=crop&q=80",
-                  "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1600&h=900&fit=crop&q=80",
-                  "https://images.unsplash.com/photo-1576280331606-7c851f6c0a6b?w=1600&h=900&fit=crop&q=80",
-                  "https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1600&h=900&fit=crop&q=80",
-                  "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1600&h=900&fit=crop&q=80"
+                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/12_converted.avif",
+                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/10_converted.avif",
+                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/11_converted.avif",
+                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/3_converted.avif",
+                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/4_converted.avif",
+                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/5_converted.avif"
                 ]}
                 className="w-full"
               />
-            </a>
+            </div>
           </div>
 
           <div class="text-center mt-12">
             <a 
               href="#gallery" 
-              class="inline-flex items-center gap-2 px-8 py-4 text-lg font-semibold text-white hover:text-white/80 transition-all font-heading"
+              class="inline-flex items-center gap-2 px-8 py-4 text-lg font-semibold text-black hover:text-gray-700 transition-all font-heading"
             >
               <span>View Complete Project Gallery</span>
               <span>→</span>
@@ -583,9 +610,9 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
       </div>
     </section>
 
-    <!-- DIY vs Professional Comparison Section -->
-    <section id="diy-comparison" class="py-20 bg-gray-50">
-      <div class="max-w-[1200px] mx-auto px-8">
+      <!-- DIY vs Professional Comparison Section -->
+      <section id="diy-comparison" class="py-20 bg-gray-50">
+        <div class="max-w-full md:max-w-[1200px] mx-auto px-0 md:px-8">
         <div class="text-center mb-16">
           <h2 class="text-[36px] sm:text-[40px] lg:text-[52px] font-medium font-heading mb-6 text-gray-800">
             DIY vs Professional Installation
@@ -595,93 +622,97 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
           </p>
         </div>
 
-        <div class="overflow-x-auto">
-          <table class="w-full bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="relative pt-6 pb-16 px-2 md:px-0">
+          <div class="px-4 md:px-6 py-4 md:py-0 pb-8 overflow-x-auto">
+            <table class="w-full bg-[#FAFAFA] rounded-xl overflow-hidden" style="box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.15), 0 5px 15px -4px rgba(0, 0, 0, 0.1);">
             <thead>
-              <tr class="bg-gradient-to-r from-[#2563eb] to-[#1d4ed8]">
-                <th class="px-6 py-4 text-left text-white font-heading text-lg">Feature</th>
-                <th class="px-6 py-4 text-center text-white font-heading text-lg">DIY Installation</th>
-                <th class="px-6 py-4 text-center text-white font-heading text-lg">Summit Lighting Co.</th>
+              <tr class="bg-gradient-to-r from-[#1E40AF] to-[#1d4ed8]">
+                <th class="px-2 md:px-6 py-3 md:py-4 text-center text-white font-heading text-xs md:text-lg">Feature</th>
+                <th class="px-2 md:px-6 py-3 md:py-4 text-center text-white font-heading text-xs md:text-lg">DIY</th>
+                <th class="px-2 md:px-6 py-3 md:py-4 text-center text-white font-heading text-xs md:text-lg" id="summit-header">
+                  Summit Lighting Co.
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-4 font-semibold text-gray-900 font-heading">Cost of Lights</td>
-                <td class="px-6 py-4 text-center text-gray-600 font-heading">$300-$1,000+</td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 text-[#10b981] font-semibold font-heading">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <tr class="border-b border-[#E5E7EB] group hover:bg-gray-100 transition-colors">
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center font-semibold text-gray-900 font-heading text-xs md:text-base align-middle">Cost of Lights</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#6B7280] font-heading text-xs md:text-base align-middle">$300-$1,000+</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center bg-[#F0FDF4] group-hover:bg-green-100 transition-colors align-middle">
+                  <span class="inline-flex items-center justify-center gap-1 md:gap-2 text-[#10b981] font-semibold font-heading text-xs md:text-base">
+                    <svg class="w-3 h-3 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                     Included
                   </span>
                 </td>
               </tr>
-              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-4 font-semibold text-gray-900 font-heading">Installation Time</td>
-                <td class="px-6 py-4 text-center text-gray-600 font-heading">8-16 hours</td>
-                <td class="px-6 py-4 text-center text-[#10b981] font-semibold font-heading">2-4 hours</td>
+              <tr class="border-b border-[#E5E7EB] group hover:bg-gray-100 transition-colors">
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center font-semibold text-gray-900 font-heading text-xs md:text-base align-middle">Installation Time</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#6B7280] font-heading text-xs md:text-base align-middle">8-16 hours</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#10b981] font-semibold font-heading bg-[#F0FDF4] group-hover:bg-green-100 transition-colors text-xs md:text-base align-middle">2-4 hours</td>
               </tr>
-              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-4 font-semibold text-gray-900 font-heading">Safety Risk</td>
-                <td class="px-6 py-4 text-center text-red-600 font-semibold font-heading">High (ladders/roofs)</td>
-                <td class="px-6 py-4 text-center text-[#10b981] font-semibold font-heading">Fully Insured</td>
+              <tr class="border-b border-[#E5E7EB] group hover:bg-gray-100 transition-colors">
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center font-semibold text-gray-900 font-heading text-xs md:text-base align-middle">Safety Risk</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#6B7280] font-heading text-xs md:text-base align-middle">High (ladders/roofs)</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#10b981] font-semibold font-heading bg-[#F0FDF4] group-hover:bg-green-100 transition-colors text-xs md:text-base align-middle">Fully Insured</td>
               </tr>
-              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-4 font-semibold text-gray-900 font-heading">Maintenance</td>
-                <td class="px-6 py-4 text-center text-gray-600 font-heading">You handle repairs</td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 text-[#10b981] font-semibold font-heading">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <tr class="border-b border-[#E5E7EB] group hover:bg-gray-100 transition-colors">
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center font-semibold text-gray-900 font-heading text-xs md:text-base align-middle">Maintenance</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#6B7280] font-heading text-xs md:text-base align-middle">You handle repairs</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center bg-[#F0FDF4] group-hover:bg-green-100 transition-colors align-middle">
+                  <span class="inline-flex items-center justify-center gap-1 md:gap-2 text-[#10b981] font-semibold font-heading text-xs md:text-base">
+                    <svg class="w-3 h-3 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                     Free All Season
                   </span>
                 </td>
               </tr>
-              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-4 font-semibold text-gray-900 font-heading">Storage</td>
-                <td class="px-6 py-4 text-center text-gray-600 font-heading">Takes garage space</td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 text-[#10b981] font-semibold font-heading">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <tr class="border-b border-[#E5E7EB] group hover:bg-gray-100 transition-colors">
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center font-semibold text-gray-900 font-heading text-xs md:text-base align-middle">Storage</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#6B7280] font-heading text-xs md:text-base align-middle">Takes garage space</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center bg-[#F0FDF4] group-hover:bg-green-100 transition-colors align-middle">
+                  <span class="inline-flex items-center justify-center gap-1 md:gap-2 text-[#10b981] font-semibold font-heading text-xs md:text-base">
+                    <svg class="w-3 h-3 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                     Free Year-Round
                   </span>
                 </td>
               </tr>
-              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-4 font-semibold text-gray-900 font-heading">Takedown</td>
-                <td class="px-6 py-4 text-center text-gray-600 font-heading">Another full day</td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 text-[#10b981] font-semibold font-heading">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <tr class="border-b border-[#E5E7EB] group hover:bg-gray-100 transition-colors">
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center font-semibold text-gray-900 font-heading text-xs md:text-base align-middle">Takedown</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#6B7280] font-heading text-xs md:text-base align-middle">Another full day</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center bg-[#F0FDF4] group-hover:bg-green-100 transition-colors align-middle">
+                  <span class="inline-flex items-center justify-center gap-1 md:gap-2 text-[#10b981] font-semibold font-heading text-xs md:text-base">
+                    <svg class="w-3 h-3 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                     Included
                   </span>
                 </td>
               </tr>
-              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-4 font-semibold text-gray-900 font-heading">Professional Design</td>
-                <td class="px-6 py-4 text-center text-gray-600 font-heading">DIY guess work</td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-2 text-[#10b981] font-semibold font-heading">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <tr class="border-b border-[#E5E7EB] group hover:bg-gray-100 transition-colors">
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center font-semibold text-gray-900 font-heading text-xs md:text-base align-middle">Professional Design</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#6B7280] font-heading text-xs md:text-base align-middle">DIY guess work</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center bg-[#F0FDF4] group-hover:bg-green-100 transition-colors align-middle">
+                  <span class="inline-flex items-center justify-center gap-1 md:gap-2 text-[#10b981] font-semibold font-heading text-xs md:text-base">
+                    <svg class="w-3 h-3 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                     Expert Consultation
                   </span>
                 </td>
               </tr>
-              <tr class="hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-4 font-semibold text-gray-900 font-heading">Light Quality</td>
-                <td class="px-6 py-4 text-center text-gray-600 font-heading">Consumer grade</td>
-                <td class="px-6 py-4 text-center text-[#10b981] font-semibold font-heading">Commercial LED</td>
+              <tr class="group hover:bg-gray-100 transition-colors">
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center font-semibold text-gray-900 font-heading text-xs md:text-base align-middle">Light Quality</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#6B7280] font-heading text-xs md:text-base align-middle">Consumer grade</td>
+                <td class="px-2 md:px-6 py-3 md:py-7 text-center text-[#10b981] font-semibold font-heading bg-[#F0FDF4] group-hover:bg-green-100 transition-colors text-xs md:text-base align-middle">Commercial LED</td>
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </section>

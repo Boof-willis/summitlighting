@@ -10,10 +10,25 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [autoExpandedIndex, setAutoExpandedIndex] = useState<number>(0);
+  const [currentMobileIndex, setCurrentMobileIndex] = useState<number>(0);
   const [isInView, setIsInView] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const thumbnailContainerRef = useRef<HTMLDivElement>(null);
+
+  // Detect mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Intersection Observer to detect when gallery is in view
   useEffect(() => {
@@ -33,12 +48,16 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
     return () => observer.disconnect();
   }, []);
 
-  // Auto-rotate every 2 seconds when in view and not paused
+  // Auto-rotate every 3 seconds when in view and not paused
   useEffect(() => {
     if (isInView && !isPaused && selectedIndex === null) {
       intervalRef.current = setInterval(() => {
-        setAutoExpandedIndex((prev) => (prev + 1) % images.length);
-      }, 2000);
+        if (isMobile) {
+          setCurrentMobileIndex((prev) => (prev + 1) % images.length);
+        } else {
+          setAutoExpandedIndex((prev) => (prev + 1) % images.length);
+        }
+      }, 3000);
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -51,16 +70,63 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
         clearInterval(intervalRef.current);
       }
     };
-  }, [isInView, isPaused, selectedIndex, images.length]);
+  }, [isInView, isPaused, selectedIndex, images.length, isMobile]);
+
+  // Cleanup: restore body scroll when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedIndex !== null) {
+        closeImage();
+      }
+    };
+
+    if (selectedIndex !== null) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [selectedIndex]);
+
+  // Scroll to center the selected thumbnail on mobile
+  useEffect(() => {
+    if (isMobile && thumbnailContainerRef.current) {
+      const container = thumbnailContainerRef.current;
+      const thumbnail = container.children[currentMobileIndex] as HTMLElement;
+      if (thumbnail) {
+        const containerWidth = container.offsetWidth;
+        const thumbnailLeft = thumbnail.offsetLeft;
+        const thumbnailWidth = thumbnail.offsetWidth;
+        const scrollPosition = thumbnailLeft - (containerWidth / 2) + (thumbnailWidth / 2);
+        
+        container.scrollTo({
+          left: scrollPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [currentMobileIndex, isMobile]);
 
   const openImage = (index: number) => {
     setSelectedIndex(index);
     setIsPaused(true);
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
   };
 
   const closeImage = () => {
     setSelectedIndex(null);
     setIsPaused(false);
+    // Restore body scroll when modal is closed
+    document.body.style.overflow = '';
   };
 
   const goToNext = (e: React.MouseEvent) => {
@@ -100,63 +166,136 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
     setIsPaused(false);
   };
 
+  const handleThumbnailClick = (index: number) => {
+    setCurrentMobileIndex(index);
+    setIsPaused(true);
+    // Resume auto-rotation after 3 seconds
+    setTimeout(() => setIsPaused(false), 3000);
+  };
+
   return (
     <div ref={galleryRef} className={className}>
-      {/* Horizontal Expandable Gallery */}
-      <div className="flex gap-2 h-96 w-full">
-        {images.map((image, index) => (
+      {/* Mobile Gallery - Main Image + Thumbnails */}
+      {isMobile ? (
+        <div className="flex flex-col gap-4">
+          {/* Main Image */}
           <motion.div
-            key={index}
-            className="relative cursor-pointer overflow-hidden rounded-md"
-            style={{ flex: 1 }}
-            animate={{ flex: getFlexValue(index) }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
-            onClick={() => openImage(index)}
+            className="w-full aspect-[4/3] rounded-lg overflow-hidden cursor-pointer"
+            onClick={() => openImage(currentMobileIndex)}
           >
-            <img
-              src={image}
-              alt={`Gallery image ${index + 1}`}
+            <motion.img
+              key={currentMobileIndex}
+              src={images[currentMobileIndex]}
+              alt={`Gallery image ${currentMobileIndex + 1}`}
               className="w-full h-full object-cover"
-            />
-            <motion.div
-              className="absolute inset-0 bg-black"
               initial={{ opacity: 0 }}
-              animate={{ 
-                opacity: (hoveredIndex === index || autoExpandedIndex === index) && selectedIndex === null ? 0 : 0.3 
-              }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             />
           </motion.div>
-        ))}
-      </div>
 
-      {/* Expanded View Modal */}
+          {/* Thumbnail Strip */}
+          <div
+            ref={thumbnailContainerRef}
+            className="flex gap-2 overflow-x-auto scrollbar-hide py-2 px-1"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch'
+            }}
+          >
+            {images.map((image, index) => (
+              <motion.div
+                key={index}
+                className={`relative flex-shrink-0 w-20 h-20 rounded-md overflow-hidden cursor-pointer transition-all ${
+                  currentMobileIndex === index ? 'ring-2 ring-blue-500 ring-offset-2' : 'opacity-60'
+                }`}
+                onClick={() => handleThumbnailClick(index)}
+                whileTap={{ scale: 0.95 }}
+              >
+                <img
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        /* Desktop Gallery - Horizontal Expandable */
+        <div className="flex gap-2 h-96 w-full">
+          {images.map((image, index) => (
+            <motion.div
+              key={index}
+              className="relative cursor-pointer overflow-hidden rounded-md"
+              style={{ flex: 1 }}
+              animate={{ flex: getFlexValue(index) }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openImage(index);
+              }}
+            >
+              <img
+                src={image}
+                alt={`Gallery image ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+              <motion.div
+                className="absolute inset-0 bg-black"
+                initial={{ opacity: 0 }}
+                animate={{ 
+                  opacity: (hoveredIndex === index || autoExpandedIndex === index) && selectedIndex === null ? 0 : 0.3 
+                }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.div>
+          ))}
+        </div>
+      )}
+
+      {/* Expanded View Modal - Full Screen Popup (Both Mobile & Desktop) */}
       <AnimatePresence>
         {selectedIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-95 p-4"
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black"
+            style={{ 
+              position: 'fixed', 
+              top: 0, 
+              left: 0, 
+              right: 0, 
+              bottom: 0,
+              width: '100vw',
+              height: '100vh'
+            }}
             onClick={closeImage}
           >
-            {/* Close Button */}
+            {/* Close Button (X) - Top Right */}
             <button
-              className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 transition-colors"
-              onClick={closeImage}
+              className="absolute top-6 right-6 z-20 text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-75"
+              onClick={(e) => {
+                e.stopPropagation();
+                closeImage();
+              }}
+              aria-label="Close gallery"
             >
               <svg
                 className="w-8 h-8"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                strokeWidth={2.5}
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
@@ -165,38 +304,42 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
             {/* Previous Button */}
             {images.length > 1 && (
               <button
-                className="absolute left-4 z-10 text-white hover:text-gray-300 transition-colors"
-                onClick={goToPrev}
+                className="absolute left-6 z-20 text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 rounded-full p-4 hover:bg-opacity-75"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToPrev(e);
+                }}
+                aria-label="Previous image"
               >
                 <svg
-                  className="w-10 h-10"
+                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  strokeWidth={2.5}
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
                     d="M15 19l-7-7 7-7"
                   />
                 </svg>
               </button>
             )}
 
-            {/* Image */}
+            {/* Image Container - Clicking here won't close the modal */}
             <motion.div
-              className="relative max-w-5xl max-h-[90vh] w-full"
+              className="relative w-full h-full flex items-center justify-center p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <motion.img
                 key={selectedIndex}
                 src={images[selectedIndex]}
                 alt={`Gallery image ${selectedIndex + 1}`}
-                className="w-full h-full object-contain rounded-md"
-                initial={{ opacity: 0, scale: 0.8 }}
+                className="max-w-full max-h-full object-contain"
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
+                exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
               />
             </motion.div>
@@ -204,19 +347,23 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
             {/* Next Button */}
             {images.length > 1 && (
               <button
-                className="absolute right-4 z-10 text-white hover:text-gray-300 transition-colors"
-                onClick={goToNext}
+                className="absolute right-6 z-20 text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 rounded-full p-4 hover:bg-opacity-75"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToNext(e);
+                }}
+                aria-label="Next image"
               >
                 <svg
-                  className="w-10 h-10"
+                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  strokeWidth={2.5}
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
@@ -224,12 +371,20 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
             )}
 
             {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-4 py-2 rounded-md">
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 text-white text-sm bg-black bg-opacity-70 px-4 py-2 rounded-full">
               {selectedIndex + 1} / {images.length}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+          }
+        `
+      }} />
     </div>
   );
 };

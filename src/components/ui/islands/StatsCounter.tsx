@@ -46,6 +46,8 @@ function StatItem({ number, label }: StatItemProps) {
       let displayValue = Math.floor(current).toLocaleString();
       if (number.includes('+')) {
         displayValue += '+';
+      } else if (number.includes('%')) {
+        displayValue += '%';
       }
 
       setDisplayNumber(displayValue);
@@ -69,10 +71,10 @@ function StatItem({ number, label }: StatItemProps) {
 export default function StatsCounter() {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 md:gap-12">
-      <StatItem number="500+" label="Homes lit up" />
-      <StatItem number="10+" label="Years of experience" />
-      <StatItem number="100%" label="Customer satisfaction" />
-      <StatItem number="0" label="Hours you spend on ladders" />
+      <StatItem number="1000+" label="Homes lit up" />
+      <StatItem number="15+" label="Years of experience" />
+      <StatItem number="98%" label="Customer satisfaction" />
+      <StatItem number="0" label="Hours on a ladder" />
     </div>
   );
 }
