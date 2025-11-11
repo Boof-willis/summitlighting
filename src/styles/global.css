@@ -71,6 +71,19 @@
   }
 }
 
+@keyframes textShadowFadeIn {
+  0% {
+    text-shadow: 
+      0 2px 20px rgba(0, 0, 0, 0),
+      0 4px 20px rgba(0, 0, 0, 0);
+  }
+  100% {
+    text-shadow: 
+      0 2px 20px rgba(0, 0, 0, 0.9),
+      0 4px 20px rgba(0, 0, 0, 0.7);
+  }
+}
+
 /* Hero Character Reveal - Staggered Animation */
 .hero-title span {
   display: inline-block;
@@ -139,10 +152,12 @@
   }
   
   /* Mobile-only text shadows for hero text legibility - only on h2 */
+  /* Text shadow fades in after h2 animation completes (starts at 1.7s, h2 animation is 0.9s delay + 0.8s duration) */
   .hero-subheading {
+    animation: fadeInUp 0.8s ease 0.9s forwards, textShadowFadeIn 0.5s ease 1.7s forwards;
     text-shadow: 
-      0 2px 20px rgba(0, 0, 0, 0.9),
-      0 4px 20px rgba(0, 0, 0, 0.7);
+      0 2px 20px rgba(0, 0, 0, 0),
+      0 4px 20px rgba(0, 0, 0, 0);
   }
 }
 
