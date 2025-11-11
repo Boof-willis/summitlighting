@@ -224,7 +224,6 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
                   currentMobileIndex === index ? 'ring-2 ring-blue-500 ring-offset-2' : 'opacity-60'
                 }`}
                 onClick={(e) => handleThumbnailClick(index, e)}
-                whileTap={{ scale: 0.95 }}
               >
                 <img
                   src={image}
@@ -417,10 +416,25 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
             display: none;
           }
           /* Prevent any overlay or backdrop on thumbnail clicks */
+          .gallery-thumbnail {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            outline: none !important;
+            box-shadow: none !important;
+          }
           .gallery-thumbnail:active,
-          .gallery-thumbnail:focus {
-            outline: none;
-            box-shadow: none;
+          .gallery-thumbnail:focus,
+          .gallery-thumbnail:focus-visible,
+          .gallery-thumbnail:focus-within {
+            outline: none !important;
+            box-shadow: none !important;
+            background: none !important;
+            border: none !important;
+          }
+          .gallery-thumbnail * {
+            -webkit-tap-highlight-color: transparent;
           }
         `
       }} />
