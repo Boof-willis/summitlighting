@@ -93,7 +93,7 @@ export default function HeroRepair() {
         {/* Gradient Overlay - Mobile - Dark to transparent left to right for text legibility */}
         <div className="md:hidden absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1]"
           style={{
-            background: 'linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.25) 80%, transparent 100%)',
+            background: 'linear-gradient(to right, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.44) 50%, rgba(0, 0, 0, 0.275) 80%, transparent 100%)',
           }}
         />
         
@@ -109,7 +109,7 @@ export default function HeroRepair() {
       <div ref={contentRef} className="relative z-[2] max-w-[1200px] w-full px-8" style={{ willChange: 'transform' }}>
         <div className="relative w-full max-w-[800px] text-left">
           {/* Preheading Badge */}
-          <div className="inline-flex items-center gap-2.5 mb-8 font-heading text-base font-normal leading-6 tracking-[0.1em] text-white/95 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.3s_forwards]">
+          <div className="hero-eyebrow inline-flex items-center gap-2.5 mb-8 font-heading text-base font-normal leading-6 tracking-[0.1em] text-white/95 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.3s_forwards]">
             <span className="w-14 h-0.5 bg-white/80 rounded-sm"></span>
             Utah County Christmas Lights
           </div>
@@ -129,7 +129,7 @@ export default function HeroRepair() {
           </h1>
 
           {/* Subheading */}
-          <h2 className="font-heading text-base leading-6 text-white/90 font-normal mb-10 max-w-[620px] opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.9s_forwards]">
+          <h2 className="hero-subheading font-heading text-base leading-6 text-white/90 font-normal mb-10 max-w-[620px] opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.9s_forwards]">
             Commercial-grade lights included. Professional design, installation, and takedown with free year-round storage.
           </h2>
 

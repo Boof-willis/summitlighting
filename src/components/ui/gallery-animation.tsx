@@ -166,7 +166,9 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
     setIsPaused(false);
   };
 
-  const handleThumbnailClick = (index: number) => {
+  const handleThumbnailClick = (index: number, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setCurrentMobileIndex(index);
     setIsPaused(true);
     // Resume auto-rotation after 3 seconds
@@ -218,10 +220,10 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
             {images.map((image, index) => (
               <motion.div
                 key={index}
-                className={`relative flex-shrink-0 w-20 h-20 rounded-md overflow-hidden cursor-pointer transition-all ${
+                className={`gallery-thumbnail relative flex-shrink-0 w-20 h-20 rounded-md overflow-hidden cursor-pointer transition-all ${
                   currentMobileIndex === index ? 'ring-2 ring-blue-500 ring-offset-2' : 'opacity-60'
                 }`}
-                onClick={() => handleThumbnailClick(index)}
+                onClick={(e) => handleThumbnailClick(index, e)}
                 whileTap={{ scale: 0.95 }}
               >
                 <img
@@ -413,6 +415,12 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
         __html: `
           .scrollbar-hide::-webkit-scrollbar {
             display: none;
+          }
+          /* Prevent any overlay or backdrop on thumbnail clicks */
+          .gallery-thumbnail:active,
+          .gallery-thumbnail:focus {
+            outline: none;
+            box-shadow: none;
           }
         `
       }} />

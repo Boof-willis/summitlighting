@@ -137,6 +137,17 @@
   .hero-reviews-text {
     line-height: 1.5;
   }
+  
+  /* Mobile-only text shadows for hero text legibility */
+  .hero-eyebrow,
+  .hero-title,
+  .hero-subheading,
+  .hero-reviews-stars,
+  .hero-reviews-text {
+    text-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.9),
+      0 4px 12px rgba(0, 0, 0, 0.7);
+  }
 }
 
 /* CTA Button Styles */
