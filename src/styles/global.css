@@ -138,15 +138,11 @@
     line-height: 1.5;
   }
   
-  /* Mobile-only text shadows for hero text legibility */
-  .hero-eyebrow,
-  .hero-title,
-  .hero-subheading,
-  .hero-reviews-stars,
-  .hero-reviews-text {
+  /* Mobile-only text shadows for hero text legibility - only on h2 */
+  .hero-subheading {
     text-shadow: 
-      0 2px 4px rgba(0, 0, 0, 0.9),
-      0 4px 12px rgba(0, 0, 0, 0.7);
+      0 2px 20px rgba(0, 0, 0, 0.9),
+      0 4px 20px rgba(0, 0, 0, 0.7);
   }
 }
 

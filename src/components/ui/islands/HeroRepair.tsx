@@ -93,7 +93,7 @@ export default function HeroRepair() {
         {/* Gradient Overlay - Mobile - Dark to transparent left to right for text legibility */}
         <div className="md:hidden absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1]"
           style={{
-            background: 'linear-gradient(to right, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.44) 50%, rgba(0, 0, 0, 0.275) 80%, transparent 100%)',
+            background: 'linear-gradient(to right, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.45) 100%)',
           }}
         />
         
