@@ -122,7 +122,7 @@ export default function HeroRepair() {
                 <>
                   {wrapCharacters("Utah County's Most")}
                   <br />
-                  {wrapCharacters('Trusted Christmas Light Installation')}
+                  {wrapCharacters('Trusted Christmas Light Installer')}
                 </>
               );
             })()}
