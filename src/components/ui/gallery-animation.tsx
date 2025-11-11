@@ -180,18 +180,29 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
         <div className="flex flex-col gap-4">
           {/* Main Image */}
           <motion.div
-            className="w-full aspect-[4/3] rounded-lg overflow-hidden cursor-pointer"
+            className="relative w-full aspect-[4/3] rounded-lg overflow-visible cursor-pointer"
             onClick={() => openImage(currentMobileIndex)}
           >
-            <motion.img
-              key={currentMobileIndex}
-              src={images[currentMobileIndex]}
-              alt={`Gallery image ${currentMobileIndex + 1}`}
-              className="w-full h-full object-cover"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
+            {/* RGB Glow Layer */}
+            <div 
+              className="absolute inset-0 rounded-lg -z-10"
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 0, 150, 0.5) 0%, rgba(0, 255, 200, 0.4) 50%, rgba(150, 0, 255, 0.4) 100%)',
+                filter: 'blur(40px)',
+                transform: 'scale(1.3)'
+              }}
             />
+            <div className="relative w-full h-full rounded-lg overflow-hidden z-30">
+              <motion.img
+                key={currentMobileIndex}
+                src={images[currentMobileIndex]}
+                alt={`Gallery image ${currentMobileIndex + 1}`}
+                className="w-full h-full object-cover relative"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
           </motion.div>
 
           {/* Thumbnail Strip */}
@@ -228,7 +239,7 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
           {images.map((image, index) => (
             <motion.div
               key={index}
-              className="relative cursor-pointer overflow-hidden rounded-md"
+              className="relative cursor-pointer overflow-visible rounded-md"
               style={{ flex: 1 }}
               animate={{ flex: getFlexValue(index) }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
@@ -240,13 +251,24 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
                 openImage(index);
               }}
             >
-              <img
-                src={image}
-                alt={`Gallery image ${index + 1}`}
-                className="w-full h-full object-cover"
+              {/* RGB Glow Layer */}
+              <div 
+                className="absolute inset-0 rounded-md -z-10"
+                style={{
+                  background: 'radial-gradient(circle, rgba(255, 0, 150, 0.5) 0%, rgba(0, 255, 200, 0.4) 50%, rgba(150, 0, 255, 0.4) 100%)',
+                  filter: 'blur(40px)',
+                  transform: 'scale(1.3)'
+                }}
               />
+              <div className="relative w-full h-full rounded-md overflow-hidden z-30">
+                <img
+                  src={image}
+                  alt={`Gallery image ${index + 1}`}
+                  className="w-full h-full object-cover relative"
+                />
+              </div>
               <motion.div
-                className="absolute inset-0 bg-black"
+                className="absolute inset-0 bg-black z-20"
                 initial={{ opacity: 0 }}
                 animate={{ 
                   opacity: (hoveredIndex === index || autoExpandedIndex === index) && selectedIndex === null ? 0 : 0.3 
@@ -332,11 +354,20 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
               className="relative w-full h-full flex items-center justify-center p-8"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* RGB Glow Layer */}
+              <div 
+                className="absolute inset-0 -z-10"
+                style={{
+                  background: 'radial-gradient(circle, rgba(255, 0, 150, 0.6) 0%, rgba(0, 255, 200, 0.5) 50%, rgba(150, 0, 255, 0.5) 100%)',
+                  filter: 'blur(50px)',
+                  transform: 'scale(1.4)'
+                }}
+              />
               <motion.img
                 key={selectedIndex}
                 src={images[selectedIndex]}
                 alt={`Gallery image ${selectedIndex + 1}`}
-                className="max-w-full max-h-full object-contain"
+                className="max-w-full max-h-full object-contain relative z-30"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}

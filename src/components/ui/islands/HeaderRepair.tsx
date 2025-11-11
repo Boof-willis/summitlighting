@@ -1,17 +1,86 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function HeaderRepair() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const lastScrollY = useRef(0);
+  const scrollHistory = useRef<Array<{ y: number; time: number }>>([]);
+  const minScrollDistance = 80; // minimum pixels to scroll in time window
+  const scrollTimeWindow = 150; // milliseconds to measure scroll speed
 
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Show header when mobile menu opens
+  useEffect(() => {
+    if (mobileMenuOpen && isMobile) {
+      setHeaderVisible(true);
+    }
+  }, [mobileMenuOpen, isMobile]);
+
+  // Scroll handler with fast scroll detection
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      const currentTime = Date.now();
+      setScrolled(currentScrollY > 50);
+
+      // Only apply scroll hide/show on mobile
+      if (isMobile) {
+        // Always show header if mobile menu is open
+        if (mobileMenuOpen) {
+          setHeaderVisible(true);
+          scrollHistory.current = [];
+        } else if (currentScrollY < 50) {
+          // Always show at top of page
+          setHeaderVisible(true);
+          scrollHistory.current = [];
+        } else if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+          // Scrolling down - hide header
+          setHeaderVisible(false);
+          scrollHistory.current = [];
+        } else if (currentScrollY < lastScrollY.current) {
+          // Scrolling up - track scroll history
+          scrollHistory.current.push({ y: currentScrollY, time: currentTime });
+          
+          // Keep only recent scroll history (within time window)
+          const cutoffTime = currentTime - scrollTimeWindow;
+          scrollHistory.current = scrollHistory.current.filter(
+            (entry) => entry.time > cutoffTime
+          );
+          
+          // Calculate total scroll distance in the time window
+          if (scrollHistory.current.length >= 2) {
+            const oldest = scrollHistory.current[0];
+            const newest = scrollHistory.current[scrollHistory.current.length - 1];
+            const scrollDistance = oldest.y - newest.y; // positive when scrolling up
+            
+            // Only show header if user scrolled a significant distance quickly
+            if (scrollDistance >= minScrollDistance) {
+              setHeaderVisible(true);
+            }
+          }
+        }
+      } else {
+        // Always visible on desktop
+        setHeaderVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMobile, mobileMenuOpen]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -23,51 +92,67 @@ export default function HeaderRepair() {
   };
 
   return (
-    <header className={`fixed md:absolute top-0 left-0 right-0 z-[1000] py-4 transition-colors duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'} md:bg-transparent md:shadow-none`}
+    <header className={`fixed md:absolute top-0 left-0 right-0 z-[1000] py-4 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'} md:bg-transparent md:shadow-none ${headerVisible ? 'translate-y-0' : '-translate-y-full'}`}
     >
       <nav className="flex justify-between items-center w-full px-8 max-w-[1200px] mx-auto relative z-[1001]">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           <div className="flex items-center opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.2s_forwards]">
             <img 
-              src="https://static.wixstatic.com/media/9ce439_a1db304484b242b1b0e22b76abb1ff80~mv2.png/v1/fill/w_538,h_186,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Summit-Logo-White-4x.png"
+              src={(isMobile && (scrolled || mobileMenuOpen)) 
+                ? "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/logos/summit%20logo%20black.avif"
+                : "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/logos/summit%20logo%20white.avif"
+              }
               alt="Summit Lighting Co."
-              className={`h-8 w-auto transition-all duration-300 ${scrolled ? 'brightness-0' : 'brightness-100'}`}
+              className="h-8 w-auto transition-all duration-300"
             />
           </div>
-          <div className="w-[3px] h-6 bg-white/30 hidden md:block opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.3s_forwards]"></div>
-          <ul className="hidden md:flex list-none gap-8">
+          <div className="w-[3px] h-6 bg-white/30 hidden md:block opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.3s_forwards] ml-2"></div>
+          <ul className="hidden md:flex list-none gap-8 ml-2">
             <li className="opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.4s_forwards]">
               <a
-                href="#programs"
-                onClick={(e) => handleNavClick(e, '#programs')}
-                className="text-white font-medium hover:text-[#498dcb] transition-colors"
+                href="#services"
+                onClick={(e) => handleNavClick(e, '#services')}
+                className="text-white !font-normal font-heading relative inline-block group"
               >
-                How It Works
+                Services
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
             </li>
             <li className="opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.5s_forwards]">
               <a
-                href="#why-us"
-                onClick={(e) => handleNavClick(e, '#why-us')}
-                className="text-white font-medium hover:text-[#498dcb] transition-colors"
+                href="#programs"
+                onClick={(e) => handleNavClick(e, '#programs')}
+                className="text-white !font-normal font-heading relative inline-block group"
               >
-                Why Us
+                How It Works
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
             </li>
             <li className="opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.6s_forwards]">
               <a
+                href="#gallery"
+                onClick={(e) => handleNavClick(e, '#gallery')}
+                className="text-white !font-normal font-heading relative inline-block group"
+              >
+                Gallery
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            </li>
+            <li className="opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.7s_forwards]">
+              <a
                 href="#faq"
                 onClick={(e) => handleNavClick(e, '#faq')}
-                className="text-white font-medium hover:text-[#498dcb] transition-colors"
+                className="text-white !font-normal font-heading relative inline-block group"
               >
                 FAQs
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
             </li>
           </ul>
         </div>
         <div className="flex items-center gap-4">
-          <a href="tel:+18011234567" className="secondary-button !hidden md:!flex opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.7s_forwards]">
-            Call (801) 123-4567
+          <a href="tel:+18015988307" className="secondary-button !hidden md:!flex opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.8s_forwards]">
+            Call (801) 598-8307
           </a>
           <button
             className={`md:hidden bg-none border-none cursor-pointer flex items-center justify-start w-10 h-10 relative`}
@@ -102,6 +187,15 @@ export default function HeaderRepair() {
           <ul className="flex flex-col list-none gap-6 pb-4 items-center">
             <li>
               <a
+                href="#services"
+                onClick={(e) => handleNavClick(e, '#services')}
+                className="text-gray-900 font-heading font-light text-base hover:text-[#498dcb] transition-colors"
+              >
+                Services
+              </a>
+            </li>
+            <li>
+              <a
                 href="#programs"
                 onClick={(e) => handleNavClick(e, '#programs')}
                 className="text-gray-900 font-heading font-light text-base hover:text-[#498dcb] transition-colors"
@@ -111,11 +205,11 @@ export default function HeaderRepair() {
             </li>
             <li>
               <a
-                href="#why-us"
-                onClick={(e) => handleNavClick(e, '#why-us')}
+                href="#gallery"
+                onClick={(e) => handleNavClick(e, '#gallery')}
                 className="text-gray-900 font-heading font-light text-base hover:text-[#498dcb] transition-colors"
               >
-                Why Us
+                Gallery
               </a>
             </li>
             <li>
@@ -129,11 +223,11 @@ export default function HeaderRepair() {
             </li>
             <li>
               <a
-                href="tel:+18011234567"
+                href="tel:+18015988307"
                 className="inline-flex items-center justify-center bg-[#498dcb] text-white py-4 px-12 rounded-full font-heading font-normal text-base hover:bg-[#3a7ab5] transition-colors"
                 onClick={() => window.dispatchEvent(new Event('PhoneCallClick'))}
               >
-                Call (801) 123-4567
+                Call (801) 598-8307
               </a>
             </li>
           </ul>

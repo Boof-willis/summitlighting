@@ -74,7 +74,7 @@ export default function StatsCounter() {
       <StatItem number="1000+" label="Homes lit up" />
       <StatItem number="15+" label="Years of experience" />
       <StatItem number="98%" label="Customer satisfaction" />
-      <StatItem number="0" label="Hours on a ladder" />
+      <StatItem number="100%" label="Hassle-free" />
     </div>
   );
 }

@@ -65,7 +65,7 @@ export default function HeroRepair() {
           className="md:hidden absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1] opacity-0 scale-110"
           style={{
             backgroundImage:
-              "url('https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/images/hybrid%203.png')",
+              "url('https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/Christmas%20Lights%20Hero.avif')",
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center 20%',
@@ -93,7 +93,7 @@ export default function HeroRepair() {
         {/* Gradient Overlay - Mobile - Dark to transparent left to right for text legibility */}
         <div className="md:hidden absolute top-0 left-0 right-0 bottom-0 w-full h-full z-[1]"
           style={{
-            background: 'linear-gradient(to right, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.65) 50%, rgba(0, 0, 0, 0.4) 80%, transparent 100%)',
+            background: 'linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.25) 80%, transparent 100%)',
           }}
         />
         
@@ -134,7 +134,7 @@ export default function HeroRepair() {
           </h2>
 
           {/* Buttons */}
-          <div className="flex gap-4 flex-wrap mb-16 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_1.1s_forwards]">
+          <div className="flex gap-4 flex-wrap mb-10 md:mb-16 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_1.1s_forwards]">
             <a 
               href="#value-proposition" 
               className="cta-button hero-cta-button"
@@ -147,7 +147,7 @@ export default function HeroRepair() {
           </div>
 
           {/* Trust Indicators */}
-          <div className="mt-8 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_1.3s_forwards]">
+          <div className="mt-6 md:mt-8 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_1.3s_forwards]">
             <div className="flex flex-col gap-1 pl-4 py-2 border-l-[3px] border-white/80">
               <div className="hero-reviews-stars pb-5">★★★★★</div>
               <div className="hero-reviews-text font-heading">5-Star Google Reviews • Fully Insured • Free Year-Round Storage</div>

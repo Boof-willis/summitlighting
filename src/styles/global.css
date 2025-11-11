@@ -16,7 +16,31 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  }
+
+  h2 {
+    font-family: "Manrope", "Manrope Placeholder", sans-serif;
+    font-size: 36px;
+    font-weight: 500;
+  }
+
+  @media (min-width: 1024px) {
+    h2 {
+      font-size: 52px;
+    }
+  }
+
+  h3 {
+    font-family: "Manrope", "Manrope Placeholder", sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  @media (min-width: 1024px) {
+    h3 {
+      font-size: 32px;
+    }
   }
 }
 
@@ -107,6 +131,12 @@
   font-weight: 400;
   line-height: 1;
   color: rgba(255, 255, 255, 0.95);
+}
+
+@media (max-width: 767px) {
+  .hero-reviews-text {
+    line-height: 1.5;
+  }
 }
 
 /* CTA Button Styles */
@@ -209,6 +239,15 @@
   margin-left: -1rem;
   margin-right: -1rem;
   animation: fadeInUpCard 0.6s ease forwards;
+}
+
+/* Mobile: Remove negative margins and adjust width */
+@media (max-width: 1023px) {
+  .career-card {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 /* Desktop card height */

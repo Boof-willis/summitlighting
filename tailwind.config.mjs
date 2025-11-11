@@ -12,8 +12,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        heading: ['Manrope', 'sans-serif'],
+        sans: ['Manrope', 'Manrope Placeholder', 'sans-serif'],
+        heading: ['Manrope', 'Manrope Placeholder', 'sans-serif'],
       },
     },
   },

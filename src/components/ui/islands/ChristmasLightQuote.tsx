@@ -239,7 +239,7 @@ const ChristmasLightQuote: React.FC<ChristmasLightQuoteProps> = ({ onPropertySel
       
     } catch (error) {
       console.error('Form submission error:', error);
-      alert('Something went wrong. Please call us at (801) 123-4567');
+      alert('Something went wrong. Please call us at (801) 598-8307');
     } finally {
       setIsSubmitting(false);
     }
@@ -561,8 +561,8 @@ const ChristmasLightQuote: React.FC<ChristmasLightQuoteProps> = ({ onPropertySel
                         <div className="text-center mt-4 pt-4 border-t border-gray-200">
                           <p className="text-sm text-gray-600 font-heading">
                             Need immediate help?{' '}
-                            <a href="tel:+18011234567" className="text-[#2563eb] hover:underline font-medium">
-                              Call (801) 123-4567
+                            <a href="tel:+18015988307" className="text-[#2563eb] hover:underline font-medium">
+                              Call (801) 598-8307
                             </a>
                           </p>
                         </div>
@@ -612,10 +612,10 @@ const ChristmasLightQuote: React.FC<ChristmasLightQuoteProps> = ({ onPropertySel
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                     <p className="text-sm font-medium text-gray-900 mb-1 font-heading">Ready to book now?</p>
                     <a 
-                      href="tel:+18011234567" 
+                      href="tel:+18015988307" 
                       className="text-lg font-semibold text-[#2563eb] hover:underline font-heading"
                     >
-                      Call (801) 123-4567
+                      Call (801) 598-8307
                     </a>
                   </div>
                   
