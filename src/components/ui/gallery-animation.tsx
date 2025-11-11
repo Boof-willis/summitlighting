@@ -187,11 +187,12 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
           >
             {/* RGB Glow Layer */}
             <div 
-              className="absolute inset-0 rounded-lg -z-10"
+              className="absolute inset-0 rounded-lg -z-10 rgb-glow-layer"
               style={{
                 background: 'radial-gradient(circle, rgba(255, 0, 150, 0.5) 0%, rgba(0, 255, 200, 0.4) 50%, rgba(150, 0, 255, 0.4) 100%)',
                 filter: 'blur(40px)',
-                transform: 'scale(1.3)'
+                transform: 'scale(1.3)',
+                pointerEvents: 'none'
               }}
             />
             <div className="relative w-full h-full rounded-lg overflow-hidden z-30">
@@ -221,14 +222,15 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
               <motion.div
                 key={index}
                 className={`gallery-thumbnail relative flex-shrink-0 w-20 h-20 rounded-md overflow-hidden cursor-pointer transition-all ${
-                  currentMobileIndex === index ? 'ring-2 ring-blue-500 ring-offset-2' : 'opacity-60'
+                  currentMobileIndex === index ? 'ring-2 ring-white' : ''
                 }`}
+                style={currentMobileIndex === index ? { border: '2px solid white' } : {}}
                 onClick={(e) => handleThumbnailClick(index, e)}
               >
                 <img
                   src={image}
                   alt={`Thumbnail ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover ${currentMobileIndex === index ? '' : 'brightness-50'}`}
                 />
               </motion.div>
             ))}
@@ -431,10 +433,27 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
             outline: none !important;
             box-shadow: none !important;
             background: none !important;
-            border: none !important;
+          }
+          /* Ensure selected thumbnail border is visible */
+          .gallery-thumbnail.ring-2 {
+            border: 2px solid white !important;
+          }
+          .gallery-thumbnail.ring-2:active {
+            border: 2px solid white !important;
           }
           .gallery-thumbnail * {
             -webkit-tap-highlight-color: transparent;
+          }
+          /* Prevent dark overlay on RGB glow layer */
+          .rgb-glow-layer {
+            -webkit-tap-highlight-color: transparent !important;
+            pointer-events: none !important;
+          }
+          .rgb-glow-layer:active,
+          .rgb-glow-layer:focus {
+            background: radial-gradient(circle, rgba(255, 0, 150, 0.5) 0%, rgba(0, 255, 200, 0.4) 50%, rgba(150, 0, 255, 0.4) 100%) !important;
+            filter: blur(40px) !important;
+            opacity: 1 !important;
           }
         `
       }} />
