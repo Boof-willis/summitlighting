@@ -34,6 +34,14 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
     <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/RGB%20house.avif" />
     <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/maintenance%20and%20warranty.avif" />
     
+    <!-- Preload gallery images for mobile -->
+    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/12_converted.avif" />
+    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/10_converted.avif" />
+    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/11_converted.avif" />
+    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/3_converted.avif" />
+    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/4_converted.avif" />
+    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/5_converted.avif" />
+    
     <!-- JSON-LD Schema -->
     <script type="application/ld+json">
     {
@@ -129,10 +137,10 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
         
         <div class="flex flex-col gap-24 max-w-[1200px] mx-auto px-4 md:px-0">
             <!-- Residential Lighting -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-full career-card">
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
                 <!-- Image Column -->
-                <div class="w-full h-[200px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
+                <div class="w-full h-[250px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
                   <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/Residential%20Lights.avif" alt="Residential Christmas Light Installation" class="w-full h-full object-cover" loading="eager" />
                 </div>
                 
@@ -168,30 +176,18 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
                         </svg>
                         <span>Season-long maintenance</span>
                       </li>
-                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>Free year-round storage</span>
-                      </li>
-                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>Spring takedown included</span>
-                      </li>
                     </ul>
                   </div>
-                  <a href="#value-proposition" class="cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
+                  <a href="#value-proposition" class="cta-button hero-cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
                 </div>
               </div>
             </div>
 
             <!-- Commercial Lighting -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-full career-card">
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
                 <!-- Image Column -->
-                <div class="w-full h-[200px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
+                <div class="w-full h-[250px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
                   <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/Commercial%20Lights.avif" alt="Commercial Christmas Light Installation" class="w-full h-full object-cover" loading="eager" />
                 </div>
                 
@@ -227,30 +223,18 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
                         </svg>
                         <span>Flexible scheduling</span>
                       </li>
-                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>Maintenance throughout season</span>
-                      </li>
-                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>Professional takedown</span>
-                      </li>
                     </ul>
                   </div>
-                  <a href="#value-proposition" class="cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
+                  <a href="#value-proposition" class="cta-button hero-cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
                 </div>
               </div>
             </div>
 
             <!-- Custom Design -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-full career-card">
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
                 <!-- Image Column -->
-                <div class="w-full h-[200px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
+                <div class="w-full h-[250px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
                   <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/RGB%20house.avif" alt="Custom Christmas Light Design" class="w-full h-full object-cover" loading="eager" />
                 </div>
                 
@@ -286,30 +270,18 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
                         </svg>
                         <span>Custom color combinations</span>
                       </li>
-                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>Architectural accent lighting</span>
-                      </li>
-                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>Tree and landscape lighting</span>
-                      </li>
                     </ul>
                   </div>
-                  <a href="#value-proposition" class="cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
+                  <a href="#value-proposition" class="cta-button hero-cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
                 </div>
               </div>
             </div>
 
             <!-- Maintenance & Warranty -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-5 lg:top-8 w-full career-card">
+            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
                 <!-- Image Column -->
-                <div class="w-full h-[200px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
+                <div class="w-full h-[250px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
                   <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/maintenance%20and%20warranty.avif" alt="Maintenance & Warranty Service" class="w-full h-full object-cover" loading="eager" />
                 </div>
                 
@@ -345,21 +317,9 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
                         </svg>
                         <span>Timer adjustments</span>
                       </li>
-                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>Annual warranty coverage</span>
-                      </li>
-                      <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>24-hour response time</span>
-                      </li>
                     </ul>
                   </div>
-                  <a href="#value-proposition" class="cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
+                  <a href="#value-proposition" class="cta-button hero-cta-button self-start !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px] mt-4 lg:mt-auto">Get in touch</a>
                 </div>
               </div>
             </div>
@@ -409,9 +369,9 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
           return () => window.removeEventListener('scroll', requestTick);
         }
 
-        // Initialize animations for all career cards
+        // Initialize animations for all service cards
         document.addEventListener('DOMContentLoaded', () => {
-          const cards = document.querySelectorAll('.career-card');
+          const cards = document.querySelectorAll('.service-card');
           cards.forEach((card, index) => {
             // Stagger the animation delay
             const htmlCard = card;
@@ -735,12 +695,12 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
 
         <!-- Content -->
         <div class="relative z-10 max-w-[1200px] mx-auto px-8">
-          <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white font-heading">Ready for a Stress-Free Holiday Season?</h2>
+          <h2 class="text-4xl md:text-5xl font-normal md:font-bold mb-6 text-white font-heading">Ready for a Stress-Free Holiday Season?</h2>
           <p class="text-xl mb-10 text-white/90 font-heading max-w-[600px] mx-auto">
             Professional Team • Free Storage • All Lights Included
           </p>
           <div class="flex gap-4 justify-center flex-wrap">
-            <a href="tel:+18015988307" class="cta-button font-heading">Call (801) 598-8307</a>
+            <a href="tel:+18015988307" class="cta-button font-heading !hidden md:!inline-flex">Call (801) 598-8307</a>
             <a href="#value-proposition" class="secondary-button font-heading">Get Free Quote</a>
           </div>
         </div>

@@ -151,13 +151,29 @@
     line-height: 1.5;
   }
   
-  /* Mobile-only text shadows for hero text legibility - only on h2 */
-  /* Text shadow fades in after h2 animation completes (starts at 1.7s, h2 animation is 0.9s delay + 0.8s duration) */
+  /* Remove text shadow from h2 on mobile */
   .hero-subheading {
-    animation: fadeInUp 0.8s ease 0.9s forwards, textShadowFadeIn 0.5s ease 1.7s forwards;
-    text-shadow: 
-      0 2px 20px rgba(0, 0, 0, 0),
-      0 4px 20px rgba(0, 0, 0, 0);
+    animation: fadeInUp 0.8s ease 0.9s forwards;
+    text-shadow: none !important;
+  }
+  
+  /* Move hero content up on mobile, leaving bottom 25% empty */
+  /* Navbar is ~64px (py-4 = 32px padding + h-8 logo = 32px) + increased gap */
+  .hero-content-mobile {
+    padding-top: 105px !important;
+    padding-bottom: 25% !important;
+    justify-content: space-between !important;
+  }
+  
+  /* Move top content block up 10px */
+  .hero-content-mobile > div:first-child {
+    margin-top: -10px !important;
+  }
+  
+  /* Move CTA and reviews to bottom on mobile */
+  .hero-bottom-mobile {
+    margin-top: auto !important;
+    transform: translateY(15px) !important;
   }
 }
 
@@ -233,9 +249,9 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* Services Section - Career Cards Styling */
+/* Services Section - Service Cards Styling */
 /* Container for all cards */
-.career-cards-container {
+.service-cards-container {
   display: flex;
   flex-direction: column;
   gap: 6rem; /* 24 * 0.25rem = 96px / 1.5rem = 24px, but gap-24 = 6rem */
@@ -245,7 +261,7 @@
 }
 
 /* Individual Sticky Card */
-.career-card {
+.service-card {
   height: auto;
   background: white;
   border-radius: 32px;
@@ -256,7 +272,7 @@
   transform: translateY(32px) scale(0.9);
   padding: 1rem;
   position: sticky;
-  top: 20px; /* Mobile: 20px from top */
+  top: 50px; /* Mobile: 50px from top */
   width: calc(100% + 32px);
   margin-left: -1rem;
   margin-right: -1rem;
@@ -265,7 +281,7 @@
 
 /* Mobile: Remove negative margins and adjust width */
 @media (max-width: 1023px) {
-  .career-card {
+  .service-card {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
@@ -274,20 +290,20 @@
 
 /* Desktop card height */
 @media (min-width: 1024px) {
-  .career-card {
+  .service-card {
     height: 502px;
     top: 32px; /* Desktop: 32px from top */
   }
 }
 
 /* Hover state */
-.career-card:hover {
+.service-card:hover {
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
   transform: translateY(-4px);
 }
 
 /* Card Grid Layout */
-.career-card-grid {
+.service-card-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
@@ -295,36 +311,36 @@
 }
 
 @media (min-width: 1024px) {
-  .career-card-grid {
+  .service-card-grid {
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
   }
 }
 
 /* Image Container */
-.career-card-image {
+.service-card-image {
   width: 100%;
-  height: 200px;
+  height: 250px;
   overflow: hidden;
   border-radius: 1.2rem;
   order: 1; /* First on mobile */
 }
 
 @media (min-width: 1024px) {
-  .career-card-image {
+  .service-card-image {
     height: 100%;
     order: 1; /* Left column on desktop */
   }
 }
 
-.career-card-image img {
+.service-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 /* Content Container */
-.career-card-content {
+.service-card-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -334,14 +350,14 @@
 }
 
 @media (min-width: 1024px) {
-  .career-card-content {
+  .service-card-content {
     height: 100%;
     order: 2; /* Right column on desktop */
   }
 }
 
 /* Typography */
-.career-card-title {
+.service-card-title {
   font-family: "Manrope", "Manrope Placeholder", sans-serif;
   font-size: 24px;
   font-weight: 500;
@@ -351,12 +367,12 @@
 }
 
 @media (min-width: 1024px) {
-  .career-card-title {
+  .service-card-title {
     font-size: 32px;
   }
 }
 
-.career-card-description {
+.service-card-description {
   font-family: "Manrope", "Manrope Placeholder", sans-serif;
   font-size: 1rem;
   line-height: 1.625;
@@ -365,26 +381,26 @@
   margin-bottom: 1rem;
 }
 
-.career-card-timeline {
+.service-card-timeline {
   font-family: "Manrope", "Manrope Placeholder", sans-serif;
   font-size: 1rem;
   color: #000000;
   margin: 0;
 }
 
-.career-card-timeline strong {
+.service-card-timeline strong {
   font-weight: 600;
 }
 
 /* Features List */
-.career-card-features {
+.service-card-features {
   list-style: none;
   margin: 0;
   margin-bottom: 1rem;
   padding: 0;
 }
 
-.career-card-features li {
+.service-card-features li {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -394,11 +410,11 @@
   margin-bottom: 0.75rem;
 }
 
-.career-card-features li:last-child {
+.service-card-features li:last-child {
   margin-bottom: 0;
 }
 
-.career-card-features svg {
+.service-card-features svg {
   width: 20px;
   height: 20px;
   color: #000000;
@@ -406,7 +422,7 @@
 }
 
 /* CTA Button (Card-specific styling) */
-.career-card-cta {
+.service-card-cta {
   align-self: flex-start;
   background: #F2F2F2 !important;
   border: 1px solid #E1E1E1 !important;
@@ -416,7 +432,7 @@
 }
 
 @media (min-width: 1024px) {
-  .career-card-cta {
+  .service-card-cta {
     margin-top: auto;
   }
 }

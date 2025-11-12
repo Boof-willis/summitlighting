@@ -30,6 +30,15 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Preload all gallery images on mount (especially important for mobile thumbnails)
+  useEffect(() => {
+    // Preload all images immediately for both main display and thumbnails
+    images.forEach((imageUrl) => {
+      const img = new Image();
+      img.src = imageUrl;
+    });
+  }, [images]);
+
   // Intersection Observer to detect when gallery is in view
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -231,6 +240,7 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
                   src={image}
                   alt={`Thumbnail ${index + 1}`}
                   className={`w-full h-full object-cover ${currentMobileIndex === index ? '' : 'brightness-50'}`}
+                  loading="eager"
                 />
               </motion.div>
             ))}
