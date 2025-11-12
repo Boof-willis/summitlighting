@@ -369,14 +369,42 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
           return () => window.removeEventListener('scroll', requestTick);
         }
 
-        // Initialize animations for all service cards
+        // Initialize animations for all service cards with Intersection Observer for smooth entrance
         document.addEventListener('DOMContentLoaded', () => {
           const cards = document.querySelectorAll('.service-card');
+          
+          // Create a map to track card indices
+          const cardIndices = new Map();
           cards.forEach((card, index) => {
-            // Stagger the animation delay
+            cardIndices.set(card, index);
+          });
+          
+          // Create Intersection Observer to trigger animations early (200px before viewport)
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const card = entry.target;
+                const index = cardIndices.get(card) || 0;
+                // Add animation class with staggered delay
+                if (card.style) {
+                  card.style.animationDelay = `${index * 0.08}s`;
+                  card.classList.add('card-animate');
+                }
+                // Stop observing once animated
+                observer.unobserve(card);
+              }
+            });
+          }, {
+            rootMargin: '200px 0px', // Start animation 200px before card enters viewport
+            threshold: 0
+          });
+
+          cards.forEach((card) => {
             const htmlCard = card;
-            if (htmlCard && htmlCard.style) {
-              htmlCard.style.animationDelay = `${index * 0.1}s`;
+            if (htmlCard) {
+              // Observe each card
+              observer.observe(htmlCard);
+              // Initialize sticky scroll animation
               initStickyCardAnimation(htmlCard);
             }
           });

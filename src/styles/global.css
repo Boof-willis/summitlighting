@@ -276,7 +276,12 @@
   width: calc(100% + 32px);
   margin-left: -1rem;
   margin-right: -1rem;
-  animation: fadeInUpCard 0.6s ease forwards;
+  /* Animation only triggers when .card-animate class is added */
+}
+
+/* Smooth card entrance animation - only when .card-animate is added */
+.service-card.card-animate {
+  animation: fadeInUpCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Mobile: Remove negative margins and adjust width */
