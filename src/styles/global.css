@@ -21,8 +21,8 @@
 
   h2 {
     font-family: "Manrope", "Manrope Placeholder", sans-serif;
-    font-size: 36px;
-    font-weight: 500;
+    font-size: 30px;
+    font-weight: 400;
   }
 
   @media (min-width: 1024px) {
@@ -112,6 +112,12 @@
   color: white;
 }
 
+@media (max-width: 767px) {
+  .hero-title {
+    word-spacing: -0.2em;
+  }
+}
+
 @media (min-width: 768px) {
   .hero-title {
     font-size: 4.5rem;
@@ -158,10 +164,13 @@
   }
   
   /* Move hero content up on mobile, leaving bottom 25% empty */
-  /* Navbar is ~64px (py-4 = 32px padding + h-8 logo = 32px) + increased gap */
+  /* Navbar is ~64px (py-4 = 32px padding + h-8 logo = 32px) + small gap */
   .hero-content-mobile {
-    padding-top: 105px !important;
-    padding-bottom: 25% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    padding-top: 80px !important;
+    padding-bottom: 0 !important;
     justify-content: space-between !important;
   }
   
@@ -170,10 +179,23 @@
     margin-top: -10px !important;
   }
   
-  /* Move CTA and reviews to bottom on mobile */
+  /* Move reviews to bottom on mobile */
   .hero-bottom-mobile {
     margin-top: auto !important;
-    transform: translateY(15px) !important;
+    padding-bottom: 80px !important;
+  }
+}
+
+/* Desktop Hero Layout - Reset mobile styles */
+@media (min-width: 768px) {
+  .hero-content-mobile {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    justify-content: center !important;
+  }
+  
+  .hero-content-mobile > div:first-child {
+    margin-top: 0 !important;
   }
 }
 

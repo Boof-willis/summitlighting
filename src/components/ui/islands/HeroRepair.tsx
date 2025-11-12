@@ -72,10 +72,10 @@ export default function HeroRepair() {
   
   const wrapCharacters = (text: string) => {
     const baseDelay = 0.5;
-    const charDelay = 0.03;
+    const charDelay = 0.04;
 
     return text.split(' ').map((word, wordIndex) => (
-      <span key={wordIndex} className="inline-block whitespace-nowrap mr-2 md:mr-[18px]">
+      <span key={wordIndex} className="inline-block whitespace-nowrap mr-[10px] md:mr-[18px]">
         {word.split('').map((char) => {
           const delay = baseDelay + globalCharIndex * charDelay;
           globalCharIndex++;
@@ -90,7 +90,7 @@ export default function HeroRepair() {
   };
 
   return (
-    <section ref={sectionRef} className="relative h-[95vh] md:h-screen flex items-center justify-center overflow-hidden">
+    <section ref={sectionRef} className="relative h-[95vh] md:h-[100vh] md:min-h-[700px] flex items-start md:items-center justify-center overflow-hidden">
       {/* Parallax Container - moves background and content together */}
       <div ref={parallaxRef} className="absolute inset-0 w-full h-full" style={{ willChange: 'transform' }}>
         {/* Mobile Background Image */}
@@ -107,6 +107,7 @@ export default function HeroRepair() {
             transform: 'scaleX(-1)',
             willChange: 'transform',
           }}
+          aria-label="Professional Christmas light installation on Utah County home against Wasatch Mountains"
         />
         
         {/* Desktop Background Image */}
@@ -122,6 +123,7 @@ export default function HeroRepair() {
             transform: 'scaleX(-1)',
             willChange: 'transform',
           }}
+          aria-label="Professional Christmas light installation on Utah County home against Wasatch Mountains"
         />
         
         {/* Gradient Overlay - Mobile - Dark to transparent bottom to top for text legibility */}
@@ -140,16 +142,16 @@ export default function HeroRepair() {
       </div>
 
       {/* Hero Content */}
-      <div ref={contentRef} className="relative z-[2] max-w-[1200px] w-full px-8 flex flex-col md:flex-row items-start md:items-center hero-content-mobile" style={{ willChange: 'transform', height: '100%' }}>
+      <div ref={contentRef} className="relative z-[2] max-w-[1200px] w-full px-8 hero-content-mobile" style={{ willChange: 'transform' }}>
         <div className="relative w-full max-w-[800px] text-left">
           {/* Preheading Badge */}
-          <div className="hero-eyebrow inline-flex items-center gap-2.5 mb-6 font-heading text-base font-normal leading-6 tracking-[0.1em] text-white/95 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.3s_forwards]">
+          <div className="hero-eyebrow inline-flex items-center gap-2.5 mb-6 pt-8 md:pt-0 font-heading text-base font-normal leading-6 tracking-[0.1em] text-white/95 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.3s_forwards]">
             <span className="w-14 h-0.5 bg-white/80 rounded-sm"></span>
-            Utah County Christmas Lights
+            Wasatch Front Christmas Lights
           </div>
 
           {/* H1 with Character Reveal */}
-          <h1 className="hero-title font-heading text-4xl md:text-7xl font-medium leading-[1.2] text-white tracking-tight mb-7">
+          <h1 className="hero-title font-heading text-5xl md:text-7xl font-medium leading-[1.2] mb-7 text-white tracking-tight max-w-[900px]">
             {(() => {
               globalCharIndex = 0; // Reset for each render
               return (
@@ -163,12 +165,12 @@ export default function HeroRepair() {
           </h1>
 
           {/* Subheading */}
-          <h2 className="hero-subheading font-heading text-base leading-6 text-white/90 font-normal mb-8 max-w-[620px] opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.9s_forwards]">
-            Commercial-grade lights included. Professional design, installation, and takedown with free year-round storage.
+          <h2 className="hero-subheading font-heading text-base leading-6 text-white/90 mb-10 max-w-[620px] font-normal opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.9s_forwards]">
+            Commercial-grade lights included. Professional design, installation, and takedown with free year-round storage. Serving Provo, Orem, Lehi, Draper, Sandy, and beyond.
           </h2>
 
           {/* Buttons */}
-          <div className="flex gap-4 flex-wrap mb-10 md:mb-16 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_1.1s_forwards]">
+          <div className="flex gap-4 flex-wrap mb-12 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_1.1s_forwards]">
             <a 
               href="#value-proposition" 
               className="cta-button hero-cta-button"
@@ -179,12 +181,20 @@ export default function HeroRepair() {
               View Our Work
             </a>
           </div>
+
+          {/* Trust Indicators - Desktop: Under CTA buttons */}
+          <div className="hidden md:block mt-4 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_1.3s_forwards]">
+            <div className="flex flex-col gap-1 pl-4 py-2 border-l-[3px] border-white/80">
+              <div className="text-white text-lg tracking-[0.125rem] leading-none pb-5">★★★★★</div>
+              <div className="text-sm text-white/95 font-normal leading-none">5-Star Google Reviews • Fully Insured • Free Year-Round Storage</div>
+            </div>
+          </div>
         </div>
 
         {/* Reviews - Mobile Bottom Position */}
-        <div className="hero-bottom-mobile w-full max-w-[800px]">
+        <div className="hero-bottom-mobile md:hidden w-full max-w-[800px]">
           {/* Trust Indicators */}
-          <div className="mt-6 md:mt-8 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_1.3s_forwards]">
+          <div className="mt-6 opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_1.3s_forwards]">
             <div className="flex flex-col gap-1 pl-4 py-2 border-l-[3px] border-white/80">
               <div className="hero-reviews-stars pb-5">★★★★★</div>
               <div className="hero-reviews-text font-heading">5-Star Google Reviews • Fully Insured • Free Year-Round Storage</div>

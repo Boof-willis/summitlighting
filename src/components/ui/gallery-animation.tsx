@@ -3,10 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface ExpandableGalleryProps {
   images: string[];
+  altTexts?: string[];
   className?: string;
 }
 
-const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className = '' }) => {
+const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, altTexts = [], className = '' }) => {
+  const getAltText = (index: number) => {
+    return altTexts[index] || `Gallery image ${index + 1}`;
+  };
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [autoExpandedIndex, setAutoExpandedIndex] = useState<number>(0);
@@ -208,7 +212,7 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
               <motion.img
                 key={currentMobileIndex}
                 src={images[currentMobileIndex]}
-                alt={`Gallery image ${currentMobileIndex + 1}`}
+                alt={getAltText(currentMobileIndex)}
                 className="w-full h-full object-cover relative"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -238,7 +242,7 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
               >
                 <img
                   src={image}
-                  alt={`Thumbnail ${index + 1}`}
+                  alt={getAltText(index)}
                   className={`w-full h-full object-cover ${currentMobileIndex === index ? '' : 'brightness-50'}`}
                   loading="eager"
                 />
@@ -276,7 +280,7 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
               <div className="relative w-full h-full rounded-md overflow-hidden z-30">
                 <img
                   src={image}
-                  alt={`Gallery image ${index + 1}`}
+                  alt={getAltText(index)}
                   className="w-full h-full object-cover relative"
                 />
               </div>
@@ -379,7 +383,7 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, className
               <motion.img
                 key={selectedIndex}
                 src={images[selectedIndex]}
-                alt={`Gallery image ${selectedIndex + 1}`}
+                alt={getAltText(selectedIndex)}
                 className="max-w-full max-h-full object-contain relative z-30"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}

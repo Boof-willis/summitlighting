@@ -111,20 +111,11 @@ export default function Testimonials() {
   return (
     <section className="bg-gray-50 py-20 relative">
       <div className="container z-10 mx-auto max-w-[1200px] px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          viewport={{ once: true }}
-          className="flex flex-col items-center justify-center max-w-[700px] mx-auto"
-        >
-          <h2 className="text-[36px] sm:text-[40px] lg:text-[52px] font-medium font-heading mb-6 text-gray-800 text-center">
-            What Our Customers Say
+        <div className="text-center mb-16">
+          <h2 className="text-[30px] sm:text-[40px] lg:text-[52px] font-normal font-heading mb-6 text-gray-800">
+            What homeowners in Provo, Orem, Draper, and surrounding areas are saying
           </h2>
-          <p className="text-center text-lg text-gray-600 font-heading">
-            Don't just take our word for it. Hear from satisfied homeowners across Utah.
-          </p>
-        </motion.div>
+        </div>
 
         <div className="flex justify-center gap-6 mt-16 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
           <TestimonialsColumn testimonials={firstColumn} duration={15} />
