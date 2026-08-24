@@ -6,7 +6,9 @@ interface StatItemProps {
 }
 
 function StatItem({ number, label }: StatItemProps) {
-  const [displayNumber, setDisplayNumber] = useState('0');
+  // Server-render the final value so crawlers and no-JS visitors see real
+  // numbers; the count-up animation replaces it once the island hydrates.
+  const [displayNumber, setDisplayNumber] = useState(number);
   const [hasAnimated, setHasAnimated] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -71,10 +73,10 @@ function StatItem({ number, label }: StatItemProps) {
 export default function StatsCounter() {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 md:gap-12">
-      <StatItem number="1000+" label="Homes lit up" />
-      <StatItem number="15+" label="Years of experience" />
-      <StatItem number="98%" label="Customer satisfaction" />
-      <StatItem number="100%" label="Hassle-free" />
+      <StatItem number="5" label="Stars on every Google review" />
+      <StatItem number="4+" label="Years lighting Utah County homes" />
+      <StatItem number="100%" label="Lights provided, stored & maintained by us" />
+      <StatItem number="0" label="Ladders, cords, or storage bins for you" />
     </div>
   );
 }

@@ -7,9 +7,8 @@ import StepsTimeline from '@/components/ui/StepsTimeline.astro';
 import FaqAccordion from '@/components/ui/FaqAccordion.astro';
 import FooterRepair from '@/components/ui/FooterRepair.astro';
 import StatsCounter from '@/components/ui/islands/StatsCounter';
-import VideoPlayer from '@/components/ui/islands/VideoPlayer';
 import ExpandableGallery from '@/components/ui/gallery-animation';
-import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
+import ChristmasLightQuote from '@/components/ui/islands/ChristmasLightQuote';
 ---
 
 <!DOCTYPE html>
@@ -23,41 +22,65 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
     <link rel="icon" type="image/png" sizes="96x96" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/favicon/favicon-96x96.png" />
     <link rel="icon" type="image/x-icon" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/favicon/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/favicon/web-app-manifest-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/favicon/web-app-manifest-512x512.png" />
     <link rel="manifest" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/favicon/site.webmanifest" />
     <link rel="canonical" href="https://summitlightingco.com/" />
-    
-    <!-- Preload service card images for mobile -->
-    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/Residential%20Lights.avif" />
-    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/Commercial%20Lights.avif" />
-    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/RGB%20house.avif" />
-    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/maintenance%20and%20warranty.avif" />
-    
-    <!-- Preload gallery images for mobile -->
-    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/12_converted.avif" />
-    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/10_converted.avif" />
-    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/11_converted.avif" />
-    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/3_converted.avif" />
-    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/4_converted.avif" />
-    <link rel="preload" as="image" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/5_converted.avif" />
+
+    <!-- Fonts: preconnect + stylesheet link instead of render-blocking CSS @import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Summit Lighting Co." />
+    <meta property="og:title" content="Christmas Light Installation Utah County | Summit Lighting Co." />
+    <meta property="og:description" content="Professional Christmas light installation in Utah County, Salt Lake County & beyond. Commercial-grade lights, install, takedown & free year-round storage included." />
+    <meta property="og:url" content="https://summitlightingco.com/" />
+    <meta property="og:image" content="https://summitlightingco.com/images/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Christmas Light Installation Utah County | Summit Lighting Co." />
+    <meta name="twitter:description" content="Professional Christmas light installation in Utah County. Lights, install, takedown & free year-round storage included." />
+    <meta name="twitter:image" content="https://summitlightingco.com/images/og-image.jpg" />
+
+    <!-- Only the hero (LCP) images are preloaded; everything below the fold lazy-loads -->
+    <link rel="preload" as="image" href="/images/hero/hero-mobile.avif" media="(max-width: 767px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/hero/hero-desktop.avif" media="(min-width: 768px)" fetchpriority="high" />
     
     <!-- JSON-LD Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@type": "HomeAndConstructionBusiness",
+      "@id": "https://summitlightingco.com/#business",
       "name": "Summit Lighting Co.",
-      "description": "Professional Christmas light installation services in Utah County, Salt Lake County, and Wasatch County",
-      "url": "https://summitlightingco.com",
+      "description": "Professional Christmas light installation services in Utah County, Salt Lake County, and Wasatch County. Commercial-grade LED lights, custom design, installation, season-long maintenance, takedown, and free year-round storage included.",
+      "url": "https://summitlightingco.com/",
       "telephone": "+18015988307",
+      "email": "info@summitlightingco.com",
       "priceRange": "$$",
+      "image": "https://summitlightingco.com/images/og-image.jpg",
+      "logo": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/logos/summit%20logo%20white.avif",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Utah County",
         "addressRegion": "UT",
         "addressCountry": "US"
       },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "10:00",
+          "closes": "16:00"
+        }
+      ],
       "areaServed": [
         {
           "@type": "State",
@@ -112,8 +135,6 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
           "name": "Midway"
         }
       ],
-      "hasMap": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d196209.4!2d-111.8!3d40.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x874d8277b11bfd5b%3A0x5f9c1c6a9c7e1a1a!2sUtah%20County%2C%20UT!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus",
-      "serviceType": "Christmas Light Installation",
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Christmas Light Installation Services",
@@ -122,38 +143,91 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Residential Christmas Light Installation"
+              "name": "Residential Lighting",
+              "serviceType": "Residential Christmas Light Installation"
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Commercial Christmas Light Installation"
+              "name": "Commercial Lighting",
+              "serviceType": "Commercial Christmas Light Installation"
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Custom Holiday Lighting Design"
+              "name": "Custom Design Service",
+              "serviceType": "Custom Holiday Lighting Design"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Maintenance & Warranty",
+              "serviceType": "Season-Long Christmas Light Maintenance and Repair"
             }
           }
         ]
       }
     }
     </script>
+
+    <!-- FAQPage schema (AI-citation benefit; no Google rich result for commercial sites) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do you provide the lights or do I need to buy them?",
+          "acceptedAnswer": { "@type": "Answer", "text": "We provide everything! All commercial-grade LED lights, clips, extension cords, and timers are included in your quote. You don't need to buy anything." }
+        },
+        {
+          "@type": "Question",
+          "name": "What's included in my quote?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Everything! Your quote includes: all lights and equipment, custom design consultation, professional installation, season-long maintenance and repairs, takedown in January, and FREE year-round storage. We'll even return next year to reinstall!" }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does installation take?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Most homes are completed in 2-4 hours. Larger or more complex properties may take a full day. We work efficiently and clean up thoroughly, leaving no mess behind." }
+        },
+        {
+          "@type": "Question",
+          "name": "What if a light goes out during the season?",
+          "acceptedAnswer": { "@type": "Answer", "text": "We'll fix it for free! Season-long maintenance is included in your quote. If any lights go out or get damaged, just give us a call and we'll come repair or replace them at no additional charge." }
+        },
+        {
+          "@type": "Question",
+          "name": "When do you install and take down the lights?",
+          "acceptedAnswer": { "@type": "Answer", "text": "We begin installing in early October and continue through early December, so your home is holiday-ready well before Thanksgiving. Takedown happens in January. You pick your preferred dates, and we recommend booking in September or early October for the best scheduling options. We store your lights year-round for free and return next season to reinstall them." }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Service cards start hidden for the scroll-in animation; keep them visible without JS -->
+    <noscript>
+      <style>
+        .service-card { opacity: 1 !important; transform: none !important; }
+      </style>
+    </noscript>
   </head>
   <body class="overflow-x-hidden">
     <!-- Header -->
-    <HeaderRepair client:load />
+    <HeaderRepair client:idle />
 
     <main>
     <!-- Hero Section -->
       <HeroRepair client:load />
 
       <!-- Video & Stats Section -->
-      <section class="bg-white pt-16 md:pt-[120px] pb-20 md:pb-[100px] relative z-10">
+      <section class="bg-[#F7F6F1] pt-16 md:pt-[120px] pb-20 md:pb-[100px] relative z-10">
         <div class="max-w-[1200px] mx-auto px-5 md:px-8">
           <div class="flex flex-col lg:flex-row gap-12 lg:gap-[100px] items-center justify-center w-full h-min p-0 mb-16 relative overflow-hidden">
             <div class="text-left">
@@ -162,10 +236,14 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
               </p>
             </div>
             <div class="rounded-[16px] overflow-hidden w-full md:w-[408px] h-[245px] flex-shrink-0">
-              <img 
-                src="/images/hero/u3539228692_christmas_lights_--ar_169_--v_7_1df52ede-c437-45ee-83d7-4cfff732fa1f.png"
-                alt="Summit Lighting Co. professional Christmas light installation in Utah County"
+              <img
+                src="/images/sections/lights-showcase.avif"
+                alt="Home with warm white Christmas lights installed along the roofline at dusk"
                 class="w-full h-full object-cover"
+                width="820"
+                height="460"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -174,34 +252,73 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
       </section>
 
       <!-- Services Section -->
-      <section id="services" class="py-20 bg-white">
-        <div class="max-w-[1200px] mx-auto px-8">
+      <section id="services" class="py-20 bg-[#0B0C0A] relative overflow-clip">
+        <!-- Ambient RGB LED glow blooms (parallax via script below) -->
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div class="glow-orb absolute -top-32 left-[15%] w-[500px] h-[500px] rounded-full" data-speed="0.06" style="background: radial-gradient(circle, rgba(255, 90, 90, 0.16), transparent 65%); will-change: transform;"></div>
+          <div class="glow-orb absolute top-[22%] -right-40 w-[600px] h-[600px] rounded-full" data-speed="0.12" style="background: radial-gradient(circle, rgba(90, 150, 255, 0.14), transparent 65%); will-change: transform;"></div>
+          <div class="glow-orb absolute top-[52%] -left-40 w-[550px] h-[550px] rounded-full" data-speed="0.08" style="background: radial-gradient(circle, rgba(90, 230, 140, 0.13), transparent 65%); will-change: transform;"></div>
+          <div class="glow-orb absolute bottom-[2%] right-[10%] w-[500px] h-[500px] rounded-full" data-speed="0.15" style="background: radial-gradient(circle, rgba(255, 196, 110, 0.12), transparent 65%); will-change: transform;"></div>
+        </div>
+
+        <script>
+          // Delayed parallax drift for the glow orbs: each orb trails the scroll
+          // at its own speed for a depth effect. Skipped for reduced-motion users.
+          (() => {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const section = document.getElementById('services');
+            const orbs = Array.from(document.querySelectorAll('.glow-orb')) as HTMLElement[];
+            if (!section || orbs.length === 0) return;
+            let ticking = false;
+            const update = () => {
+              const offset = window.scrollY - section.offsetTop;
+              orbs.forEach((orb) => {
+                const speed = parseFloat(orb.dataset.speed || '0.1');
+                orb.style.transform = `translate3d(0, ${offset * speed}px, 0)`;
+              });
+              ticking = false;
+            };
+            window.addEventListener('scroll', () => {
+              if (!ticking) {
+                ticking = true;
+                window.requestAnimationFrame(update);
+              }
+            }, { passive: true });
+            update();
+          })();
+        </script>
+
+        <div class="max-w-[1200px] mx-auto px-8 relative">
           <div class="text-center mb-16">
-            <h2 class="text-[30px] sm:text-[40px] lg:text-[52px] font-normal font-heading mb-6 text-gray-800">
-              Professional Christmas lighting for homes and businesses across Utah County
+            <h2 class="text-[30px] sm:text-[40px] lg:text-[52px] font-normal font-heading mb-6 text-white">
+              Professional Christmas lighting for homes and businesses across Utah County.
             </h2>
-            <p class="text-center max-w-[700px] mx-auto mb-12 text-lg text-gray-600 font-heading">
-              From residential installations in Provo and Orem to commercial properties in Draper and Sandy—complete design, installation, and maintenance included
+            <p class="text-center max-w-[700px] mx-auto mb-8 text-lg text-white/80 font-heading">
+              From residential installations in Provo and Orem to commercial properties in Draper and Sandy, every project includes complete design, installation, and maintenance
             </p>
+            <!-- LED string -->
+            <div class="led-string" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
           </div>
         </div>
         
         <div class="flex flex-col gap-24 max-w-[1200px] mx-auto px-4 md:px-0">
             <!-- Residential Lighting -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
+            <div class="h-auto lg:h-[460px] bg-[#F1EDE2] rounded-[32px] border border-black/5 shadow-[0_0_45px_rgba(255,196,110,0.12)] overflow-hidden transition-transform duration-300 hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
                 <!-- Image Column -->
                 <div class="w-full h-[250px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
-                  <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/Residential%20Lights.avif" alt="Residential Christmas light installation in Utah County" class="w-full h-full object-cover" loading="eager" />
+                  <img src="/images/services/residential-lights.avif" alt="Residential Christmas light installation in Utah County" class="w-full h-full object-cover" width="700" height="479" loading="lazy" decoding="async" />
                 </div>
                 
                 <!-- Content Column -->
-                <div class="flex flex-col justify-between gap-4 py-2 lg:h-full">
+                <div class="flex flex-col justify-center gap-6 py-2 lg:h-full">
                   <div>
                     <div class="flex items-center gap-3 mb-4">
                       <h3 class="text-[24px] lg:text-[32px] font-medium text-gray-800 m-0 font-heading">Residential Lighting</h3>
                     </div>
-                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Transform your home into a holiday masterpiece with our professional Christmas light installation.</p>
+                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Your home lit beautifully, without the ladders, the tangled cords, or a Saturday spent on the roof. We handle every step.</p>
                     <ul class="list-none m-0 mb-4 space-y-3">
                       <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
@@ -235,20 +352,20 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
             </div>
 
             <!-- Commercial Lighting -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
+            <div class="h-auto lg:h-[460px] bg-[#F1EDE2] rounded-[32px] border border-black/5 shadow-[0_0_45px_rgba(255,196,110,0.12)] overflow-hidden transition-transform duration-300 hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
                 <!-- Image Column -->
                 <div class="w-full h-[250px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
-                  <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/Commercial%20Lights.avif" alt="Commercial holiday lighting for Salt Lake County businesses" class="w-full h-full object-cover" loading="eager" />
+                  <img src="/images/services/commercial-lights.avif" alt="Commercial holiday lighting for Salt Lake County businesses" class="w-full h-full object-cover" width="700" height="479" loading="lazy" decoding="async" />
                 </div>
                 
                 <!-- Content Column -->
-                <div class="flex flex-col justify-between gap-4 py-2 lg:h-full">
+                <div class="flex flex-col justify-center gap-6 py-2 lg:h-full">
                   <div>
                     <div class="flex items-center gap-3 mb-4">
                       <h3 class="text-[24px] lg:text-[32px] font-medium text-gray-800 m-0 font-heading">Commercial Lighting</h3>
                     </div>
-                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Attract customers and spread holiday cheer with professional commercial lighting displays.</p>
+                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Make your storefront or office the brightest spot on the block. We install around your business hours and keep everything running all season.</p>
                     <ul class="list-none m-0 mb-4 space-y-3">
                       <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
@@ -282,20 +399,20 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
             </div>
 
             <!-- Custom Design -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
+            <div class="h-auto lg:h-[460px] bg-[#F1EDE2] rounded-[32px] border border-black/5 shadow-[0_0_45px_rgba(255,196,110,0.12)] overflow-hidden transition-transform duration-300 hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
                 <!-- Image Column -->
                 <div class="w-full h-[250px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
-                  <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/RGB%20house.avif" alt="Custom RGB Christmas lights on Wasatch County mountain home" class="w-full h-full object-cover" loading="eager" />
+                  <img src="/images/services/rgb-house.avif" alt="Custom RGB Christmas lights on Wasatch County mountain home" class="w-full h-full object-cover" width="700" height="479" loading="lazy" decoding="async" />
                 </div>
                 
                 <!-- Content Column -->
-                <div class="flex flex-col justify-between gap-4 py-2 lg:h-full">
+                <div class="flex flex-col justify-center gap-6 py-2 lg:h-full">
                   <div>
                     <div class="flex items-center gap-3 mb-4">
                       <h3 class="text-[24px] lg:text-[32px] font-medium text-gray-800 m-0 font-heading">Custom Design Service</h3>
                     </div>
-                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Choose from multiple color options to create the perfect holiday display for your property.</p>
+                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Warm white, cool white, multicolor, or something all your own. We design the display around your home's architecture.</p>
                     <ul class="list-none m-0 mb-4 space-y-3">
                       <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
@@ -329,20 +446,20 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
             </div>
 
             <!-- Maintenance & Warranty -->
-            <div class="h-auto lg:h-[502px] bg-white rounded-[32px] shadow-[0_4px_16px_rgba(0,0,0,0.05)] overflow-hidden transition-shadow duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
+            <div class="h-auto lg:h-[460px] bg-[#F1EDE2] rounded-[32px] border border-black/5 shadow-[0_0_45px_rgba(255,196,110,0.12)] overflow-hidden transition-transform duration-300 hover:-translate-y-1 opacity-0 translate-y-8 scale-90 p-4 sticky top-[50px] lg:top-8 w-full service-card">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:h-full">
                 <!-- Image Column -->
                 <div class="w-full h-[250px] lg:h-full overflow-hidden" style="border-radius: 1.2rem;">
-                  <img src="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/maintenance%20and%20warranty.avif" alt="Christmas light maintenance service in Provo, Orem, and Lehi" class="w-full h-full object-cover" loading="eager" />
+                  <img src="/images/services/maintenance-warranty.avif" alt="Christmas light maintenance service in Provo, Orem, and Lehi" class="w-full h-full object-cover" width="700" height="479" loading="lazy" decoding="async" />
                 </div>
                 
                 <!-- Content Column -->
-                <div class="flex flex-col justify-between gap-4 py-2 lg:h-full">
+                <div class="flex flex-col justify-center gap-6 py-2 lg:h-full">
                   <div>
                     <div class="flex items-center gap-3 mb-4">
                       <h3 class="text-[24px] lg:text-[32px] font-medium text-gray-800 m-0 font-heading">Maintenance & Warranty</h3>
                     </div>
-                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">Enjoy worry-free holidays with our season-long maintenance and comprehensive warranty.</p>
+                    <p class="text-base leading-relaxed text-gray-600 m-0 mb-4 font-heading">If a bulb goes dark or a storm knocks a strand loose, we come fix it free, all season long.</p>
                     <ul class="list-none m-0 mb-4 space-y-3">
                       <li class="flex items-center gap-2 text-base text-gray-700 font-heading">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-black flex-shrink-0">
@@ -462,33 +579,30 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
         });
       </script>
 
-      <!-- Review Carousel Section -->
-      <section class="py-20 bg-white">
-        <div class="max-w-[1200px] mx-auto px-8">
-          <ReviewCarousel client:visible />
-        </div>
-      </section>
-
       <!-- How It Works Section -->
-      <section id="programs" class="py-20 bg-white">
+      <section id="programs" class="py-20 bg-[#F7F6F1]">
         <div class="max-w-[1200px] mx-auto px-8">
-          <h2 class="text-center text-[30px] sm:text-[40px] lg:text-[52px] font-normal font-heading mb-6 text-gray-800">Getting Your Home Holiday-Ready Is Easy</h2>
-          <p class="text-center max-w-[700px] mx-auto mb-12 text-lg text-gray-600 font-heading">
-            Our simple process has helped hundreds of homeowners throughout Provo, Orem, Lehi, Draper, Sandy, and beyond
+          <div class="flex items-center gap-2.5 mb-5 font-heading text-xs font-medium tracking-[0.15em] uppercase text-gray-500">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#E0A83E]"></span>
+            How it works
+          </div>
+          <h2 class="text-left text-[30px] sm:text-[40px] lg:text-[52px] font-normal font-heading mb-4 text-gray-800 max-w-[640px] leading-[1.15]">Getting your home holiday-ready is easy.</h2>
+          <p class="text-left max-w-[560px] mb-8 text-lg text-gray-600 font-heading">
+            From first call to takedown, here's how we make holiday lighting effortless for homeowners across Provo, Orem, Lehi, Draper, Sandy, and beyond
           </p>
           <StepsTimeline />
-          <div class="text-center mt-8">
+          <div class="text-left mt-8">
             <a href="#value-proposition" class="cta-button !bg-[#F2F2F2] !border !border-[#E1E1E1] !shadow-none !h-[48px]">Get Free Quote</a>
           </div>
         </div>
       </section>
 
       <!-- Gallery Section -->
-      <section id="gallery" class="py-20 relative overflow-hidden bg-black">
+      <section id="gallery" class="py-20 relative overflow-hidden bg-[#0B0C0A]">
         <div class="max-w-[1200px] mx-auto px-8 relative z-10">
           <div class="text-center mb-16">
             <h2 class="text-[30px] sm:text-[40px] lg:text-[52px] font-normal font-heading mb-6 text-white">
-              Our Christmas Light Installations
+              Real homes. Real installs.
             </h2>
             <p class="text-center max-w-[700px] mx-auto mb-12 text-lg text-white/90 font-heading">
               See how we've transformed homes throughout Provo, Orem, Lehi, and beyond
@@ -496,88 +610,40 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
           </div>
 
           <div class="overlay-sales-gallery">
-            <div class="lightbox-gallery w-inline-block" aria-label="open lightbox" aria-haspopup="dialog">
-              <script type="application/json" class="w-json" is:inline>
-                {
-                  "items": [
-                    {
-                      "type": "image",
-                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/12_converted.avif",
-                      "caption": "Residential Christmas Light Installation"
-                    },
-                    {
-                      "type": "image",
-                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/10_converted.avif",
-                      "caption": "Residential Christmas Light Installation"
-                    },
-                    {
-                      "type": "image",
-                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/11_converted.avif",
-                      "caption": "Residential Christmas Light Installation"
-                    },
-                    {
-                      "type": "image",
-                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/3_converted.avif",
-                      "caption": "Residential Christmas Light Installation"
-                    },
-                    {
-                      "type": "image",
-                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/4_converted.avif",
-                      "caption": "Residential Christmas Light Installation"
-                    },
-                    {
-                      "type": "image",
-                      "url": "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/5_converted.avif",
-                      "caption": "Residential Christmas Light Installation"
-                    }
-                  ],
-                  "group": "Residential Collection"
-                }
-              </script>
-              <ExpandableGallery 
-                client:load
-                images={[
-                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/12_converted.avif",
-                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/10_converted.avif",
-                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/11_converted.avif",
-                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/3_converted.avif",
-                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/4_converted.avif",
-                  "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/5_converted.avif"
-                ]}
-                altTexts={[
-                  "Christmas light installation Draper Utah",
-                  "Holiday lights Lehi Utah County",
-                  "Professional Christmas lights Park City Wasatch County",
-                  "Outdoor Christmas lights Sandy Salt Lake County",
-                  "Christmas light installation Draper Utah",
-                  "Holiday lights Lehi Utah County"
-                ]}
-                className="w-full"
-              />
-            </div>
+            <ExpandableGallery
+              client:visible
+              images={[
+                "/images/gallery/12_converted.avif",
+                "/images/gallery/10_converted.avif",
+                "/images/gallery/11_converted.avif",
+                "/images/gallery/3_converted.avif",
+                "/images/gallery/4_converted.avif",
+                "/images/gallery/5_converted.avif"
+              ]}
+              altTexts={[
+                "Two-story white home in Utah County with warm white Christmas lights on every roofline peak and lit walkway pillars",
+                "Single-story farmhouse with warm white Christmas lights along the eaves and covered porch at dusk",
+                "Stone-and-stucco home with red, white, and blue Christmas lights across the rooflines and lit driveway pillars",
+                "Large stucco home with red and green Christmas lights outlining multiple gables above a three-car garage",
+                "Tall outdoor evergreen tree wrapped in blue and warm white Christmas lights",
+                "Two-story home with red and green C9 Christmas lights along the rooflines at night"
+              ]}
+              className="w-full"
+            />
           </div>
 
-          <div class="text-center mt-12">
-            <a 
-              href="#gallery" 
-              class="inline-flex items-center gap-2 px-8 py-4 text-lg font-semibold text-white hover:text-white/80 transition-all font-heading"
-            >
-              <span>View Complete Project Gallery</span>
-              <span>→</span>
-            </a>
-          </div>
         </div>
       </section>
 
       <!-- Reviews Section -->
-      <TestimonialsColumns client:load />
+      <TestimonialsColumns />
 
       <!-- Service Area Section -->
-      <section class="py-20 bg-white">
+      <section class="py-20 bg-[#F7F6F1]">
         <div class="max-w-[1200px] mx-auto px-8">
           <div class="text-center mb-16">
             <h2 class="text-[30px] sm:text-[40px] lg:text-[52px] font-normal font-heading mb-6 text-gray-800">
-              Professional Christmas Light Installation Throughout Utah County & Surrounding Areas
+              Christmas light installation throughout Utah County and surrounding areas.
             </h2>
             <p class="text-center max-w-[700px] mx-auto mb-12 text-lg text-gray-600 font-heading">
               Proudly serving families and businesses across Utah County, Salt Lake County, and Wasatch County
@@ -594,7 +660,7 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
                   height="100%"
                   style="border:0;"
                   allowfullscreen=""
-                  loading="eager"
+                  loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
                   title="Northern Utah Service Area Map"
                 ></iframe>
@@ -608,7 +674,7 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
               <div class="space-y-4">
                 <!-- PRIORITY 1: Utah County -->
                 <div class="flex items-start gap-3">
-                  <svg class="w-6 h-6 text-[#498dcb] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                  <svg class="w-6 h-6 text-[#E0A83E] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   <div>
@@ -619,7 +685,7 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
 
                 <!-- PRIORITY 2: Salt Lake County -->
                 <div class="flex items-start gap-3">
-                  <svg class="w-6 h-6 text-[#498dcb] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                  <svg class="w-6 h-6 text-[#E0A83E] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   <div>
@@ -630,7 +696,7 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
 
                 <!-- PRIORITY 3: Wasatch County -->
                 <div class="flex items-start gap-3">
-                  <svg class="w-6 h-6 text-[#498dcb] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                  <svg class="w-6 h-6 text-[#E0A83E] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   <div>
@@ -643,42 +709,49 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
               <!-- Trust Signals -->
               <div class="mt-6 space-y-3">
                 <div class="flex items-center gap-2">
-                  <span class="text-lg">🎄</span>
+                  <svg class="w-5 h-5 text-[#E0A83E] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
                   <p class="text-sm text-gray-700 font-heading">
                     <strong>Locally-Owned & Operated</strong> serving the Wasatch Front
                   </p>
                 </div>
                 <div class="flex items-center gap-2">
-                  <span class="text-lg">🎄</span>
+                  <svg class="w-5 h-5 text-[#E0A83E] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
                   <p class="text-sm text-gray-700 font-heading">
                     <strong>No travel fees</strong> within service areas
                   </p>
                 </div>
                 <div class="flex items-center gap-2">
-                  <span class="text-lg">🎄</span>
+                  <svg class="w-5 h-5 text-[#E0A83E] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
                   <p class="text-sm text-gray-700 font-heading">
                     <strong>Same-week quotes</strong> and scheduling
                   </p>
                 </div>
               </div>
 
-              <!-- Service Area Note -->
-              <div class="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-100">
-                <p class="text-sm text-gray-700 font-heading">
-                  <strong class="text-[#498dcb]">Your Local Christmas Lighting Experts</strong> We understand Wasatch Front weather, architectural styles, and what makes homes in Utah County, Salt Lake County, and Wasatch County shine during the holidays.
-                </p>
-              </div>
             </div>
+          </div>
+
+          <!-- Service Area Note - centered beneath both columns -->
+          <div class="mt-12 max-w-[760px] mx-auto p-5 bg-[#EFECE3] rounded-xl border border-black/5 text-center">
+            <p class="text-sm text-gray-700 font-heading">
+              <strong class="text-[#B07E22]">Your local Christmas lighting experts:</strong> we know Wasatch Front weather, local architectural styles, and what makes homes in Utah County, Salt Lake County, and Wasatch County shine during the holidays.
+            </p>
           </div>
         </div>
       </section>
 
       <!-- DIY vs Professional Comparison Section -->
-      <section id="diy-comparison" class="pt-20 pb-0 md:pt-20 md:pb-0 bg-gray-50">
+      <section id="diy-comparison" class="pt-20 pb-0 md:pt-20 md:pb-0 bg-[#EFECE3]">
         <div class="max-w-full md:max-w-[1200px] mx-auto px-0 md:px-8">
         <div class="text-center mb-0 md:mb-16 px-4 md:px-0">
           <h2 class="text-[30px] sm:text-[40px] lg:text-[52px] font-normal font-heading mb-6 text-gray-800 max-w-[700px] mx-auto">
-            DIY vs Professional Installation
+            DIY vs professional installation.
           </h2>
           <p class="text-center max-w-[700px] mx-auto mb-0 text-lg text-gray-600 font-heading">
             Why Wasatch Front homeowners are choosing professional installation
@@ -687,9 +760,9 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
 
         <div class="relative pt-6 pb-20 md:pb-24 px-2 md:px-0">
           <div class="px-4 md:px-6 py-4 md:py-0 pb-12 md:pb-16 overflow-x-auto">
-            <table class="w-full bg-[#FAFAFA] rounded-xl overflow-hidden" style="box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.15), 0 5px 15px -4px rgba(0, 0, 0, 0.1);">
+            <table class="w-full bg-[#FCFBF7] rounded-xl overflow-hidden" style="box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.15), 0 5px 15px -4px rgba(0, 0, 0, 0.1);">
             <thead>
-              <tr class="bg-gradient-to-r from-[#1E40AF] to-[#1d4ed8]">
+              <tr class="bg-[#0B0C0A]">
                 <th class="px-2 md:px-6 py-3 md:py-4 text-center text-white font-heading text-xs md:text-lg">Feature</th>
                 <th class="px-2 md:px-6 py-3 md:py-4 text-center text-white font-heading text-xs md:text-lg">DIY</th>
                 <th class="px-2 md:px-6 py-3 md:py-4 text-center text-white font-heading text-xs md:text-lg" id="summit-header">
@@ -781,11 +854,11 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="bg-white py-24">
+    <section id="faq" class="bg-[#F7F6F1] py-24">
       <div class="max-w-[1000px] mx-auto px-8">
         <div class="text-center mb-16">
           <h2 class="text-[30px] md:text-[52px] font-normal text-gray-900 leading-tight font-heading">
-            Frequently Asked Questions
+            Frequently asked questions.
           </h2>
           <p class="text-center max-w-[700px] mx-auto mt-6 text-lg text-gray-600 font-heading">
             Common questions from homeowners in Provo, Orem, Lehi, Draper, and beyond
@@ -795,23 +868,43 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
       </div>
     </section>
 
-    <!-- CTA Band -->
-      <section id="cta-band" class="relative py-32 text-center overflow-hidden">
-        <!-- Background Image with Overlay -->
-        <div 
-          class="absolute inset-0 z-0"
-          style="background-image: url('https://cdn.midjourney.com/1df52ede-c437-45ee-83d7-4cfff732fa1f/0_0.png'); background-size: cover; background-position: center;"
-        ></div>
-        <div class="absolute inset-0 bg-black/70 z-0"></div>
+    <!-- Quote CTA - inset rounded night card with embedded survey -->
+      <section id="value-proposition" class="bg-[#F7F6F1] py-8 md:py-14 px-4 md:px-8">
+        <div class="relative max-w-[1200px] mx-auto rounded-[32px] md:rounded-[40px] overflow-hidden text-center py-16 md:py-24">
+          <!-- Background Image with Overlay -->
+          <div
+            class="absolute inset-0 z-0"
+            style="background-image: url('/images/sections/cta-band-bg.avif'); background-size: cover; background-position: center;"
+          ></div>
+          <div class="absolute inset-0 bg-[#0B0C0A]/80 z-0"></div>
 
-        <!-- Content -->
-        <div class="relative z-10 max-w-[1200px] mx-auto px-8">
-              <h2 class="text-[30px] md:text-[52px] font-normal mb-6 text-white font-heading">Ready for a Stress-Free Holiday Season?</h2>
-          <p class="text-xl mb-10 text-white/90 font-heading max-w-[600px] mx-auto">
-            Professional Team • Free Storage • All Lights Included
-          </p>
-          <div class="flex gap-4 justify-center flex-wrap">
-            <a href="#value-proposition" class="secondary-button font-heading">Get Free Quote</a>
+          <!-- Content: text column left, survey column right -->
+          <div class="relative z-10 grid md:grid-cols-2 gap-10 md:gap-14 items-center px-6 md:px-12 text-left">
+            <div>
+              <h2 class="text-[30px] md:text-[44px] leading-[1.15] font-normal mb-5 text-white font-heading">Ready for a stress-free holiday season?</h2>
+              <p class="text-lg mb-8 text-white/85 font-heading max-w-[440px]">
+                Tell us about your property and we'll get back to you the same day.
+              </p>
+              <ul class="space-y-3 mb-8">
+                <li class="flex items-center gap-3 text-white/90 font-heading">
+                  <svg class="w-5 h-5 text-[#E0A83E] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                  All lights and equipment included
+                </li>
+                <li class="flex items-center gap-3 text-white/90 font-heading">
+                  <svg class="w-5 h-5 text-[#E0A83E] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                  Free year-round storage
+                </li>
+                <li class="flex items-center gap-3 text-white/90 font-heading">
+                  <svg class="w-5 h-5 text-[#E0A83E] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                  Season-long maintenance and takedown
+                </li>
+              </ul>
+              <p class="text-sm text-white/70 font-heading">
+                Prefer to talk?
+                <a href="tel:+18015988307" class="text-white underline underline-offset-4" onclick="window.dispatchEvent(new Event('PhoneCallClick'))">Call or text (801) 598-8307</a>
+              </p>
+            </div>
+            <ChristmasLightQuote client:visible appearance="frost" />
           </div>
         </div>
       </section>
@@ -913,9 +1006,12 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
       const STATIC_NUMBER_TEL = '+18015988307';
       const GHL_LOCATION_ID = 'SUMMIT_LOCATION_ID';
       const GHL_POOL_ID = 'SUMMIT_POOL_ID';
-      
+
       // Function to get tracking number from GHL
       async function getTrackingNumber() {
+        // Inert until real GHL IDs are configured — avoids a guaranteed-failing
+        // network request and MutationObserver on every visit
+        if (GHL_LOCATION_ID.startsWith('SUMMIT_')) return null;
         try {
           const response = await fetch(`https://backend.leadconnectorhq.com/appengine/loc/${GHL_LOCATION_ID}/pool/${GHL_POOL_ID}/number_pool.js`);
           if (!response.ok) throw new Error('Failed to load tracking number');
@@ -985,9 +1081,12 @@ import ReviewCarousel from '@/components/ui/islands/ReviewCarousel';
       
       // Initialize tracking on page load
       async function initializeTracking() {
+        // Inert until real GHL IDs are configured
+        if (GHL_LOCATION_ID.startsWith('SUMMIT_')) return;
+
         // Wait for React components to hydrate
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
+
         // Load the GHL scripts
         const script1 = document.createElement('script');
         script1.src = `https://backend.leadconnectorhq.com/appengine/loc/${GHL_LOCATION_ID}/pool/${GHL_POOL_ID}/number_pool.js`;

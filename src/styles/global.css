@@ -1,6 +1,5 @@
-/* Font Import */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* Fonts are loaded via <link> tags in the page head (see index.astro) to avoid
+   a render-blocking @import chain; Inter was removed as unused. */
 
 @tailwind base;
 @tailwind components;
@@ -50,6 +49,10 @@
     opacity: 0;
     transform: scale(1.1);
   }
+  /* Image reaches full opacity early so the LCP element isn't invisible; zoom continues to 100% */
+  30% {
+    opacity: 1;
+  }
   100% {
     opacity: 1;
     transform: scale(1);
@@ -84,6 +87,38 @@
   }
 }
 
+/* LED string decoration - warm glowing bulbs with a gentle staggered twinkle */
+.led-string {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.25rem;
+}
+
+.led-string span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffd9a0;
+  box-shadow:
+    0 0 6px 2px rgba(255, 205, 130, 0.85),
+    0 0 18px 6px rgba(255, 190, 100, 0.35);
+  animation: ledTwinkle 3.2s ease-in-out infinite;
+}
+
+.led-string span:nth-child(2n) { animation-delay: 0.8s; }
+.led-string span:nth-child(3n) { animation-delay: 1.6s; }
+.led-string span:nth-child(5n) { animation-delay: 2.4s; }
+
+@keyframes ledTwinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .led-string span { animation: none; }
+}
+
 /* Hero Character Reveal - Staggered Animation */
 .hero-title span {
   display: inline-block;
@@ -91,6 +126,7 @@
   filter: blur(4px);
   animation: charReveal 0.8s ease forwards;
   will-change: transform, opacity, filter;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 16px rgba(0, 0, 0, 0.6);
 }
 
 /* Hero Typography */
@@ -112,15 +148,10 @@
   color: white;
 }
 
-@media (max-width: 767px) {
-  .hero-title {
-    word-spacing: -0.2em;
-  }
-}
 
 @media (min-width: 768px) {
   .hero-title {
-    font-size: 4.5rem;
+    font-size: 3.75rem;
   }
 }
 
@@ -129,7 +160,8 @@
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
 .hero-cta-button {
@@ -248,15 +280,15 @@
 }
 
 /* Secondary Button */
+/* Ghost/outline style so the secondary action reads clearly below the solid
+   white primary pill instead of competing with it */
 .secondary-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff26; /* rgba(255, 255, 255, 0.15) */
+  background: transparent;
   color: white;
-  border: none;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   padding: 0.875rem 2rem; /* 14px 32px */
   border-radius: 100px; /* Fully rounded */
   font-weight: 400;
@@ -268,7 +300,8 @@
 }
 
 .secondary-button:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.9);
 }
 
 /* Services Section - Service Cards Styling */

@@ -1,0 +1,9 @@
+{
+  // Cloudflare Pages configuration. The send_email binding powers the
+  // quote-form email in functions/api/quote.ts; it starts working once the
+  // domain is onboarded: npx wrangler email sending enable summitlightingco.com
+  "name": "summitlighting",
+  "compatibility_date": "2026-08-01",
+  "pages_build_output_dir": "dist",
+  "send_email": [{ "name": "EMAIL" }]
+}

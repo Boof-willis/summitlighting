@@ -1,81 +1,90 @@
 ---
-// Steps timeline component showing how the Christmas light installation process works
+// Four-step process in a staircase layout: each column steps down from the
+// last, with hairline dividers between columns (EcoCare-style).
+const steps = [
+  {
+    number: '1',
+    title: 'Get your free quote',
+    text: "Contact us for a free consultation. We'll discuss your vision and provide a detailed quote with no hidden fees.",
+    offset: '',
+  },
+  {
+    number: '2',
+    title: 'Custom design and planning',
+    text: 'We create a custom design plan for your home, choose the perfect color scheme, and schedule your installation date.',
+    offset: 'md:pt-32',
+  },
+  {
+    number: '3',
+    title: 'Professional installation',
+    text: 'Our expert team installs your lights using professional-grade equipment. We provide all lights and materials.',
+    offset: 'md:pt-64',
+  },
+  {
+    number: '4',
+    title: 'Enjoy while we maintain',
+    text: 'Relax and enjoy your beautiful display! We handle maintenance, repairs, and free storage throughout the year.',
+    offset: 'md:pt-96',
+  },
+];
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-2 relative z-10 py-10 max-w-7xl mx-auto">
-  <!-- Step 1 -->
-  <div class="flex flex-col py-10 relative group/feature border-gray-200 border-l border-t md:border-t-0 md:border-r md:border-l">
-    <div class="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-[#498dcb]/10 to-transparent pointer-events-none" />
-    <div class="mb-4 relative z-10 px-10 text-[#498dcb]">
-      <div class="w-12 h-12 bg-[#498dcb]/10 rounded-full flex items-center justify-center">
-        <span class="text-xl font-bold text-[#498dcb]">1</span>
+<!--
+  Sticky catch-up: each column's content is sticky at the same top offset,
+  and the staircase padding gives later columns catch-up distance. Column 1
+  pins first; 2, 3, then 4 scroll up to meet it. Once aligned, every
+  column's sticky travel is exhausted and the section scrolls away as one.
+-->
+<div class="grid grid-cols-1 md:grid-cols-4 relative z-10 py-10">
+  {steps.map((step, i) => (
+    <div class={`step-col relative border-t md:border-t-0 md:border-l border-gray-300/70 first:border-t-0 ${step.offset}`} style={`transition-delay: ${i * 0.15}s`}>
+      <div class="md:sticky md:top-28 md:min-h-[260px] flex flex-col gap-4 px-6 lg:px-8 py-10 md:py-0 md:pb-10">
+        <div class="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center font-heading text-gray-800">
+          {step.number}
+        </div>
+        <h3 class="text-xl font-heading font-semibold text-gray-900">{step.title}</h3>
+        <p class="text-sm font-heading text-gray-600 leading-relaxed max-w-xs">{step.text}</p>
       </div>
     </div>
-    <div class="text-xl font-heading font-semibold mb-2 relative z-10 px-10">
-      <div class="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-gray-300 group-hover/feature:bg-[#498dcb] transition-all duration-200 origin-center" />
-      <span class="group-hover/feature:translate-x-2 transition duration-200 inline-block text-gray-800 font-heading">
-        Get Your Free Quote
-      </span>
-    </div>
-    <p class="text-base font-heading text-gray-600 max-w-xs relative z-10 px-10 leading-relaxed">
-      Contact us for a free consultation. We'll discuss your vision and provide a detailed quote with no hidden fees.
-    </p>
-  </div>
-
-  <!-- Step 2 -->
-  <div class="flex flex-col py-10 relative group/feature border-gray-200 border-l border-t md:border-t-0 md:border-r">
-    <div class="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-[#498dcb]/10 to-transparent pointer-events-none" />
-    <div class="mb-4 relative z-10 px-10 text-[#498dcb]">
-      <div class="w-12 h-12 bg-[#498dcb]/10 rounded-full flex items-center justify-center">
-        <span class="text-xl font-bold text-[#498dcb]">2</span>
-      </div>
-    </div>
-    <div class="text-xl font-heading font-semibold mb-2 relative z-10 px-10">
-      <div class="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-gray-300 group-hover/feature:bg-[#498dcb] transition-all duration-200 origin-center" />
-      <span class="group-hover/feature:translate-x-2 transition duration-200 inline-block text-gray-800 font-heading">
-        Custom Design & Planning
-      </span>
-    </div>
-    <p class="text-base font-heading text-gray-600 max-w-xs relative z-10 px-10 leading-relaxed">
-      We create a custom design plan for your home, choose the perfect color scheme, and schedule your installation date.
-    </p>
-  </div>
-
-  <!-- Step 3 -->
-  <div class="flex flex-col py-10 relative group/feature border-gray-200 border-l border-t border-b md:border-b-0 md:border-t-0 md:border-r md:border-l">
-    <div class="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-[#498dcb]/10 to-transparent pointer-events-none" />
-    <div class="mb-4 relative z-10 px-10 text-[#498dcb]">
-      <div class="w-12 h-12 bg-[#498dcb]/10 rounded-full flex items-center justify-center">
-        <span class="text-xl font-bold text-[#498dcb]">3</span>
-      </div>
-    </div>
-    <div class="text-xl font-heading font-semibold mb-2 relative z-10 px-10">
-      <div class="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-gray-300 group-hover/feature:bg-[#498dcb] transition-all duration-200 origin-center" />
-      <span class="group-hover/feature:translate-x-2 transition duration-200 inline-block text-gray-800 font-heading">
-        Professional Installation
-      </span>
-    </div>
-    <p class="text-base font-heading text-gray-600 max-w-xs relative z-10 px-10 leading-relaxed">
-      Our expert team installs your lights using professional-grade equipment. We provide all lights and materials.
-    </p>
-  </div>
-
-  <!-- Step 4 -->
-  <div class="flex flex-col py-10 relative group/feature border-gray-200 border-l border-t border-b md:border-b-0 md:border-t-0 md:border-r">
-    <div class="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-[#498dcb]/10 to-transparent pointer-events-none" />
-    <div class="mb-4 relative z-10 px-10 text-[#498dcb]">
-      <div class="w-12 h-12 bg-[#498dcb]/10 rounded-full flex items-center justify-center">
-        <span class="text-xl font-bold text-[#498dcb]">✓</span>
-      </div>
-    </div>
-    <div class="text-xl font-heading font-semibold mb-2 relative z-10 px-10">
-      <div class="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-gray-300 group-hover/feature:bg-[#498dcb] transition-all duration-200 origin-center" />
-      <span class="group-hover/feature:translate-x-2 transition duration-200 inline-block text-gray-800 font-heading">
-        Enjoy & We Maintain
-      </span>
-    </div>
-    <p class="text-base font-heading text-gray-600 max-w-xs relative z-10 px-10 leading-relaxed">
-      Relax and enjoy your beautiful display! We handle maintenance, repairs, and free storage throughout the year.
-    </p>
-  </div>
+  ))}
 </div>
+
+<style>
+  .step-col {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .step-col.step-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .step-col {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Scroll-reveal for the step columns: each column rises into place as it
+  // enters the viewport, staggered by its transition-delay.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('step-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2, rootMargin: '0px 0px -60px 0px' }
+  );
+  document.querySelectorAll('.step-col').forEach((col) => observer.observe(col));
+</script>

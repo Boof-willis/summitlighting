@@ -1,5 +1,4 @@
-"use client";
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface FormData {
   selectedPropertyType: string;
@@ -9,26 +8,106 @@ interface FormData {
   cityOrZip: string;
   description: string;
   consentGiven: boolean;
-  timestamp: string;
-  pageSource: string;
-  gclid: string;
-  fullUrl: string;
 }
 
-interface Errors {
-  [key: string]: string;
+const PROPERTY_TYPES = [
+  { title: 'Small home', subtitle: '1,500–2,500 sq ft' },
+  { title: 'Medium home', subtitle: '2,500–3,500 sq ft' },
+  { title: 'Large home', subtitle: '3,500+ sq ft' },
+  { title: 'Commercial', subtitle: 'Business or storefront' },
+  { title: 'HOA / complex', subtitle: 'Multiple units' },
+  { title: 'Something else', subtitle: 'General inquiry' },
+];
+
+const TOTAL_STEPS = 3;
+
+// Ad/campaign params captured on landing and kept for the whole session, so
+// a visitor who lands on / with UTMs and later submits on /contact still
+// carries their attribution into the webhook payload.
+const TRACKING_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid'];
+
+function captureTracking(): Record<string, string> {
+  const out: Record<string, string> = {};
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const stored = JSON.parse(sessionStorage.getItem('sl_tracking') || '{}');
+    TRACKING_KEYS.forEach((k) => {
+      const v = params.get(k) || stored[k];
+      if (v) out[k] = v;
+    });
+    if (Object.keys(out).length > 0) sessionStorage.setItem('sl_tracking', JSON.stringify(out));
+  } catch {
+    /* sessionStorage unavailable (private mode etc.) — submit without attribution */
+  }
+  return out;
 }
 
-interface ChristmasLightQuoteProps {
-  onPropertySelect: (propertyType: string) => void;
+interface Props {
+  /** 'light' = solid cream panel; 'frost' = translucent glass over imagery */
+  appearance?: 'light' | 'frost';
 }
 
-const ChristmasLightQuote: React.FC<ChristmasLightQuoteProps> = ({ onPropertySelect }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentStep, setCurrentStep] = useState(2); // Start at step 2 (step 1 is property type selection)
+export default function ChristmasLightQuote({ appearance = 'light' }: Props) {
+  const frost = appearance === 'frost';
+  const T = frost
+    ? {
+        panel: 'bg-white/10 backdrop-blur-2xl border-white/20',
+        label: 'text-white/60',
+        heading: 'text-white',
+        sub: 'text-white/60',
+        card: 'border-white/20 bg-white/10 hover:border-white/70',
+        cardSelected: 'border-white bg-white/20',
+        cardTitle: 'text-white',
+        cardSub: 'text-white/60',
+        input: 'bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:ring-white/70',
+        inputError: 'border-red-300',
+        error: 'text-red-300',
+        back: 'text-white/70',
+        primary: 'bg-white text-[#0B0C0A] hover:bg-white/85',
+        progressOn: 'bg-white',
+        progressOff: 'bg-white/20',
+        consent: 'text-white/70',
+        checkbox: 'accent-white',
+        successIcon: 'bg-white/15',
+        successHeading: 'text-white',
+        successBody: 'text-white/80',
+        successLink: 'text-white',
+      }
+    : {
+        panel: 'bg-[#F7F6F1] border-black/10',
+        label: 'text-gray-500',
+        heading: 'text-gray-900',
+        sub: 'text-gray-500',
+        card: 'border-black/10 bg-white hover:border-[#0B0C0A]',
+        cardSelected: 'border-[#0B0C0A] bg-[#0B0C0A]/5',
+        cardTitle: 'text-gray-900',
+        cardSub: 'text-gray-500',
+        input: 'bg-white border-black/10 text-gray-900 placeholder:text-gray-400 focus:ring-[#0B0C0A]/60',
+        inputError: 'border-red-400',
+        error: 'text-red-500',
+        back: 'text-gray-500',
+        primary: 'bg-[#0B0C0A] text-white hover:bg-[#23291F]',
+        progressOn: 'bg-[#0B0C0A]',
+        progressOff: 'bg-black/10',
+        consent: 'text-gray-600',
+        checkbox: 'accent-[#0B0C0A]',
+        successIcon: 'bg-[#0B0C0A]',
+        successHeading: 'text-gray-900',
+        successBody: 'text-gray-600',
+        successLink: 'text-gray-900',
+      };
+  const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
+  const [usedFallback, setUsedFallback] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  // Honeypot: humans never see or fill this field; bots auto-filling every
+  // input give themselves away and get a silent fake success.
+  const [honeypot, setHoneypot] = useState('');
+
+  useEffect(() => {
+    captureTracking();
+  }, []);
   const [formData, setFormData] = useState<FormData>({
     selectedPropertyType: '',
     fullName: '',
@@ -37,603 +116,293 @@ const ChristmasLightQuote: React.FC<ChristmasLightQuoteProps> = ({ onPropertySel
     cityOrZip: '',
     description: '',
     consentGiven: false,
-    timestamp: '',
-    pageSource: 'christmas-lights-landing',
-    gclid: '',
-    fullUrl: ''
   });
 
-  // Capture URL parameters on component mount
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const gclidValue = urlParams.get('gclid') || '';
-      const fullUrlValue = window.location.href;
-      
-      setFormData(prev => ({
-        ...prev,
-        gclid: gclidValue,
-        fullUrl: fullUrlValue
-      }));
-    }
-  }, []);
-  
-  const [errors, setErrors] = useState<Errors>({});
-
-  // Handle property type card click
-  const handlePropertySelect = (propertyType: string) => {
-    setFormData({ ...formData, selectedPropertyType: propertyType });
-    setIsModalOpen(true);
-    setCurrentStep(2);
-    setIsSubmitted(false);
-    onPropertySelect(propertyType);
-  };
-
-  // Close modal and reset
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setCurrentStep(2);
-    setIsSubmitted(false);
-    
-    // Preserve gclid and fullUrl when resetting
-    const urlParams = new URLSearchParams(window.location.search);
-    const gclidValue = urlParams.get('gclid') || '';
-    const fullUrlValue = window.location.href;
-    
-    setFormData({
-      selectedPropertyType: '',
-      fullName: '',
-      phone: '',
-      email: '',
-      cityOrZip: '',
-      description: '',
-      consentGiven: false,
-      timestamp: '',
-      pageSource: 'christmas-lights-landing',
-      gclid: gclidValue,
-      fullUrl: fullUrlValue
-    });
-    setErrors({});
-  };
-
-  // Phone number formatting
   const formatPhoneNumber = (value: string) => {
-    const phoneNumber = value.replace(/\D/g, '');
-    
-    if (phoneNumber.length === 0) return '';
-    if (phoneNumber.length <= 3) return `(${phoneNumber}`;
-    if (phoneNumber.length <= 6) {
-      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
-    }
-    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+    const digits = value.replace(/\D/g, '').slice(0, 10);
+    if (digits.length < 4) return digits;
+    if (digits.length < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
   };
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhoneNumber(e.target.value);
-    setFormData({ ...formData, phone: formatted });
+  const validateContact = () => {
+    const next: Record<string, string> = {};
+    if (formData.fullName.trim().length < 2) next.fullName = 'Please enter your name';
+    if (formData.phone.replace(/\D/g, '').length !== 10) next.phone = 'Please enter a 10-digit phone number';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) next.email = 'Please enter a valid email';
+    setErrors(next);
+    return Object.keys(next).length === 0;
   };
 
-  // Validation functions
-  const validateStep2 = () => {
-    const newErrors: Errors = {};
-    
-    if (!formData.fullName || formData.fullName.trim().length < 2) {
-      newErrors.fullName = 'Please enter your full name';
-    }
-    
-    const phoneDigits = formData.phone.replace(/\D/g, '');
-    if (phoneDigits.length !== 10) {
-      newErrors.phone = 'Please enter a valid 10-digit phone number';
-    }
-    
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const validateFinal = () => {
+    const next: Record<string, string> = {};
+    if (formData.cityOrZip.trim().length < 2) next.cityOrZip = 'Please enter your city or ZIP';
+    if (!formData.consentGiven) next.consentGiven = 'Please confirm so we can reach out about your quote';
+    setErrors(next);
+    return Object.keys(next).length === 0;
   };
 
-  const validateStep3 = () => {
-    const newErrors: Errors = {};
-    
-    if (!formData.cityOrZip || formData.cityOrZip.trim().length < 3) {
-      newErrors.cityOrZip = 'Please enter your city or zip code';
-    }
-    
-    if (!formData.consentGiven) {
-      newErrors.consent = 'Please agree to be contacted';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const selectType = (title: string) => {
+    setFormData((f) => ({ ...f, selectedPropertyType: title }));
+    setStep(2);
   };
 
-  // Step navigation
-  const handleNextStep = () => {
-    if (currentStep === 2 && validateStep2()) {
-      setCurrentStep(3);
-      setErrors({});
-    }
-  };
-
-  const handlePreviousStep = () => {
-    if (currentStep === 3) {
-      setCurrentStep(2);
-      setErrors({});
-    }
-  };
-
-  const handleChangePropertyType = () => {
-    setIsModalOpen(false);
-    setCurrentStep(2);
-    
-    // Preserve gclid and fullUrl when resetting
-    const urlParams = new URLSearchParams(window.location.search);
-    const gclidValue = urlParams.get('gclid') || '';
-    const fullUrlValue = window.location.href;
-    
-    setFormData({
-      selectedPropertyType: '',
-      fullName: '',
-      phone: '',
-      email: '',
-      cityOrZip: '',
-      description: '',
-      consentGiven: false,
-      timestamp: '',
-      pageSource: 'christmas-lights-landing',
-      gclid: gclidValue,
-      fullUrl: fullUrlValue
-    });
-    setErrors({});
-    // Scroll to property type chooser section after modal closes
-    setTimeout(() => {
-      const propertyChooser = document.getElementById('property-chooser');
-      if (propertyChooser) {
-        propertyChooser.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }, 300);
-  };
-
-  // Form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validateStep3()) return;
-    
+    if (!validateFinal()) return;
+
+    // Bot filled the invisible field: report success, send nothing.
+    if (honeypot.trim() !== '') {
+      setIsSubmitted(true);
+      return;
+    }
+
     setIsSubmitting(true);
-    
+
+    const submissionData = {
+      ...formData,
+      ...captureTracking(),
+      website: honeypot,
+      timestamp: new Date().toISOString(),
+      pageSource: window.location.href,
+      referrer: document.referrer,
+    };
+
     try {
-      const submissionData = {
-        ...formData,
-        timestamp: new Date().toISOString(),
-        phoneClean: formData.phone.replace(/\D/g, ''),
-      };
-      
-      // GoHighLevel webhook endpoint (UPDATE WITH SUMMIT LIGHTING WEBHOOK)
-      const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/SUMMIT_WEBHOOK_ID/webhook-trigger/SUMMIT_TRIGGER_ID';
-      
-      const response = await fetch(GHL_WEBHOOK_URL, {
+      // Pages Function (functions/api/quote.ts) emails the lead to the
+      // business via Cloudflare Email Service.
+      const response = await fetch('/api/quote', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submissionData),
       });
-      
-      if (!response.ok) {
-        console.error('GHL webhook error:', {
-          status: response.status,
-          statusText: response.statusText,
-        });
-        throw new Error(`Webhook returned ${response.status}`);
-      }
-      
-      const responseData = await response.text();
-      console.log('GHL webhook response:', responseData);
-      console.log('Lead submitted successfully:', submissionData);
-      
+      if (!response.ok) throw new Error(`Quote endpoint returned ${response.status}`);
       setIsSubmitted(true);
-      
     } catch (error) {
-      console.error('Form submission error:', error);
-      alert('Something went wrong. Please call us at (801) 598-8307');
+      // Endpoint unreachable (local dev, or email service not yet onboarded):
+      // fall back to composing the lead in the visitor's own SMS/email app so
+      // it is never lost.
+      console.error('Form submission error, using compose fallback:', error);
+      const body = encodeURIComponent(
+        `Quote request\nName: ${formData.fullName}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nCity/ZIP: ${formData.cityOrZip}\nProperty: ${formData.selectedPropertyType}${formData.description ? `\nDetails: ${formData.description}` : ''}`
+      );
+      const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+      window.location.href = isMobile
+        ? `sms:+18015988307?&body=${body}`
+        : `mailto:info@summitlightingco.com?subject=${encodeURIComponent('Quote request from ' + formData.fullName)}&body=${body}`;
+      setUsedFallback(true);
+      setIsSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Keyboard and click outside handlers
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isModalOpen) {
-        handleCloseModal();
-      }
-    };
-
-    if (isModalOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
-    };
-  }, [isModalOpen]);
-
-  const propertyTypes = [
-    { title: "Small Home", subtitle: "1,500-2,500 sq ft", icon: "🏠", estimate: "$400-$600" },
-    { title: "Medium Home", subtitle: "2,500-3,500 sq ft", icon: "🏡", estimate: "$600-$900" },
-    { title: "Large Home", subtitle: "3,500+ sq ft", icon: "🏘️", estimate: "$900-$1,200+" },
-    { title: "Commercial Property", subtitle: "Business or storefront", icon: "🏢", estimate: "Custom Quote" },
-    { title: "HOA/Complex", subtitle: "Multiple units", icon: "🏘️", estimate: "Custom Quote" },
-    { title: "Just Browsing", subtitle: "General inquiry", icon: "💡", estimate: "Free Consult" }
-  ];
-
-  const isStep2Valid = formData.fullName.trim().length >= 2 && 
-                       formData.phone.replace(/\D/g, '').length === 10 && 
-                       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+  const inputClass = (field: string) =>
+    `w-full rounded-xl border px-4 py-3 font-heading text-base focus:outline-none focus:ring-2 ${T.input} ${
+      errors[field] ? T.inputError : ''
+    }`;
 
   return (
-    <>
-      {/* Property Type Cards Section */}
-      <div className="mb-12" id="property-chooser">
-        {/* Interactive Indicator */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-4 py-2">
-            <span className="text-[#2563eb] text-sm font-medium font-heading">👆 Get Your Quote</span>
-            <span className="text-gray-600 text-sm font-heading">Click your property type to get started →</span>
+    <div className={`mx-auto w-full max-w-[640px] rounded-3xl border p-6 text-left md:p-10 ${T.panel}`}>
+      {isSubmitted ? (
+        <div className="py-4 text-center">
+          <div className={`mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full ${T.successIcon}`}>
+            <svg className="h-7 w-7 text-[#E0A83E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
           </div>
-        </div>
-
-        {/* Property Type Cards Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-          {propertyTypes.map((type) => (
-            <button
-              key={type.title}
-              onClick={() => handlePropertySelect(type.title)}
-              className="bg-white rounded-2xl md:rounded-[32px] shadow-[0_0_16px_rgba(0,0,0,0.05)] md:shadow-[0_0_32px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 hover:scale-105 p-4 md:p-8 text-center cursor-pointer border-2 border-transparent hover:border-[#2563eb]/30 hover:bg-[#2563eb]/5 group"
-            >
-              <div className="text-3xl md:text-4xl mb-2 md:mb-4">{type.icon}</div>
-              <h3 className="text-base md:text-xl font-bold text-gray-800 mb-1 md:mb-2 font-heading group-hover:text-[#2563eb] transition-colors leading-tight">
-                {type.title}
-              </h3>
-              <p className="text-gray-600 text-xs md:text-sm font-heading mb-1">
-                {type.subtitle}
-              </p>
-              <p className="text-[#2563eb] font-semibold text-sm md:text-base font-heading">
-                {type.estimate}
-              </p>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Modal */}
-      {isModalOpen && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ 
-            background: 'rgba(0, 0, 0, 0.7)',
-            backdropFilter: 'blur(4px)',
-          }}
-          onClick={handleCloseModal}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div 
-            className="bg-white rounded-2xl md:rounded-2xl rounded-t-2xl shadow-2xl w-full max-w-[600px] max-h-[95vh] md:max-h-[90vh] overflow-y-auto relative animate-[fadeInUp_0.3s_ease-out]"
-            onClick={(e) => e.stopPropagation()}
+          <h3 className={`mb-3 font-heading text-2xl font-semibold ${T.successHeading}`}>Request received.</h3>
+          <p className={`mx-auto mb-6 max-w-[420px] font-heading ${T.successBody}`}>
+            {usedFallback
+              ? 'Your details are ready to send. If your messaging or email app opened, just hit send and we will get back to you the same day.'
+              : 'We will review your details and reach out within one business day with your quote.'}
+          </p>
+          <a
+            href="tel:+18015988307"
+            className={`font-heading font-medium underline underline-offset-4 ${T.successLink}`}
+            onClick={() => window.dispatchEvent(new Event('PhoneCallClick'))}
           >
-            {/* Close Button */}
-            <button
-              onClick={handleCloseModal}
-              className="sticky top-4 right-4 ml-auto w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10 mb-[-40px]"
-              aria-label="Close modal"
-            >
-              <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            <div className="p-4 md:p-8 pt-2">
-              {!isSubmitted ? (
-                <>
-                  {/* Progress Bar */}
-                  <div className="w-full mb-6">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm text-gray-600 font-heading">Step {currentStep} of 3</span>
-                      <span className="text-sm text-gray-600 font-heading">{Math.round((currentStep / 3) * 100)}% Complete</span>
-                    </div>
-                    <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-[#2563eb] transition-all duration-300 ease-in-out"
-                        style={{ width: `${(currentStep / 3) * 100}%` }}
-                        role="progressbar"
-                        aria-valuenow={currentStep}
-                        aria-valuemin={1}
-                        aria-valuemax={3}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Step 2: Contact Information */}
-                  {currentStep === 2 && (
-                    <div>
-                      <div className="mb-4 md:mb-6">
-                        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2 font-heading">
-                          Let's Get You a Free Quote
-                        </h2>
-                        <div className="flex items-center gap-2 text-sm text-gray-600 flex-wrap">
-                          <span className="font-heading">Property Type:</span>
-                          <span className="font-medium text-[#2563eb] font-heading">{formData.selectedPropertyType}</span>
-                          <button 
-                            onClick={handleChangePropertyType}
-                            className="text-[#2563eb] hover:underline ml-2 font-heading"
-                          >
-                            ✏️ Change
-                          </button>
-                        </div>
-                        <p className="text-gray-600 text-sm mt-2 font-heading hidden md:block">
-                          We'll contact you within 24 hours with your personalized quote and available installation dates.
-                        </p>
-                      </div>
-
-                      <form className="space-y-3 md:space-y-4">
-                        {/* Full Name */}
-                        <div>
-                          <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
-                            Full Name <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            id="fullName"
-                            value={formData.fullName}
-                            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                            placeholder="John Smith"
-                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] font-heading text-base ${
-                              errors.fullName ? 'border-red-500' : 'border-gray-300'
-                            }`}
-                          />
-                          {errors.fullName && (
-                            <p className="text-red-500 text-sm mt-1 font-heading" role="alert">{errors.fullName}</p>
-                          )}
-                        </div>
-
-                        {/* Phone Number */}
-                        <div>
-                          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
-                            Phone Number <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="tel"
-                            id="phone"
-                            value={formData.phone}
-                            onChange={handlePhoneChange}
-                            placeholder="(801) 555-1234"
-                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] font-heading text-base ${
-                              errors.phone ? 'border-red-500' : 'border-gray-300'
-                            }`}
-                          />
-                          {errors.phone && (
-                            <p className="text-red-500 text-sm mt-1 font-heading" role="alert">{errors.phone}</p>
-                          )}
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
-                            Email <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="email"
-                            id="email"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            placeholder="john@example.com"
-                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] font-heading text-base ${
-                              errors.email ? 'border-red-500' : 'border-gray-300'
-                            }`}
-                          />
-                          {errors.email && (
-                            <p className="text-red-500 text-sm mt-1 font-heading" role="alert">{errors.email}</p>
-                          )}
-                        </div>
-
-                        <button 
-                          type="button"
-                          onClick={handleNextStep}
-                          disabled={!isStep2Valid}
-                          className="w-full bg-[#2563eb] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#1d4ed8] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed font-heading min-h-[44px]"
-                        >
-                          Continue →
-                        </button>
-                      </form>
-                    </div>
-                  )}
-
-                  {/* Step 3: Location & Details */}
-                  {currentStep === 3 && (
-                    <div>
-                      <div className="mb-4 md:mb-6">
-                        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2 font-heading">
-                          Almost Done!
-                        </h2>
-                        <p className="text-gray-600 text-sm font-heading hidden md:block">
-                          Just need a few more details to provide an accurate quote.
-                        </p>
-                      </div>
-
-                      <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
-                        {/* City or Zip Code */}
-                        <div>
-                          <label htmlFor="cityOrZip" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
-                            City or Zip Code <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            id="cityOrZip"
-                            value={formData.cityOrZip}
-                            onChange={(e) => setFormData({ ...formData, cityOrZip: e.target.value })}
-                            placeholder="Provo or 84601"
-                            className={`w-full px-3 md:px-4 py-2.5 md:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] font-heading text-base ${
-                              errors.cityOrZip ? 'border-red-500' : 'border-gray-300'
-                            }`}
-                          />
-                          {errors.cityOrZip && (
-                            <p className="text-red-500 text-sm mt-1 font-heading" role="alert">{errors.cityOrZip}</p>
-                          )}
-                        </div>
-
-                        {/* Brief Description */}
-                        <div>
-                          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1 font-heading">
-                            Special Requests or Questions (Optional)
-                          </label>
-                          <textarea
-                            id="description"
-                            value={formData.description}
-                            onChange={(e) => {
-                              if (e.target.value.length <= 500) {
-                                setFormData({ ...formData, description: e.target.value });
-                              }
-                            }}
-                            placeholder="Tell us about your property, preferred colors, timeline, or any special requests..."
-                            rows={3}
-                            className="w-full px-3 md:px-4 py-2.5 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] font-heading resize-none text-base"
-                          />
-                          <p className="text-sm text-gray-500 mt-1 text-right font-heading">
-                            {formData.description.length} / 500
-                          </p>
-                        </div>
-
-                        {/* Consent Checkbox */}
-                        <div>
-                          <label className="flex items-start gap-3 cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={formData.consentGiven}
-                              onChange={(e) => setFormData({ ...formData, consentGiven: e.target.checked })}
-                              className="mt-1 w-5 h-5 text-[#2563eb] border-gray-300 rounded focus:ring-[#2563eb] cursor-pointer flex-shrink-0"
-                            />
-                            <span className="text-sm text-gray-700 font-heading">
-                              I agree to receive calls/texts from Summit Lighting Co. about my quote request
-                            </span>
-                          </label>
-                          <p className="text-xs text-gray-500 mt-1 ml-8 font-heading">
-                            We respect your privacy. See our{' '}
-                            <a 
-                              href="https://summitlightingco.com/privacy-policy" 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-[#2563eb] hover:underline"
-                            >
-                              privacy policy
-                            </a>.
-                          </p>
-                          {errors.consent && (
-                            <p className="text-red-500 text-sm mt-1 ml-8 font-heading" role="alert">{errors.consent}</p>
-                          )}
-                        </div>
-
-                        {/* Buttons */}
-                        <div className="flex gap-3">
-                          <button 
-                            type="button"
-                            onClick={handlePreviousStep}
-                            className="flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors font-heading min-h-[44px]"
-                          >
-                            ← Back
-                          </button>
-                          <button 
-                            type="submit"
-                            disabled={!formData.consentGiven || isSubmitting}
-                            className="flex-1 bg-[#2563eb] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#1d4ed8] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed font-heading min-h-[44px]"
-                          >
-                            {isSubmitting ? 'Submitting...' : 'Get Free Quote →'}
-                          </button>
-                        </div>
-
-                        {/* Footer Link */}
-                        <div className="text-center mt-4 pt-4 border-t border-gray-200">
-                          <p className="text-sm text-gray-600 font-heading">
-                            Need immediate help?{' '}
-                            <a href="tel:+18015988307" className="text-[#2563eb] hover:underline font-medium">
-                              Call (801) 598-8307
-                            </a>
-                          </p>
-                        </div>
-                      </form>
-                    </div>
-                  )}
-                </>
-              ) : (
-                /* Thank You State */
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  
-                  <h2 className="text-2xl font-semibold text-gray-900 mb-2 font-heading">
-                    Quote Request Received!
-                  </h2>
-                  
-                  <p className="text-gray-600 mb-6 font-heading">
-                    We'll review your <span className="font-medium">{formData.selectedPropertyType}</span> request and call you within 24 hours.
-                  </p>
-                  
-                  <div className="bg-gray-50 rounded-lg p-6 mb-6 text-left">
-                    <h3 className="font-semibold text-gray-900 mb-3 font-heading">What happens next:</h3>
-                    <div className="space-y-2">
-                      <div className="flex items-start gap-3">
-                        <span className="text-[#2563eb] font-semibold">1️⃣</span>
-                        <span className="text-gray-700 font-heading">We'll review your property details</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <span className="text-[#2563eb] font-semibold">2️⃣</span>
-                        <span className="text-gray-700 font-heading">A team member will call you within 24 hours</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <span className="text-[#2563eb] font-semibold">3️⃣</span>
-                        <span className="text-gray-700 font-heading">We'll provide your custom quote</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <span className="text-[#2563eb] font-semibold">4️⃣</span>
-                        <span className="text-gray-700 font-heading">Schedule installation at your convenience</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                    <p className="text-sm font-medium text-gray-900 mb-1 font-heading">Ready to book now?</p>
-                    <a 
-                      href="tel:+18015988307" 
-                      className="text-lg font-semibold text-[#2563eb] hover:underline font-heading"
-                    >
-                      Call (801) 598-8307
-                    </a>
-                  </div>
-                  
-                  <button 
-                    onClick={handleCloseModal}
-                    className="text-gray-600 hover:text-gray-900 underline text-sm font-heading inline-block"
-                  >
-                    Close
-                  </button>
-                </div>
-              )}
+            Or call or text (801) 598-8307
+          </a>
+        </div>
+      ) : (
+        <form id="quote-form" onSubmit={handleSubmit} noValidate>
+          {/* Honeypot - keep invisible to humans */}
+          <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+            <label>
+              Website
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
+            </label>
+          </div>
+          {/* Progress */}
+          <div className="mb-7">
+            <div className={`mb-2 flex items-center justify-between font-heading text-xs tracking-[0.12em] uppercase ${T.label}`}>
+              <span>Free quote</span>
+              <span>
+                Step {step} of {TOTAL_STEPS}
+              </span>
+            </div>
+            <div className="flex gap-1.5" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={TOTAL_STEPS}>
+              {[1, 2, 3].map((s) => (
+                <div
+                  key={s}
+                  className={`h-1 flex-1 rounded-full transition-colors duration-300 ${s <= step ? T.progressOn : T.progressOff}`}
+                />
+              ))}
             </div>
           </div>
-        </div>
+
+          {step === 1 && (
+            <fieldset>
+              <legend className={`mb-5 font-heading text-xl font-semibold ${T.heading}`}>What are we lighting?</legend>
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                {PROPERTY_TYPES.map((type) => (
+                  <button
+                    key={type.title}
+                    type="button"
+                    onClick={() => selectType(type.title)}
+                    className={`rounded-xl border px-4 py-3.5 text-left transition-colors duration-150 ${
+                      formData.selectedPropertyType === type.title ? T.cardSelected : T.card
+                    }`}
+                  >
+                    <span className={`block font-heading font-medium ${T.cardTitle}`}>{type.title}</span>
+                    <span className={`block font-heading text-sm ${T.cardSub}`}>{type.subtitle}</span>
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+          )}
+
+          {step === 2 && (
+            <div>
+              <h3 className={`mb-1 font-heading text-xl font-semibold ${T.heading}`}>How do we reach you?</h3>
+              <p className={`mb-5 font-heading text-sm ${T.sub}`}>
+                {formData.selectedPropertyType} ·{' '}
+                <button type="button" className="underline underline-offset-2" onClick={() => setStep(1)}>
+                  change
+                </button>
+              </p>
+              <div className="space-y-3">
+                <div>
+                  <input
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Full name"
+                    aria-label="Full name"
+                    value={formData.fullName}
+                    onChange={(e) => setFormData((f) => ({ ...f, fullName: e.target.value }))}
+                    className={inputClass('fullName')}
+                  />
+                  {errors.fullName && <p className={`mt-1 font-heading text-sm ${T.error}`}>{errors.fullName}</p>}
+                </div>
+                <div>
+                  <input
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="Phone"
+                    aria-label="Phone"
+                    value={formData.phone}
+                    onChange={(e) => setFormData((f) => ({ ...f, phone: formatPhoneNumber(e.target.value) }))}
+                    className={inputClass('phone')}
+                  />
+                  {errors.phone && <p className={`mt-1 font-heading text-sm ${T.error}`}>{errors.phone}</p>}
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    placeholder="Email"
+                    aria-label="Email"
+                    value={formData.email}
+                    onChange={(e) => setFormData((f) => ({ ...f, email: e.target.value }))}
+                    className={inputClass('email')}
+                  />
+                  {errors.email && <p className={`mt-1 font-heading text-sm ${T.error}`}>{errors.email}</p>}
+                </div>
+              </div>
+              <div className="mt-6 flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => setStep(1)}
+                  className={`font-heading text-sm underline underline-offset-2 ${T.back}`}
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  onClick={() => validateContact() && setStep(3)}
+                  className={`rounded-full px-8 py-3 font-heading text-base transition-colors ${T.primary}`}
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          )}
+
+          {step === 3 && (
+            <div>
+              <h3 className={`mb-5 font-heading text-xl font-semibold ${T.heading}`}>Where is the property?</h3>
+              <div className="space-y-3">
+                <div>
+                  <input
+                    type="text"
+                    autoComplete="postal-code"
+                    placeholder="City or ZIP code"
+                    aria-label="City or ZIP code"
+                    value={formData.cityOrZip}
+                    onChange={(e) => setFormData((f) => ({ ...f, cityOrZip: e.target.value }))}
+                    className={inputClass('cityOrZip')}
+                  />
+                  {errors.cityOrZip && <p className={`mt-1 font-heading text-sm ${T.error}`}>{errors.cityOrZip}</p>}
+                </div>
+                <textarea
+                  placeholder="Anything we should know? Colors, timeline, special requests (optional)"
+                  aria-label="Special requests"
+                  rows={3}
+                  value={formData.description}
+                  onChange={(e) => setFormData((f) => ({ ...f, description: e.target.value }))}
+                  className={`${inputClass('description')} resize-none`}
+                />
+                <label className="flex cursor-pointer items-start gap-3 pt-1">
+                  <input
+                    type="checkbox"
+                    checked={formData.consentGiven}
+                    onChange={(e) => setFormData((f) => ({ ...f, consentGiven: e.target.checked }))}
+                    className={`mt-0.5 h-5 w-5 cursor-pointer rounded border-black/20 ${T.checkbox}`}
+                  />
+                  <span className={`font-heading text-sm ${T.consent}`}>
+                    Summit Lighting Co. can contact me about my quote request.
+                  </span>
+                </label>
+                {errors.consentGiven && <p className={`font-heading text-sm ${T.error}`}>{errors.consentGiven}</p>}
+              </div>
+              <div className="mt-6 flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => setStep(2)}
+                  className={`font-heading text-sm underline underline-offset-2 ${T.back}`}
+                >
+                  Back
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`rounded-full px-8 py-3 font-heading text-base transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${T.primary}`}
+                >
+                  {isSubmitting ? 'Sending…' : 'Get my quote'}
+                </button>
+              </div>
+            </div>
+          )}
+        </form>
       )}
-    </>
+    </div>
   );
-};
-
-export default ChristmasLightQuote;
-
+}

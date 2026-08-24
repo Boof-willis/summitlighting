@@ -83,9 +83,11 @@ export default function HeaderRepair() {
   }, [isMobile, mobileMenuOpen]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
     const target = document.querySelector(href);
+    // Smooth-scroll when the section is on this page; otherwise let the
+    // browser follow the absolute link (e.g. /#services from /contact).
     if (target) {
+      e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setMobileMenuOpen(false);
     }
@@ -96,21 +98,21 @@ export default function HeaderRepair() {
     >
       <nav className="flex justify-between items-center w-full px-8 max-w-[1200px] mx-auto relative z-[1001]">
         <div className="flex items-center gap-6">
-          <div className="flex items-center opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.2s_forwards]">
-            <img 
-              src={(isMobile && (scrolled || mobileMenuOpen)) 
+          <a href="/" aria-label="Summit Lighting Co. home" className="flex items-center opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.2s_forwards]">
+            <img
+              src={(isMobile && (scrolled || mobileMenuOpen))
                 ? "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/logos/summit%20logo%20black.avif"
                 : "https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/logos/summit%20logo%20white.avif"
               }
               alt="Summit Lighting Co."
               className="h-8 w-auto transition-all duration-300"
             />
-          </div>
+          </a>
           <div className="w-[3px] h-6 bg-white/30 hidden md:block opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.3s_forwards] ml-2"></div>
           <ul className="hidden md:flex list-none gap-8 ml-2">
             <li className="opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.4s_forwards]">
               <a
-                href="#services"
+                href="/#services"
                 onClick={(e) => handleNavClick(e, '#services')}
                 className="text-white !font-normal font-heading relative inline-block group"
               >
@@ -120,7 +122,7 @@ export default function HeaderRepair() {
             </li>
             <li className="opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.5s_forwards]">
               <a
-                href="#programs"
+                href="/#programs"
                 onClick={(e) => handleNavClick(e, '#programs')}
                 className="text-white !font-normal font-heading relative inline-block group"
               >
@@ -130,7 +132,7 @@ export default function HeaderRepair() {
             </li>
             <li className="opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.6s_forwards]">
               <a
-                href="#gallery"
+                href="/#gallery"
                 onClick={(e) => handleNavClick(e, '#gallery')}
                 className="text-white !font-normal font-heading relative inline-block group"
               >
@@ -140,11 +142,20 @@ export default function HeaderRepair() {
             </li>
             <li className="opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.7s_forwards]">
               <a
-                href="#faq"
+                href="/#faq"
                 onClick={(e) => handleNavClick(e, '#faq')}
                 className="text-white !font-normal font-heading relative inline-block group"
               >
                 FAQs
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            </li>
+            <li className="opacity-0 translate-y-5 animate-[fadeInUp_0.8s_ease_0.75s_forwards]">
+              <a
+                href="/contact"
+                className="text-white !font-normal font-heading relative inline-block group"
+              >
+                Contact
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
             </li>
@@ -187,44 +198,52 @@ export default function HeaderRepair() {
           <ul className="flex flex-col list-none gap-6 pb-4 items-center">
             <li>
               <a
-                href="#services"
+                href="/#services"
                 onClick={(e) => handleNavClick(e, '#services')}
-                className="text-gray-900 font-heading font-light text-base hover:text-[#498dcb] transition-colors"
+                className="text-gray-900 font-heading font-light text-base hover:text-[#B07E22] transition-colors"
               >
                 Services
               </a>
             </li>
             <li>
               <a
-                href="#programs"
+                href="/#programs"
                 onClick={(e) => handleNavClick(e, '#programs')}
-                className="text-gray-900 font-heading font-light text-base hover:text-[#498dcb] transition-colors"
+                className="text-gray-900 font-heading font-light text-base hover:text-[#B07E22] transition-colors"
               >
                 How It Works
               </a>
             </li>
             <li>
               <a
-                href="#gallery"
+                href="/#gallery"
                 onClick={(e) => handleNavClick(e, '#gallery')}
-                className="text-gray-900 font-heading font-light text-base hover:text-[#498dcb] transition-colors"
+                className="text-gray-900 font-heading font-light text-base hover:text-[#B07E22] transition-colors"
               >
                 Gallery
               </a>
             </li>
             <li>
               <a
-                href="#faq"
+                href="/#faq"
                 onClick={(e) => handleNavClick(e, '#faq')}
-                className="text-gray-900 font-heading font-light text-base hover:text-[#498dcb] transition-colors"
+                className="text-gray-900 font-heading font-light text-base hover:text-[#B07E22] transition-colors"
               >
                 FAQs
               </a>
             </li>
             <li>
               <a
+                href="/contact"
+                className="text-gray-900 font-heading font-light text-base hover:text-[#B07E22] transition-colors"
+              >
+                Contact
+              </a>
+            </li>
+            <li>
+              <a
                 href="tel:+18015988307"
-                className="inline-flex items-center justify-center bg-[#498dcb] text-white py-4 px-12 rounded-full font-heading font-normal text-base hover:bg-[#3a7ab5] transition-colors"
+                className="inline-flex items-center justify-center bg-[#0B0C0A] text-white py-4 px-12 rounded-full font-heading font-normal text-base hover:bg-[#23291F] transition-colors"
                 onClick={() => window.dispatchEvent(new Event('PhoneCallClick'))}
               >
                 Call (801) 598-8307

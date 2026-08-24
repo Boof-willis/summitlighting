@@ -1,0 +1,126 @@
+---
+import '@/styles/global.css';
+import HeaderRepair from '@/components/ui/islands/HeaderRepair';
+import FooterRepair from '@/components/ui/FooterRepair.astro';
+import ChristmasLightQuote from '@/components/ui/islands/ChristmasLightQuote';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Summit Lighting Co. | Christmas Light Installation Utah County</title>
+    <meta name="description" content="Get a free Christmas light installation quote from Summit Lighting Co. Call or text (801) 598-8307, email, or send the form. Serving Provo, Orem, Lehi, Draper, Sandy & beyond." />
+    <link rel="icon" type="image/svg+xml" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/favicon/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/favicon/favicon-96x96.png" />
+    <link rel="icon" type="image/x-icon" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://pub-b90babce61544d61a1c7d67d49d512e4.r2.dev/images/favicon/apple-touch-icon.png" />
+    <link rel="canonical" href="https://summitlightingco.com/contact" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Summit Lighting Co." />
+    <meta property="og:title" content="Contact Summit Lighting Co." />
+    <meta property="og:description" content="Free quotes for Christmas light installation across Utah County. Call or text (801) 598-8307, or send the form." />
+    <meta property="og:url" content="https://summitlightingco.com/contact" />
+    <meta property="og:image" content="https://summitlightingco.com/images/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- ContactPage schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "@id": "https://summitlightingco.com/contact#page",
+      "url": "https://summitlightingco.com/contact",
+      "name": "Contact Summit Lighting Co.",
+      "about": { "@id": "https://summitlightingco.com/#business" }
+    }
+    </script>
+  </head>
+  <body class="overflow-x-hidden bg-[#F7F6F1]">
+    <HeaderRepair client:idle />
+
+    <main>
+      <!-- Dark page header (gives the transparent nav a night backdrop) -->
+      <section class="bg-[#0B0C0A] pt-36 md:pt-44 pb-16 md:pb-20 text-center relative overflow-clip">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div class="absolute -top-24 left-[20%] w-[440px] h-[440px] rounded-full" style="background: radial-gradient(circle, rgba(255, 196, 110, 0.13), transparent 65%);"></div>
+          <div class="absolute -bottom-40 right-[10%] w-[500px] h-[500px] rounded-full" style="background: radial-gradient(circle, rgba(90, 150, 255, 0.10), transparent 65%);"></div>
+        </div>
+        <div class="relative max-w-[800px] mx-auto px-8">
+          <h1 class="text-[36px] md:text-[56px] font-medium leading-[1.15] text-white font-heading mb-5">Contact us.</h1>
+          <p class="text-lg text-white/85 font-heading max-w-[560px] mx-auto">
+            Free quotes for Christmas light installation across Utah County. Call, text, email, or send the form and we'll get back to you the same day.
+          </p>
+        </div>
+      </section>
+
+      <!-- Contact info + form -->
+      <section class="py-16 md:py-20 bg-[#F7F6F1]">
+        <div class="max-w-[1100px] mx-auto px-6 md:px-8 grid md:grid-cols-[1fr_1.2fr] gap-10 md:gap-14 items-start">
+          <!-- Info column -->
+          <div class="space-y-8">
+            <div>
+              <h2 class="font-heading text-xl font-semibold text-gray-900 mb-3">Talk to us</h2>
+              <ul class="space-y-2 font-heading text-gray-700">
+                <li>
+                  <a href="tel:+18015988307" class="underline underline-offset-4 hover:text-gray-900" onclick="window.dispatchEvent(new Event('PhoneCallClick'))">(801) 598-8307</a>
+                  <span class="text-gray-500"> — call or text</span>
+                </li>
+                <li>
+                  <a href="mailto:info@summitlightingco.com" class="underline underline-offset-4 hover:text-gray-900">info@summitlightingco.com</a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h2 class="font-heading text-xl font-semibold text-gray-900 mb-3">Hours</h2>
+              <ul class="space-y-1 font-heading text-gray-700">
+                <li>Monday–Friday: 9am–6pm</li>
+                <li>Saturday: 10am–4pm</li>
+                <li class="text-gray-500">Installation season: September–January</li>
+              </ul>
+            </div>
+
+            <div>
+              <h2 class="font-heading text-xl font-semibold text-gray-900 mb-3">Service area</h2>
+              <p class="font-heading text-gray-700 leading-relaxed">
+                Provo, Orem, Lehi, Draper, Sandy, and surrounding communities across Utah County, Salt Lake County, and Wasatch County. No travel fees within our service area.
+              </p>
+            </div>
+          </div>
+
+          <!-- Form column -->
+          <ChristmasLightQuote client:load />
+        </div>
+      </section>
+
+      <!-- Map -->
+      <section class="pb-16 md:pb-20 bg-[#F7F6F1]">
+        <div class="max-w-[1100px] mx-auto px-6 md:px-8">
+          <div class="rounded-2xl overflow-hidden h-[360px] w-full border border-black/5">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d196209.4!2d-111.8!3d40.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x874d8277b11bfd5b%3A0x5f9c1c6a9c7e1a1a!2sUtah%20County%2C%20UT!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+              width="100%"
+              height="100%"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Summit Lighting Co. service area map"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <FooterRepair />
+  </body>
+</html>

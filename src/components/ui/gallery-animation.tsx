@@ -244,7 +244,7 @@ const ExpandableGallery: React.FC<ExpandableGalleryProps> = ({ images, altTexts 
                   src={image}
                   alt={getAltText(index)}
                   className={`w-full h-full object-cover ${currentMobileIndex === index ? '' : 'brightness-50'}`}
-                  loading="eager"
+                  loading="lazy"
                 />
               </motion.div>
             ))}
