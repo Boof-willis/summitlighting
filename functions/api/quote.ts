@@ -1,9 +1,12 @@
 // Cloudflare Pages Function: receives quote-form submissions and emails the
-// lead to the business via Cloudflare Email Service (send_email binding).
+// lead to the business via the Cloudflare Email Service REST API (the
+// send_email binding is Workers-only; Pages projects use the REST API).
 //
 // Prerequisites (one-time, after DNS moves to Cloudflare):
-//   npx wrangler email sending enable summitlightingco.com
-// The EMAIL binding is declared in wrangler.jsonc.
+//   1. npx wrangler email sending enable summitlightingco.com
+//   2. In the Pages project (Settings -> Variables and Secrets) add:
+//        CF_ACCOUNT_ID    - the Cloudflare account ID
+//        EMAIL_API_TOKEN  - an API token with Email Sending permission
 
 interface QuotePayload {
   selectedPropertyType?: string;
@@ -28,16 +31,9 @@ interface QuotePayload {
 }
 
 interface Env {
-  EMAIL: {
-    send(message: {
-      to: string;
-      from: { email: string; name: string };
-      replyTo?: string;
-      subject: string;
-      text: string;
-      html?: string;
-    }): Promise<unknown>;
-  };
+  // Set in the Pages project: Settings -> Variables and Secrets
+  CF_ACCOUNT_ID: string;
+  EMAIL_API_TOKEN: string; // API token with Email Sending permission
 }
 
 const TO_ADDRESS = 'info@summitlightingco.com';
@@ -104,15 +100,34 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
     .map(([k, v]) => `<tr><td><strong>${esc(k)}</strong></td><td>${esc(String(v))}</td></tr>`)
     .join('')}</table>`;
 
+  if (!env.CF_ACCOUNT_ID || !env.EMAIL_API_TOKEN) {
+    console.error('Email secrets not configured (CF_ACCOUNT_ID / EMAIL_API_TOKEN)');
+    return json(502, { ok: false, error: 'Email not configured' });
+  }
+
   try {
-    await env.EMAIL.send({
-      to: TO_ADDRESS,
-      from: { email: FROM_ADDRESS, name: 'Summit Lighting Website' },
-      replyTo: email,
-      subject: `Quote request: ${property} in ${city} - ${name}`,
-      text,
-      html,
-    });
+    const res = await fetch(
+      `https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}/email/sending/send`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${env.EMAIL_API_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: TO_ADDRESS,
+          from: { address: FROM_ADDRESS, name: 'Summit Lighting Website' },
+          reply_to: email,
+          subject: `Quote request: ${property} in ${city} - ${name}`,
+          text,
+          html,
+        }),
+      }
+    );
+    if (!res.ok) {
+      console.error('Email send failed:', res.status, await res.text());
+      return json(502, { ok: false, error: 'Email delivery failed' });
+    }
   } catch (err) {
     console.error('Email send failed:', err);
     return json(502, { ok: false, error: 'Email delivery failed' });
