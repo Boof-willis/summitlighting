@@ -6,7 +6,7 @@
 //   1. npx wrangler email sending enable summitlightingco.com
 //   2. In the Pages project (Settings -> Variables and Secrets) add:
 //        CF_ACCOUNT_ID    - the Cloudflare account ID
-//        EMAIL_API_TOKEN  - an API token with Email Sending permission
+//        SUMMIT_LIGHTING_EMAIL - an API token with Email Sending permission
 
 interface QuotePayload {
   selectedPropertyType?: string;
@@ -33,7 +33,7 @@ interface QuotePayload {
 interface Env {
   // Set in the Pages project: Settings -> Variables and Secrets
   CF_ACCOUNT_ID: string;
-  EMAIL_API_TOKEN: string; // API token with Email Sending permission
+  SUMMIT_LIGHTING_EMAIL: string; // API token with Email Sending permission
 }
 
 const TO_ADDRESS = 'info@summitlightingco.com';
@@ -100,8 +100,8 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
     .map(([k, v]) => `<tr><td><strong>${esc(k)}</strong></td><td>${esc(String(v))}</td></tr>`)
     .join('')}</table>`;
 
-  if (!env.CF_ACCOUNT_ID || !env.EMAIL_API_TOKEN) {
-    console.error('Email secrets not configured (CF_ACCOUNT_ID / EMAIL_API_TOKEN)');
+  if (!env.CF_ACCOUNT_ID || !env.SUMMIT_LIGHTING_EMAIL) {
+    console.error('Email secrets not configured (CF_ACCOUNT_ID / SUMMIT_LIGHTING_EMAIL)');
     return json(502, { ok: false, error: 'Email not configured' });
   }
 
@@ -111,7 +111,7 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${env.EMAIL_API_TOKEN}`,
+          Authorization: `Bearer ${env.SUMMIT_LIGHTING_EMAIL}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
